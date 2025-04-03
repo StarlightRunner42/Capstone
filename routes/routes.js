@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controller/controller");
+const {requireAuth} = require('../middleware/authMiddleware')
 
 router.get('/', (req, res) => {
     res.render('auth');
@@ -10,7 +11,7 @@ router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.get('/index', (req, res) => {
+router.get('/index', requireAuth,(req, res) => {
     res.render('index-1');
 });
 
@@ -23,4 +24,6 @@ router.get('/Analytics', (req, res) => {
 });
 
 router.post('/create-user',controller.createUser);
+router.post('/login',controller.login);
+router.get('/logout',controller.logout);
 module.exports = router; 

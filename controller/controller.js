@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
+const session = require('express-session');
 const { User,Barangay } = require("../model/schema");
 
 exports.createUser = async (req, res) => {
@@ -64,10 +65,59 @@ exports.createUser = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-       const {email,password} = req.body;
-       
+      const { email, password } = req.body;
+  
+      // Validate input
+      if (!email || !password) {
+        return res.status(400).json({
+          success: false,
+          error: "All fields are required",
+        });
+      }
+  
+      // Check if user exists
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          error: "Invalid credentials",
+        });
+      }
+  
+      // Verify password
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(401).json({
+          success: false,
+          error: "Invalid credentials",
+        });
+      }
+  
+      // Store user data in session (excluding password)
+      req.session.user = {
+        _id: user._id,
+        email: user.email,
+        // Add any other user data you need (but avoid sensitive info)
+      };
+  
+      // Successful login response
+      res.redirect('/index');
+  
     } catch (err) {
-        res.status(400).json({ error: err.message });
+      res.status(500).json({
+        success: false,
+        error: err.message,
+      });
     }
-};
+}
 
+exports.logout = (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Session destruction error:', err);
+        return res.redirect('/'); // Still redirect to root even on error
+      }
+      res.clearCookie('connect.sid'); // Clear the session cookie
+      res.redirect('/'); // Explicit redirect to homepage
+    });
+  };
