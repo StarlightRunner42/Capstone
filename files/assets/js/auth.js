@@ -1,45 +1,46 @@
-        // Role selection functionality
-        document.querySelectorAll('.role-option').forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove active class from all options
-                document.querySelectorAll('.role-option').forEach(opt => {
-                    opt.classList.remove('active');
-                });
-                
-                // Add active class to clicked option
-                this.classList.add('active');
-                
-                // Update hidden input value
-                document.getElementById('selected-role').value = this.dataset.role;
-            });
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const role = formData.get('role');
+    
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password, role })
         });
 
-        var alertMessage = "<?php echo $alertMessage; ?>";
-        if (alertMessage === "success") {
-            Swal.fire({
-                icon: 'success',
-                title: 'Welcome Back!',
-                text: 'Login successful',
-                showConfirmButton: false,
-                timer: 2000,
-                customClass: {
-                    popup: 'animated fadeInDown'
-                }
-            }).then(() => {
-                const role = document.getElementById('selected-role').value;
-                if (role === "admin") {
-                    window.location.href = 'admin_dashboard.php';
-                } else if (role === "staff") {
-                    window.location.href = 'staff_dashboard.php';
-                } else {
-                    window.location.href = 'home_page.php';
-                }
-            });
-        } else if (alertMessage === "error") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Access Denied',
-                text: 'Invalid email or password. Please try again.',
-                confirmButtonColor: '#2962ff'
-            });
+        if (response.redirected) {
+            // Successful login - follow the redirect
+            window.location.href = response.url;
+        } else {
+            const data = await response.json();
+            
+            if (!data.success) {
+                // Show SweetAlert for error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: data.error || 'Invalid credentials',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Try Again'
+                });
+            }
         }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred during login',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+        console.error('Login error:', error);
+    }
+});

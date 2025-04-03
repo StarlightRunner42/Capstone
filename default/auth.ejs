@@ -20,14 +20,14 @@
             </div>
             <div class="login-form">
                 <h3 class="text-center mb-4">Login to Your Account</h3>
-                <form method="POST" action="/login">
+                <form method="POST" action="/login" id="loginForm">
                     <input type="hidden" name="role" id="selected-role" value="user">
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" required>
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                         <i class="fas fa-lock"></i>
                     </div>
                     <button type="submit" class="btn btn-login btn-block">Sign In</button>
