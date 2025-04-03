@@ -97,11 +97,16 @@ exports.login = async (req, res) => {
       req.session.user = {
         _id: user._id,
         email: user.email,
-        // Add any other user data you need (but avoid sensitive info)
-      };
-  
+        role: user.role,  // Ensure 'role' exists in your database
+    };
       // Successful login response
-      res.redirect('/index');
+      if (user.role === "Admin") {
+        return res.redirect("/index");
+    } else if (user.role === "Staff") {
+        return res.redirect("/index");
+    } else {
+        return res.redirect("/index"); // Default redirection
+    }
   
     } catch (err) {
       res.status(500).json({

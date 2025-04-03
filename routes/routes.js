@@ -15,11 +15,11 @@ router.get('/index', requireAuth,(req, res) => {
     res.render('index-1');
 });
 
-router.get('/Baranggay', (req, res) => {
+router.get('/Baranggay', requireAuth,(req, res) => {
     res.render('dashboard-crm');
 });
 
-router.get('/Analytics', (req, res) => {
+router.get('/Analytics', requireAuth,(req, res) => {
     res.render('dashboard-analytics');
 });
 
