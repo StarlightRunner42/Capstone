@@ -19,6 +19,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
+    "capstone": "file:",
     "datatables.net-dt": "^2.2.2",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
@@ -28,6 +29,7 @@
     "mongoose": "^8.13.1",
     "nodemon": "^3.1.9",
     "path": "^0.12.7",
-    "routes": "^2.1.0"
+    "routes": "^2.1.0",
+    "sweetalert2": "^11.17.2"
   }
 }

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require("path");
 const express = require("express"); 
 const bodyParser = require("body-parser");
@@ -19,6 +20,13 @@ app.use(express.static(path.join(__dirname, "files")));
 // Middleware to parse request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: process.env.SESSION_SECRET, // Change this to a strong, random string
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
 //database connection
 connection();

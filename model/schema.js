@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+const UserSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ['Admin', 'Staff'], required: true }
+});
+
 const PurokSchema = new mongoose.Schema({
     name: { type: String, required: true },
     location: {
@@ -14,6 +21,7 @@ const BarangaySchema = new mongoose.Schema({
     puroks: [PurokSchema] // Array of puroks inside a barangay
 });
 
+const User = mongoose.model('User', UserSchema);
 const Barangay = mongoose.model('Barangay', BarangaySchema);
 
-module.exports = Barangay;
+module.exports = { User, Barangay };

@@ -6,6 +6,10 @@ router.get('/', (req, res) => {
     res.render('auth');
 });
 
+router.get('/register', (req, res) => {
+    res.render('register');
+});
+
 router.get('/index', (req, res) => {
     res.render('index-1');
 });
@@ -17,4 +21,6 @@ router.get('/Baranggay', (req, res) => {
 router.get('/Analytics', (req, res) => {
     res.render('dashboard-analytics');
 });
+
+router.post('/create-user',controller.createUser);
 module.exports = router; 
