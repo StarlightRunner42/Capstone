@@ -1,0 +1,592 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Adminty - Premium Admin Template by Colorlib </title>
+    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 10]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="#">
+    <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="#">
+    <!-- Favicon icon -->
+    <link rel="icon" href="..\files\assets\images\favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="..\files\bower_components\bootstrap\css\bootstrap.min.css">
+    <!-- radial chart.css -->
+    <link rel="stylesheet" href="..\files\assets\pages\chart\radial\css\radial.css" type="text/css" media="all">
+    <!-- feather Awesome -->
+    <link rel="stylesheet" type="text/css" href="..\files\assets\icon\feather\css\feather.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="..\files\assets\css\style.css">
+    <link rel="stylesheet" type="text/css" href="..\files\assets\css\data.css">
+    <link rel="stylesheet" type="text/css" href="..\files\assets\css\jquery.mCustomScrollbar.css">
+</head>
+<!-- Menu sidebar static layout -->
+
+<body>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pre-loader end -->
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+
+                    <div class="navbar-logo">
+                        <a class="mobile-menu" id="mobile-collapse" href="#!">
+                            <i class="feather icon-menu"></i>
+                        </a>
+                        <a href="index-1.htm">
+                            <img class="img-fluid" src="..\files\assets\images\logo.png" alt="Theme-Logo">
+                        </a>
+                        <a class="mobile-options">
+                            <i class="feather icon-more-horizontal"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-container container-fluid">
+                        <ul class="nav-left">
+                            <li class="header-search">
+                                <div class="main-search morphsearch-search">
+                                    <div class="input-group">
+                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                    <i class="feather icon-maximize full-screen"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav-right">
+                            <li class="header-notification">
+                                <div class="dropdown-primary dropdown">
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="feather icon-bell"></i>
+                                        <span class="badge bg-c-pink">5</span>
+                                    </div>
+                                    <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <li>
+                                            <h6>Notifications</h6>
+                                            <label class="label label-danger">New</label>
+                                        </li>
+                                        <li>
+                                            <div class="media">
+                                                <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5 class="notification-user">John Doe</h5>
+                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                    <span class="notification-time">30 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="media">
+                                                <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5 class="notification-user">Joseph William</h5>
+                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                    <span class="notification-time">30 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="media">
+                                                <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5 class="notification-user">Sara Soudein</h5>
+                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                    <span class="notification-time">30 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="user-profile header-notification">
+                                <div class="dropdown-primary dropdown">
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="..\files\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                        <span>John Doe</span>
+                                        <i class="feather icon-chevron-down"></i>
+                                    </div>
+                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <li>
+                                            <a href="user-profile.htm">
+                                                <i class="feather icon-user"></i> Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="auth-normal-sign-in.htm">
+                                                <i class="feather icon-log-out"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+          
+           
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    <nav class="pcoded-navbar">
+                        <div class="pcoded-inner-navbar main-menu">
+                            <div class="pcoded-navigatio-lavel">Navigation</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu active pcoded-trigger">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                        <span class="pcoded-mtext">Dashboard</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="index-1.htm">
+                                                <span class="">Data</span>
+                                            </a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="dashboard-crm.htm">
+                                                <span class="">Baranggay</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="dashboard-analytics.htm">
+                                                <span class="">Analytics</span>
+                                            
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+
+
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    
+                                          
+                                    <div class="dashboard">
+                                        <div class="header">
+                                            <h1 class="title">Barangay Data Analytics Dashboard</h1>
+                                            <div class="filters">
+                                                <div class="filter-item">
+                                                    <label class="filter-label">Time Period</label>
+                                                    <select id="time-filter">
+                                                        <option value="current">Current Quarter</option>
+                                                        <option value="last">Last Quarter</option>
+                                                        <option value="year">Year to Date</option>
+                                                        <option value="custom">Custom Range</option>
+                                                    </select>
+                                                </div>
+                                                <div class="filter-item">
+                                                    <label class="filter-label">District</label>
+                                                    <select id="district-filter">
+                                                        <option value="all">All Districts</option>
+                                                        <option value="north">North District</option>
+                                                        <option value="central">Central District</option>
+                                                        <option value="south">South District</option>
+                                                    </select>
+                                                </div>
+                                                <div class="filter-item">
+                                                    <label class="filter-label">Metric</label>
+                                                    <select id="metric-filter">
+                                                        <option value="population">Population</option>
+                                                        <option value="income">Income Level</option>
+                                                        <option value="education">Education</option>
+                                                        <option value="health">Health Metrics</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="dashboard-grid">
+                                            <div class="stat-card">
+                                                <div class="stat-title">Total Population</div>
+                                                <div class="stat-value">143,892</div>
+                                                <div class="stat-change up">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" transform="rotate(180 8 8)"/>
+                                                    </svg>
+                                                    2.4% from last period
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-title">Average Household Income</div>
+                                                <div class="stat-value">₱32,450</div>
+                                                <div class="stat-change up">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" transform="rotate(180 8 8)"/>
+                                                    </svg>
+                                                    3.7% from last period
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-title">Education Rate</div>
+                                                <div class="stat-value">87.3%</div>
+                                                <div class="stat-change up">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" transform="rotate(180 8 8)"/>
+                                                    </svg>
+                                                    1.2% from last period
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-title">Health Index</div>
+                                                <div class="stat-value">74.8</div>
+                                                <div class="stat-change down">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                                                    </svg>
+                                                    0.5% from last period
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="table-section">
+                                            <div class="section-header">
+                                                <h2 class="section-title">Barangay Performance Metrics</h2>
+                                                <button class="button secondary-button">Export Data</button>
+                                            </div>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Barangay Name</th>
+                                                        <th>Population</th>
+                                                        <th>Avg. Income</th>
+                                                        <th>Education %</th>
+                                                        <th>Health Index</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>San Antonio</td>
+                                                        <td>12,547</td>
+                                                        <td>₱35,780</td>
+                                                        <td>92.3%</td>
+                                                        <td>82.1</td>
+                                                        <td><span class="status high">High</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sto. Niño</td>
+                                                        <td>8,932</td>
+                                                        <td>₱29,450</td>
+                                                        <td>85.7%</td>
+                                                        <td>76.5</td>
+                                                        <td><span class="status medium">Medium</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Poblacion</td>
+                                                        <td>15,623</td>
+                                                        <td>₱41,230</td>
+                                                        <td>94.1%</td>
+                                                        <td>84.3</td>
+                                                        <td><span class="status high">High</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>San Isidro</td>
+                                                        <td>7,521</td>
+                                                        <td>₱24,680</td>
+                                                        <td>78.3%</td>
+                                                        <td>68.7</td>
+                                                        <td><span class="status low">Low</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>San Jose</td>
+                                                        <td>10,823</td>
+                                                        <td>₱32,120</td>
+                                                        <td>88.5%</td>
+                                                        <td>75.9</td>
+                                                        <td><span class="status medium">Medium</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Santa Cruz</td>
+                                                        <td>9,754</td>
+                                                        <td>₱30,540</td>
+                                                        <td>84.2%</td>
+                                                        <td>73.6</td>
+                                                        <td><span class="status medium">Medium</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>San Miguel</td>
+                                                        <td>11,235</td>
+                                                        <td>₱33,870</td>
+                                                        <td>89.7%</td>
+                                                        <td>78.4</td>
+                                                        <td><span class="status high">High</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Santa Monica</td>
+                                                        <td>6,842</td>
+                                                        <td>₱26,350</td>
+                                                        <td>81.9%</td>
+                                                        <td>70.2</td>
+                                                        <td><span class="status low">Low</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="pagination">
+                                                <div class="page-info">Showing 1 to 8 of 24 entries</div>
+                                                <div class="page-controls">
+                                                    <button class="page-button">Previous</button>
+                                                    <button class="page-button active">1</button>
+                                                    <button class="page-button">2</button>
+                                                    <button class="page-button">3</button>
+                                                    <button class="page-button">Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="charts-section">
+                                            <div class="section-header">
+                                                <h2 class="section-title">Performance Visualization</h2>
+                                            </div>
+                                            <div class="charts-grid">
+                                                <div class="chart-container">
+                                                    <canvas id="populationChart"></canvas>
+                                                </div>
+                                                <div class="chart-container">
+                                                    <canvas id="incomeChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                                     
+
+                                                        
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- latest activity end -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="styleSelector">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning Section Starts -->
+    <!-- Older IE warning message -->
+    <!--[if lt IE 10]>
+<div class="ie-warning">
+    <h1>Warning!!</h1>
+    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+    <div class="iew-container">
+        <ul class="iew-download">
+            <li>
+                <a href="http://www.google.com/chrome/">
+                    <img src="../files/assets/images/browser/chrome.png" alt="Chrome">
+                    <div>Chrome</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.mozilla.org/en-US/firefox/new/">
+                    <img src="../files/assets/images/browser/firefox.png" alt="Firefox">
+                    <div>Firefox</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.opera.com">
+                    <img src="../files/assets/images/browser/opera.png" alt="Opera">
+                    <div>Opera</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.apple.com/safari/">
+                    <img src="../files/assets/images/browser/safari.png" alt="Safari">
+                    <div>Safari</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                    <img src="../files/assets/images/browser/ie.png" alt="">
+                    <div>IE (9 & above)</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p>Sorry for the inconvenience!</p>
+</div>
+<![endif]-->
+    <!-- Warning Section Ends -->
+    <!-- Required Jquery -->
+    <script type="text/javascript" src="..\files\bower_components\jquery\js\jquery.min.js"></script>
+    <script type="text/javascript" src="..\files\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
+    <script type="text/javascript" src="..\files\bower_components\popper.js\js\popper.min.js"></script>
+    <script type="text/javascript" src="..\files\bower_components\bootstrap\js\bootstrap.min.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="..\files\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="..\files\bower_components\modernizr\js\modernizr.js"></script>
+    <script type="text/javascript" src="..\files\bower_components\modernizr\js\css-scrollbars.js"></script>
+    <!-- Chart js -->
+    <script type="text/javascript" src="..\files\bower_components\chart.js\js\Chart.js"></script>
+    <!-- Google map js -->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="..\files\assets\pages\google-maps\gmaps.js"></script>
+    <!-- gauge js -->
+    <script src="..\files\assets\pages\widget\gauge\gauge.min.js"></script>
+    <script src="..\files\assets\pages\widget\amchart\amcharts.js"></script>
+    <script src="..\files\assets\pages\widget\amchart\serial.js"></script>
+    <script src="..\files\assets\pages\widget\amchart\gauge.js"></script>
+    <script src="..\files\assets\pages\widget\amchart\pie.js"></script>
+    <script src="..\files\assets\pages\widget\amchart\light.js"></script>
+    <!-- Custom js -->
+    <script src="..\files\assets\js\pcoded.min.js"></script>
+    <script src="..\files\assets\js\vartical-layout.min.js"></script>
+    <script src="..\files\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="..\files\assets\pages\dashboard\crm-dashboard.min.js"></script>
+    <script type="text/javascript" src="..\files\assets\js\script.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+
+
+   // Population Chart
+   const populationCtx = document.getElementById('populationChart').getContext('2d');
+        const populationChart = new Chart(populationCtx, {
+            type: 'bar',
+            data: {
+                labels: ['San Antonio', 'Sto. Niño', 'Poblacion', 'San Isidro', 'San Jose', 'Santa Cruz', 'San Miguel', 'Santa Monica'],
+                datasets: [{
+                    label: 'Population',
+                    data: [12547, 8932, 15623, 7521, 10823, 9754, 11235, 6842],
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#2563eb',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Population by Barangay',
+                        font: {
+                            size: 16
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // Income Chart
+        const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+        const incomeChart = new Chart(incomeCtx, {
+            type: 'line',
+            data: {
+                labels: ['San Antonio', 'Sto. Niño', 'Poblacion', 'San Isidro', 'San Jose', 'Santa Cruz', 'San Miguel', 'Santa Monica'],
+                datasets: [{
+                    label: 'Average Income (₱)',
+                    data: [35780, 29450, 41230, 24680, 32120, 30540, 33870, 26350],
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    borderColor: '#10b981',
+                    borderWidth: 2,
+                    tension: 0.2,
+                    pointBackgroundColor: '#10b981'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Average Income by Barangay',
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            }
+        });
+
+</script>
+</body>
+
+</html>
