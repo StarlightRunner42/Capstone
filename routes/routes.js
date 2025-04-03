@@ -3,6 +3,10 @@ const router = express.Router();
 const controller = require("../controller/controller");
 
 router.get('/', (req, res) => {
+    res.render('auth');
+});
+
+router.get('/index', (req, res) => {
     res.render('index-1');
 });
 
