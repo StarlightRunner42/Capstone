@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Adminty - Premium Admin Template by Colorlib </title>
+    <title>Adminty - Premium Admin Template by Colorlib aaaaaaa</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/form.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <!-- Menu sidebar static layout -->
 
@@ -765,6 +766,8 @@
     <script src="/assets/pages/widget/amchart/gauge.js"></script>
     <script src="/assets/pages/widget/amchart/pie.js"></script>
     <script src="/assets/pages/widget/amchart/light.js"></script>
+    <!-- SWAL -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <!-- Custom js -->
     <script src="/assets/js/pcoded.min.js"></script>
     <script src="/assets/js/vartical-layout.min.js"></script>
@@ -772,6 +775,7 @@
     <script type="text/javascript" src="/assets/pages/dashboard/crm-dashboard.min.js"></script>
     <script type="text/javascript" src="/assets/js/script.js"></script>
     <script type="text/javascript" src="/assets/js/crm.js"></script>
+    
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>
@@ -967,7 +971,11 @@
                     // Validate gender selection
                     const genderSelected = document.getElementById('male').checked || document.getElementById('female').checked;
                     if (!genderSelected) {
-                        alert('Please select a gender.');
+                        Swal.fire({
+                        title: "Fields are Empty",
+                        text: "Please select a gender.",
+                        icon: "error"
+                         });
                         isValid = false;
                     }
                     break;
@@ -1004,7 +1012,12 @@
                         const pensionerSelected = document.getElementById('pensionerYes').checked || 
                                                 document.getElementById('pensionerNo').checked;
                         if (!pensionerSelected) {
-                            alert('Please select a pensioner status.');
+                           
+                            Swal.fire({
+                        title: "Fields are Empty",
+                        text: "Please select a pensioner status.",
+                        icon: "error"
+                         });
                             isValid = false;
                         }
                     }
@@ -1136,7 +1149,12 @@
             // Simulate form submission (replace with actual submission logic)
             setTimeout(function() {
                 // Replace with actual form submission code
-                alert('Registration submitted successfully!');
+                
+                Swal.fire({
+                title: "Success!",
+                text: "Registration submitted successfully!",
+                icon: "success"
+                });
                 
                 // Reset form
                 document.getElementById('registrationForm').reset();

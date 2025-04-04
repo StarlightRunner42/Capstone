@@ -38,3 +38,12 @@ app.use("/", routes);
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+//to do 
+
+//add Encoder on Register
+
+//add form validation for register add to backed
+
+
