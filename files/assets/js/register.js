@@ -71,30 +71,30 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     // });
 
     // // Password strength indicator
-    // document.getElementById('password').addEventListener('input', function() {
-    //     const password = this.value;
-    //     const strength = document.querySelector('.password-strength');
-    //     const requirements = document.querySelectorAll('.requirement i');
+    document.getElementById('password').addEventListener('input', function() {
+        const password = this.value;
+        const strength = document.querySelector('.password-strength');
+        const requirements = document.querySelectorAll('.requirement i');
         
-    //     // Check requirements
-    //     const hasLength = password.length >= 8;
-    //     const hasCase = /[a-z]/.test(password) && /[A-Z]/.test(password);
-    //     const hasNumber = /\d/.test(password);
+        // Check requirements
+        const hasLength = password.length >= 8;
+        const hasCase = /[a-z]/.test(password) && /[A-Z]/.test(password);
+        const hasNumber = /\d/.test(password);
         
-    //     requirements[0].className = hasLength ? 'fas fa-check' : 'fas fa-circle';
-    //     requirements[1].className = hasCase ? 'fas fa-check' : 'fas fa-circle';
-    //     requirements[2].className = hasNumber ? 'fas fa-check' : 'fas fa-circle';
+        requirements[0].className = hasLength ? 'fas fa-check' : 'fas fa-circle';
+        requirements[1].className = hasCase ? 'fas fa-check' : 'fas fa-circle';
+        requirements[2].className = hasNumber ? 'fas fa-check' : 'fas fa-circle';
         
-    //     let strengthValue = 0;
-    //     if (hasLength) strengthValue += 33;
-    //     if (hasCase) strengthValue += 33;
-    //     if (hasNumber) strengthValue += 34;
+        let strengthValue = 0;
+        if (hasLength) strengthValue += 33;
+        if (hasCase) strengthValue += 33;
+        if (hasNumber) strengthValue += 34;
         
-    //     strength.style.width = `${strengthValue}%`;
-    //     strength.style.background = 
-    //         strengthValue <= 33 ? '#ff4444' :
-    //         strengthValue <= 66 ? '#ffa700' : '#00C851';
-    // });
+        strength.style.width = `${strengthValue}%`;
+        strength.style.background = 
+            strengthValue <= 33 ? '#ff4444' :
+            strengthValue <= 66 ? '#ffa700' : '#00C851';
+    });
 
     // // Alert messages
     // var alertMessage = "<?php echo $alertMessage; ?>";
