@@ -99,12 +99,15 @@ exports.login = async (req, res) => {
         email: user.email,
         role: user.role,  // Ensure 'role' exists in your database
     };
+    
       // Successful login response
       if (user.role === "Admin") {
         return res.redirect("/index");
     } else if (user.role === "Staff") {
         return res.redirect("/index");
-    } else {
+    }else if (user.role === "Encoder") {
+        return res.redirect("/index-staff");
+    }else {
         return res.redirect("/index"); // Default redirection
     }
   

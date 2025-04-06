@@ -15,6 +15,10 @@ router.get('/index', requireAuth,(req, res) => {
     res.render('index-1');
 });
 
+router.get('/index-staff',requireAuth,(req, res) => {
+    res.render('dashboard-staff');
+});
+
 router.get('/Baranggay', requireAuth,(req, res) => {
     res.render('dashboard-crm');
 });
