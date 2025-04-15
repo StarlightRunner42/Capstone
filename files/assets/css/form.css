@@ -471,3 +471,34 @@ body.high-contrast .progress-bar {
     color: #64748b;
     margin-bottom: 15px;
 }
+
+.map-button {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin-top: 6px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(247, 247, 247, 0.05);
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.map-button:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.map-button:active {
+    background-color: #f0f0f0;
+}
+
+.map-icon {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+}
