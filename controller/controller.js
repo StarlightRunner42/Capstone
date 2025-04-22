@@ -104,9 +104,9 @@ exports.login = async (req, res) => {
       if (user.role === "Admin") {
         return res.redirect("/index");
     } else if (user.role === "Staff") {
-        return res.redirect("/index");
-    }else if (user.role === "Encoder") {
         return res.redirect("/index-staff");
+    }else if (user.role === "Super Admin") {
+        return res.redirect("/index-superadmin");
     }else {
         return res.redirect("/index"); // Default redirection
     }
@@ -133,64 +133,69 @@ exports.logout = (req, res) => {
 
 exports.createResident = async (req, res) => {
   try {
-    // Transform form data to match schema
+    const formData = req.body;
+    
+    // Transform the form data to match our schema
     const residentData = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      middleName: req.body.middleName,
-      birthdate: new Date(req.body.birthdate),
-      age: parseInt(req.body.age),
-      gender: req.body.gender,
-      barangay: req.body.barangay, // This should be the ObjectId from your Barangay collection
-      purok: req.body.purok,
-      contactNumber: req.body.contactNumber,
-      email: req.body.email,
-      emergencyContact: req.body.emergencyContact,
-      emergencyContactName: req.body.emergencyContactName,
-      relationship: req.body.relationship,
-      status: [],
-      medicalConditions: req.body.disease,
-      healthInsurance: req.body.healthInsurance,
-      bloodType: req.body.bloodType,
-      medications: req.body.medications
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      middleName: formData.middleName || undefined,
+      birthdate: new Date(formData.birthdate),
+      age: parseInt(formData.age),
+      gender: formData.gender,
+      barangay: formData.barangay,
+      purok: formData.purok,
+      
+      // Contact Information
+      contactNumber: formData.contactNumber || undefined,
+      email: formData.email || undefined,
+      emergencyContact: formData.emergencyContact || undefined,
+      emergencyContactName: formData.emergencyContactName || undefined,
+      relationship: formData.relationship || undefined,
+      
+      // Special Categories
+      status: getStatus(formData),
+      pwdInfo: formData.pwd ? {
+        idNumber: formData.pwdIdNumber || undefined,
+        disabilityType: formData.disabilityType || undefined,
+        accommodationNeeds: formData.accommodationNeeds || undefined
+      } : undefined,
+      seniorInfo: formData.senior ? {
+        idNumber: formData.seniorIdNumber || undefined,
+        pensioner: formData.pensioner || undefined,
+        livingArrangement: formData.livingArrangement || undefined
+      } : undefined,
+      
+      // Medical Information
+      medicalConditions: formData.disease || undefined,
+      healthInsurance: formData.healthInsurance || undefined,
+      bloodType: formData.bloodType || undefined,
+      medications: formData.medications || undefined
     };
 
-    // Handle special categories
-    if (req.body.pwd === 'on' || req.body.indigent === 'on') {
-      residentData.status.push('pwd');
-      residentData.pwdDetails = {
-        idNumber: req.body.pwdIdNumber,
-        disabilityType: req.body.disabilityType,
-        accommodationNeeds: req.body.accommodationNeeds
-      };
-    }
-
-    if (req.body.senior === 'on' || req.body.indigent === 'on') {
-      residentData.status.push('senior');
-      residentData.seniorDetails = {
-        idNumber: req.body.seniorIdNumber,
-        pensioner: req.body.pensioner,
-        livingArrangement: req.body.livingArrangement
-      };
-    }
-
-    if (req.body.indigent === 'on') {
-      residentData.status.push('indigent');
-    }
-
+    // Create new resident
     const newResident = new Resident(residentData);
     await newResident.save();
-    
-    res.status(201).json({ 
+
+    res.status(201).json({
       success: true,
       message: 'Resident registered successfully',
       data: newResident
     });
   } catch (error) {
-    res.status(400).json({ 
+    console.error('Registration error:', error);
+    res.status(500).json({
       success: false,
-      message: 'Registration failed',
-      error: error.message 
+      message: 'Error registering resident',
+      error: error.message
     });
   }
   };
+
+  function getStatus(formData) {
+    if (formData.indigent) return 'indigent';
+    if (formData.pwd && formData.senior) return 'indigent';
+    if (formData.pwd) return 'pwd';
+    if (formData.senior) return 'senior';
+    return null;
+  }

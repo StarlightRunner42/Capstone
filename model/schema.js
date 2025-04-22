@@ -7,20 +7,6 @@ const UserSchema = new mongoose.Schema({
     role: { type: String, enum: ['Admin', 'Staff','Encoder'], required: true }
 });
 
-const PurokSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    location: {
-        latitude: { type: Number, required: true },
-        longitude: { type: Number, required: true }
-    },
-    leader: { type: String },
-});
-
-const BarangaySchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
-    puroks: [PurokSchema] // Array of puroks inside a barangay
-});
-
 const residentSchema = new mongoose.Schema({
   // Personal Information
   firstName: { type: String, required: true },
@@ -40,7 +26,7 @@ const residentSchema = new mongoose.Schema({
   relationship: String,
   
   // Special Categories
-  status: [{ type: String, enum: ['pwd', 'senior', 'indigent'] }],
+  status: [{ type: String, enum: ['pwd', 'senior', 'both'] }],
   pwdDetails: {
     idNumber: String,
     disabilityType: String,
@@ -70,9 +56,8 @@ residentSchema.pre('save', function(next) {
 });
 
 const User = mongoose.model('User', UserSchema);
-const Barangay = mongoose.model('Barangay', BarangaySchema);
 const Resident = mongoose.model('Resident', residentSchema);
 
 
 
-module.exports = { User, Barangay,Resident };
+module.exports = { User,Resident };

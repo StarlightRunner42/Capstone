@@ -11,21 +11,22 @@ router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.get('/index', requireAuth,(req, res) => {
-    res.render('index-1');
+router.get('/Index', requireAuth,(req, res) => {
+    res.render('admin/admin_index-1');
 });
 
 router.get('/index-staff',requireAuth,(req, res) => {
-    res.render('dashboard-staff');
+    res.render('staff/staff_dashboard');
 });
 
-router.get('/Baranggay', requireAuth,(req, res) => {
-    res.render('dashboard-crm');
+router.get('/Map', requireAuth,(req, res) => {
+    res.render('admin/admin_map');
 });
 
 router.get('/Analytics', requireAuth,(req, res) => {
-    res.render('dashboard-analytics');
+    res.render('admin/admin_analytics');
 });
+
 
 router.post('/create-user',controller.createUser);
 router.post('/login',controller.login);
