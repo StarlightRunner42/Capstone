@@ -30,4 +30,6 @@ router.get('/Analytics', requireAuth,(req, res) => {
 router.post('/create-user',controller.createUser);
 router.post('/login',controller.login);
 router.get('/logout',controller.logout);
+
+router.post('/add-data',controller.createResident);
 module.exports = router; 

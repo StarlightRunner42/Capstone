@@ -4,7 +4,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
-const { User,Barangay } = require("../model/schema");
+const { User,Resident } = require("../model/schema");
 
 exports.createUser = async (req, res) => {
     try {
@@ -128,4 +128,69 @@ exports.logout = (req, res) => {
       res.clearCookie('connect.sid'); // Clear the session cookie
       res.redirect('/'); // Explicit redirect to homepage
     });
+  };
+
+
+exports.createResident = async (req, res) => {
+  try {
+    // Transform form data to match schema
+    const residentData = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      middleName: req.body.middleName,
+      birthdate: new Date(req.body.birthdate),
+      age: parseInt(req.body.age),
+      gender: req.body.gender,
+      barangay: req.body.barangay, // This should be the ObjectId from your Barangay collection
+      purok: req.body.purok,
+      contactNumber: req.body.contactNumber,
+      email: req.body.email,
+      emergencyContact: req.body.emergencyContact,
+      emergencyContactName: req.body.emergencyContactName,
+      relationship: req.body.relationship,
+      status: [],
+      medicalConditions: req.body.disease,
+      healthInsurance: req.body.healthInsurance,
+      bloodType: req.body.bloodType,
+      medications: req.body.medications
+    };
+
+    // Handle special categories
+    if (req.body.pwd === 'on' || req.body.indigent === 'on') {
+      residentData.status.push('pwd');
+      residentData.pwdDetails = {
+        idNumber: req.body.pwdIdNumber,
+        disabilityType: req.body.disabilityType,
+        accommodationNeeds: req.body.accommodationNeeds
+      };
+    }
+
+    if (req.body.senior === 'on' || req.body.indigent === 'on') {
+      residentData.status.push('senior');
+      residentData.seniorDetails = {
+        idNumber: req.body.seniorIdNumber,
+        pensioner: req.body.pensioner,
+        livingArrangement: req.body.livingArrangement
+      };
+    }
+
+    if (req.body.indigent === 'on') {
+      residentData.status.push('indigent');
+    }
+
+    const newResident = new Resident(residentData);
+    await newResident.save();
+    
+    res.status(201).json({ 
+      success: true,
+      message: 'Resident registered successfully',
+      data: newResident
+    });
+  } catch (error) {
+    res.status(400).json({ 
+      success: false,
+      message: 'Registration failed',
+      error: error.message 
+    });
+  }
   };
