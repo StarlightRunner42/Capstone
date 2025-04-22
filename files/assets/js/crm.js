@@ -132,7 +132,25 @@ function updateFormFields() {
             }
         }
 
-    
+        // Function to update purok options based on selected barangay
+        function updatePurok() {
+            const barangaySelect = document.getElementById('barangay');
+            const purokSelect = document.getElementById('purok');
+            
+            // Clear current options
+            purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
+            
+            const selectedBarangay = barangaySelect.value;
+            if (selectedBarangay && purokData[selectedBarangay]) {
+                // Add new options based on selected barangay
+                purokData[selectedBarangay].forEach(purok => {
+                    const option = document.createElement('option');
+                    option.value = purok;
+                    option.textContent = purok;
+                    purokSelect.appendChild(option);
+                });
+            }
+        }
 
         // Function to toggle PWD specific section
         function togglePWDSection() {
@@ -313,141 +331,80 @@ function updateFormFields() {
             element.classList.remove('is-invalid');
         }
 
-        // Function to update the review section
-function updateReview() {
-    // Personal Information
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const middleName = document.getElementById('middleName').value;
-    const fullName = `${firstName} ${middleName ? middleName + ' ' : ''}${lastName}`;
-    document.getElementById('review-fullName').textContent = fullName;
-    document.getElementById('hiddenFirstName').value = firstName;
-    document.getElementById('hiddenLastName').value = lastName;
-    document.getElementById('hiddenMiddleName').value = middleName;
-    
-    const birthdate = document.getElementById('birthdate').value;
-    document.getElementById('review-birthdate').textContent = birthdate || '-';
-    document.getElementById('hiddenBirthdate').value = birthdate;
-    
-    const age = document.getElementById('age').value;
-    document.getElementById('review-age').textContent = age || '-';
-    document.getElementById('hiddenAge').value = age;
-    
-    const gender = document.querySelector('input[name="gender"]:checked');
-    const genderValue = gender ? gender.value : '';
-    document.getElementById('review-gender').textContent = genderValue ? genderValue.charAt(0).toUpperCase() + genderValue.slice(1) : '-';
-    document.getElementById('hiddenGender').value = genderValue;
-    
-    const barangay = document.getElementById('barangay');
-    const barangayText = barangay.options[barangay.selectedIndex].text;
-    document.getElementById('review-barangay').textContent = barangayText || '-';
-    document.getElementById('hiddenBarangay').value = barangayText;
-    
-    const purok = document.getElementById('purok');
-    const purokText = purok.options[purok.selectedIndex].text;
-    document.getElementById('review-purok').textContent = purokText || '-';
-    document.getElementById('hiddenPurok').value = purokText;
-    
-    // Contact Information
-    const contactNumber = document.getElementById('contactNumber').value;
-    document.getElementById('review-contactNumber').textContent = contactNumber || '-';
-    document.getElementById('hiddenContactNumber').value = contactNumber;
-    
-    const email = document.getElementById('email').value;
-    document.getElementById('review-email').textContent = email || '-';
-    document.getElementById('hiddenEmail').value = email;
-    
-    const emergencyContact = document.getElementById('emergencyContact').value;
-    document.getElementById('review-emergencyContact').textContent = emergencyContact || '-';
-    document.getElementById('hiddenEmergencyContact').value = emergencyContact;
-    
-    const emergencyContactName = document.getElementById('emergencyContactName').value;
-    document.getElementById('review-emergencyContactName').textContent = emergencyContactName || '-';
-    document.getElementById('hiddenEmergencyContactName').value = emergencyContactName;
-    
-    const relationship = document.getElementById('relationship').value;
-    document.getElementById('review-relationship').textContent = relationship || '-';
-    document.getElementById('hiddenRelationship').value = relationship;
-    
-    // Special Categories
-    const statusCheckboxes = document.querySelectorAll('input[name="status"]:checked');
-    const statusValues = Array.from(statusCheckboxes).map(cb => {
-        switch(cb.value) {
-            case 'pwd': return 'Person with Disability (PWD)';
-            case 'senior': return 'Senior Citizen';
-            case 'indigent': return 'Both PWD & Senior';
-            default: return cb.value;
+        // Function to populate review section
+        function populateReview() {
+            // Personal Information
+            document.getElementById('review-name').textContent = 
+                `${document.getElementById('firstName').value} ${document.getElementById('middleName').value ? document.getElementById('middleName').value + ' ' : ''}${document.getElementById('lastName').value}`;
+            document.getElementById('review-birthdate').textContent = formatDate(document.getElementById('birthdate').value);
+            document.getElementById('review-age').textContent = document.getElementById('age').value;
+            document.getElementById('review-gender').textContent = document.querySelector('input[name="gender"]:checked') ? 
+                document.querySelector('input[name="gender"]:checked').value.charAt(0).toUpperCase() + document.querySelector('input[name="gender"]:checked').value.slice(1) : '-';
+            
+            const barangaySelect = document.getElementById('barangay');
+            document.getElementById('review-barangay').textContent = barangaySelect.options[barangaySelect.selectedIndex].text;
+            
+            const purokSelect = document.getElementById('purok');
+            document.getElementById('review-purok').textContent = purokSelect.value;
+            
+            // Contact Information
+            document.getElementById('review-contactNumber').textContent = document.getElementById('contactNumber').value || '-';
+            document.getElementById('review-email').textContent = document.getElementById('email').value || '-';
+            document.getElementById('review-emergencyContact').textContent = document.getElementById('emergencyContact').value || '-';
+            document.getElementById('review-emergencyContactName').textContent = document.getElementById('emergencyContactName').value || '-';
+            document.getElementById('review-relationship').textContent = document.getElementById('relationship').value || '-';
+            
+            // Special Categories
+            const specialCategories = [];
+            if (document.getElementById('pwd').checked) specialCategories.push('Person with Disability');
+            if (document.getElementById('senior').checked) specialCategories.push('Senior Citizen');
+            if (document.getElementById('indigent').checked) specialCategories.push('Both PWD & Senior');
+            document.getElementById('review-status').textContent = specialCategories.length > 0 ? specialCategories.join(', ') : 'None';
+            
+            // Show/hide PWD review section
+            if (document.getElementById('pwd').checked) {
+                document.getElementById('review-pwd-section').style.display = 'block';
+                document.getElementById('review-pwdIdNumber').textContent = document.getElementById('pwdIdNumber').value || '-';
+                
+                const disabilityTypeSelect = document.getElementById('disabilityType');
+                document.getElementById('review-disabilityType').textContent = disabilityTypeSelect.value ? 
+                    disabilityTypeSelect.options[disabilityTypeSelect.selectedIndex].text : '-';
+                    
+                document.getElementById('review-accommodationNeeds').textContent = document.getElementById('accommodationNeeds').value || '-';
+            } else {
+                document.getElementById('review-pwd-section').style.display = 'none';
+            }
+            
+            // Show/hide Senior review section
+            if (document.getElementById('senior').checked) {
+                document.getElementById('review-senior-section').style.display = 'block';
+                document.getElementById('review-seniorIdNumber').textContent = document.getElementById('seniorIdNumber').value || '-';
+                document.getElementById('review-pensioner').textContent = document.querySelector('input[name="pensioner"]:checked') ? 
+                    (document.querySelector('input[name="pensioner"]:checked').value === 'yes' ? 'Receiving Pension' : 'Not Receiving Pension') : '-';
+                
+                const livingArrangementSelect = document.getElementById('livingArrangement');
+                document.getElementById('review-livingArrangement').textContent = livingArrangementSelect.value ? 
+                    livingArrangementSelect.options[livingArrangementSelect.selectedIndex].text : '-';
+            } else {
+                document.getElementById('review-senior-section').style.display = 'none';
+            }
+            
+            // If neither PWD nor Senior is checked, hide the entire special section
+            if (!document.getElementById('pwd').checked && !document.getElementById('senior').checked && !document.getElementById('indigent').checked) {
+                document.getElementById('review-special-section').style.display = 'none';
+            } else {
+                document.getElementById('review-special-section').style.display = 'block';
+            }
+            
+            // Medical Information
+            document.getElementById('review-disease').textContent = document.getElementById('disease').value || '-';
+            document.getElementById('review-healthInsurance').textContent = document.getElementById('healthInsurance').value || '-';
+            
+            const bloodTypeSelect = document.getElementById('bloodType');
+            document.getElementById('review-bloodType').textContent = bloodTypeSelect.value ? bloodTypeSelect.value : '-';
+            
+            document.getElementById('review-medications').textContent = document.getElementById('medications').value || '-';
         }
-    });
-    const statusText = statusValues.join(', ') || 'None';
-    document.getElementById('review-status').textContent = statusText;
-    document.getElementById('hiddenStatus').value = statusText;
-    
-    // Show/hide PWD section based on checkbox
-    const pwdSection = document.getElementById('pwdReviewDetails');
-    if (document.getElementById('pwd').checked || document.getElementById('indigent').checked) {
-        pwdSection.style.display = 'block';
-        
-        const pwdIdNumber = document.getElementById('pwdIdNumber').value;
-        document.getElementById('review-pwdIdNumber').textContent = pwdIdNumber || '-';
-        document.getElementById('hiddenPwdIdNumber').value = pwdIdNumber;
-        
-        const disabilityType = document.getElementById('disabilityType');
-        const disabilityTypeText = disabilityType.options[disabilityType.selectedIndex].text;
-        document.getElementById('review-disabilityType').textContent = disabilityTypeText || '-';
-        document.getElementById('hiddenDisabilityType').value = disabilityTypeText;
-        
-        const accommodationNeeds = document.getElementById('accommodationNeeds').value;
-        document.getElementById('review-accommodationNeeds').textContent = accommodationNeeds || '-';
-        document.getElementById('hiddenAccommodationNeeds').value = accommodationNeeds;
-    } else {
-        pwdSection.style.display = 'none';
-    }
-    
-    // Show/hide Senior section based on checkbox
-    const seniorSection = document.getElementById('seniorReviewDetails');
-    if (document.getElementById('senior').checked || document.getElementById('indigent').checked) {
-        seniorSection.style.display = 'block';
-        
-        const seniorIdNumber = document.getElementById('seniorIdNumber').value;
-        document.getElementById('review-seniorIdNumber').textContent = seniorIdNumber || '-';
-        document.getElementById('hiddenSeniorIdNumber').value = seniorIdNumber;
-        
-        const pensioner = document.querySelector('input[name="pensioner"]:checked');
-        const pensionerValue = pensioner ? pensioner.value : '';
-        document.getElementById('review-pensioner').textContent = pensionerValue ? 
-            (pensionerValue === 'yes' ? 'Receiving Pension' : 'Not Receiving Pension') : '-';
-        document.getElementById('hiddenPensioner').value = pensionerValue;
-        
-        const livingArrangement = document.getElementById('livingArrangement');
-        const livingArrangementText = livingArrangement.options[livingArrangement.selectedIndex].text;
-        document.getElementById('review-livingArrangement').textContent = livingArrangementText || '-';
-        document.getElementById('hiddenLivingArrangement').value = livingArrangementText;
-    } else {
-        seniorSection.style.display = 'none';
-    }
-    
-    // Medical Information
-    const disease = document.getElementById('disease').value;
-    document.getElementById('review-disease').textContent = disease || '-';
-    document.getElementById('hiddenDisease').value = disease;
-    
-    const healthInsurance = document.getElementById('healthInsurance').value;
-    document.getElementById('review-healthInsurance').textContent = healthInsurance || '-';
-    document.getElementById('hiddenHealthInsurance').value = healthInsurance;
-    
-    const bloodType = document.getElementById('bloodType');
-    const bloodTypeText = bloodType.options[bloodType.selectedIndex].text;
-    document.getElementById('review-bloodType').textContent = bloodTypeText || '-';
-    document.getElementById('hiddenBloodType').value = bloodTypeText;
-    
-    const medications = document.getElementById('medications').value;
-    document.getElementById('review-medications').textContent = medications || '-';
-    document.getElementById('hiddenMedications').value = medications;
-    
-    // Enable/disable submit button based on consent
-    document.getElementById('submitButton').disabled = !document.getElementById('consent').checked;
-}
 
         // Helper function to format date
         function formatDate(dateString) {

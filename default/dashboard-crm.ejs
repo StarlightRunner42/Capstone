@@ -109,6 +109,12 @@
                                 </a>
                             </li>
                         </ul>
+                        <a href="map.php" class="map-button">
+                            <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2">
+                                <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4zM8 2v16M16 6v16"/>
+                            </svg>
+                            View Map
+                        </a>
                         <ul class="nav-right">
                             <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
@@ -396,27 +402,27 @@
                                                     </div>
                                                 </div>
                                 
-                                                <!-- Step 3: Special Categories Section -->
-                                                <div class="form-step" id="step3">
-                                                    <h2 class="section-title"><i class="fas fa-hand-holding-heart"></i> Special Categories</h2>
-                                                    
-                                                    <div class="form-group">
-                                                        <label class="form-label">Special Category (if applicable)</label>
-                                                        <div class="checkbox-group">
-                                                            <div class="checkbox-item">
-                                                                <input type="checkbox" id="pwd" name="status" value="pwd" onchange="togglePWDSection()">
-                                                                <label for="pwd">Person with Disability (PWD)</label>
-                                                            </div>
-                                                            <div class="checkbox-item">
-                                                                <input type="checkbox" id="senior" name="status" value="senior" onchange="toggleSeniorSection()">
-                                                                <label for="senior">Senior Citizen</label>
-                                                            </div>
-                                                            <div class="checkbox-item">
-                                                                <input type="checkbox" id="indigent" name="status" value="indigent">
-                                                                <label for="indigent">Both Pwd & Senior</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                               <!-- Step 3: Special Categories Section -->
+<div class="form-step" id="step3">
+    <h2 class="section-title"><i class="fas fa-hand-holding-heart"></i> Special Categories</h2>
+    
+    <div class="form-group">
+        <label class="form-label">Special Category (if applicable)</label>
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" id="pwd" name="status" value="pwd" onchange="handleSpecialCategoryChange(this)">
+                <label for="pwd">Person with Disability (PWD)</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="senior" name="status" value="senior" onchange="handleSpecialCategoryChange(this)">
+                <label for="senior">Senior Citizen</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="indigent" name="status" value="indigent" onchange="handleSpecialCategoryChange(this)">
+                <label for="indigent">Both Pwd & Senior</label>
+            </div>
+        </div>
+    </div>
                                 
                                                     <!-- PWD Specific Section -->
                                                     <div id="pwdSection" class="conditional-section">
@@ -538,183 +544,153 @@
                                                     </div>
                                                 </div>
                                 
-                                               <!-- Step 5: Review Information Section -->
-            <div class="form-step" id="step5">
-                <h2 class="section-title"><i class="fas fa-check-circle"></i> Review Your Information</h2>
-                
-                <div class="review-container">
-                    <!-- Personal Information Review -->
-                    <div class="review-section">
-                        <h3>Personal Information</h3>
-                        <div class="review-grid">
-                            <div class="review-item">
-                                <span class="review-label">Full Name:</span>
-                                <span class="review-value" id="review-fullName"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Date of Birth:</span>
-                                <span class="review-value" id="review-birthdate"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Age:</span>
-                                <span class="review-value" id="review-age"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Gender:</span>
-                                <span class="review-value" id="review-gender"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Barangay:</span>
-                                <span class="review-value" id="review-barangay"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Purok:</span>
-                                <span class="review-value" id="review-purok"></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Contact Information Review -->
-                    <div class="review-section">
-                        <h3>Contact Information</h3>
-                        <div class="review-grid">
-                            <div class="review-item">
-                                <span class="review-label">Mobile Number:</span>
-                                <span class="review-value" id="review-contactNumber"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Email Address:</span>
-                                <span class="review-value" id="review-email"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Emergency Contact:</span>
-                                <span class="review-value" id="review-emergencyContact"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Emergency Contact Name:</span>
-                                <span class="review-value" id="review-emergencyContactName"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Relationship:</span>
-                                <span class="review-value" id="review-relationship"></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Special Categories Review -->
-                    <div class="review-section" id="specialCategoriesReview">
-                        <h3>Special Categories</h3>
-                        <div class="review-grid">
-                            <div class="review-item">
-                                <span class="review-label">Special Status:</span>
-                                <span class="review-value" id="review-status"></span>
-                            </div>
-                        </div>
-                        
-                        <!-- PWD Review (will be shown if applicable) -->
-                        <div id="pwdReviewDetails" class="review-subsection">
-                            <h4>PWD Details</h4>
-                            <div class="review-grid">
-                                <div class="review-item">
-                                    <span class="review-label">PWD ID Number:</span>
-                                    <span class="review-value" id="review-pwdIdNumber"></span>
-                                </div>
-                                <div class="review-item">
-                                    <span class="review-label">Disability Type:</span>
-                                    <span class="review-value" id="review-disabilityType"></span>
-                                </div>
-                                <div class="review-item">
-                                    <span class="review-label">Accommodation Needs:</span>
-                                    <span class="review-value" id="review-accommodationNeeds"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Senior Citizen Review (will be shown if applicable) -->
-                        <div id="seniorReviewDetails" class="review-subsection">
-                            <h4>Senior Citizen Details</h4>
-                            <div class="review-grid">
-                                <div class="review-item">
-                                    <span class="review-label">Senior ID Number:</span>
-                                    <span class="review-value" id="review-seniorIdNumber"></span>
-                                </div>
-                                <div class="review-item">
-                                    <span class="review-label">Pensioner Status:</span>
-                                    <span class="review-value" id="review-pensioner"></span>
-                                </div>
-                                <div class="review-item">
-                                    <span class="review-label">Living Arrangement:</span>
-                                    <span class="review-value" id="review-livingArrangement"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Medical Information Review -->
-                    <div class="review-section">
-                        <h3>Medical Information</h3>
-                        <div class="review-grid">
-                            <div class="review-item">
-                                <span class="review-label">Medical Conditions:</span>
-                                <span class="review-value" id="review-disease"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Health Insurance:</span>
-                                <span class="review-value" id="review-healthInsurance"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Blood Type:</span>
-                                <span class="review-value" id="review-bloodType"></span>
-                            </div>
-                            <div class="review-item">
-                                <span class="review-label">Current Medications:</span>
-                                <span class="review-value" id="review-medications"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Hidden inputs for form submission -->
-                <input type="hidden" id="hiddenFirstName" name="hiddenFirstName">
-                <input type="hidden" id="hiddenLastName" name="hiddenLastName">
-                <input type="hidden" id="hiddenMiddleName" name="hiddenMiddleName">
-                <input type="hidden" id="hiddenBirthdate" name="hiddenBirthdate">
-                <input type="hidden" id="hiddenAge" name="hiddenAge">
-                <input type="hidden" id="hiddenGender" name="hiddenGender">
-                <input type="hidden" id="hiddenBarangay" name="hiddenBarangay">
-                <input type="hidden" id="hiddenPurok" name="hiddenPurok">
-                <input type="hidden" id="hiddenContactNumber" name="hiddenContactNumber">
-                <input type="hidden" id="hiddenEmail" name="hiddenEmail">
-                <input type="hidden" id="hiddenEmergencyContact" name="hiddenEmergencyContact">
-                <input type="hidden" id="hiddenEmergencyContactName" name="hiddenEmergencyContactName">
-                <input type="hidden" id="hiddenRelationship" name="hiddenRelationship">
-                <input type="hidden" id="hiddenStatus" name="hiddenStatus">
-                <input type="hidden" id="hiddenPwdIdNumber" name="hiddenPwdIdNumber">
-                <input type="hidden" id="hiddenDisabilityType" name="hiddenDisabilityType">
-                <input type="hidden" id="hiddenAccommodationNeeds" name="hiddenAccommodationNeeds">
-                <input type="hidden" id="hiddenSeniorIdNumber" name="hiddenSeniorIdNumber">
-                <input type="hidden" id="hiddenPensioner" name="hiddenPensioner">
-                <input type="hidden" id="hiddenLivingArrangement" name="hiddenLivingArrangement">
-                <input type="hidden" id="hiddenDisease" name="hiddenDisease">
-                <input type="hidden" id="hiddenHealthInsurance" name="hiddenHealthInsurance">
-                <input type="hidden" id="hiddenBloodType" name="hiddenBloodType">
-                <input type="hidden" id="hiddenMedications" name="hiddenMedications">
-                
-                <div class="form-group">
-                    <div class="checkbox-item consent-checkbox">
-                        <input type="checkbox" id="consent" name="consent" required>
-                        <label for="consent" class="required">I hereby certify that the information provided is true and correct to the best of my knowledge.</label>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(5)"><i class="fas fa-arrow-left"></i> Previous</button>
-                    <button type="submit" class="btn btn-success" id="submitButton" disabled>Submit Registration <i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+                                                <!-- Step 5: Review Information Section -->
+                                                <div class="form-step" id="step5">
+                                                    <h2 class="section-title"><i class="fas fa-check-circle"></i> Review Your Information</h2>
+                                                    
+                                                    <div class="review-container">
+                                                        <div class="review-section">
+                                                            <h3>Personal Information</h3>
+                                                            <div class="review-grid">
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Name:</span>
+                                                                    <span class="review-value" id="review-name">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Date of Birth:</span>
+                                                                    <span class="review-value" id="review-birthdate">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Age:</span>
+                                                                    <span class="review-value" id="review-age">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Gender:</span>
+                                                                    <span class="review-value" id="review-gender">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Barangay:</span>
+                                                                    <span class="review-value" id="review-barangay">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Purok:</span>
+                                                                    <span class="review-value" id="review-purok">-</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="review-section">
+                                                            <h3>Contact Information</h3>
+                                                            <div class="review-grid">
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Mobile Number:</span>
+                                                                    <span class="review-value" id="review-contactNumber">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Email Address:</span>
+                                                                    <span class="review-value" id="review-email">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Emergency Contact:</span>
+                                                                    <span class="review-value" id="review-emergencyContact">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Emergency Contact Name:</span>
+                                                                    <span class="review-value" id="review-emergencyContactName">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Relationship:</span>
+                                                                    <span class="review-value" id="review-relationship">-</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="review-section" id="review-special-section">
+                                                            <h3>Special Categories</h3>
+                                                            <div class="review-grid">
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Special Category:</span>
+                                                                    <span class="review-value" id="review-status">-</span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- PWD Review -->
+                                                            <div id="review-pwd-section" class="review-subsection">
+                                                                <h4>PWD Information</h4>
+                                                                <div class="review-grid">
+                                                                    <div class="review-item">
+                                                                        <span class="review-label">PWD ID Number:</span>
+                                                                        <span class="review-value" id="review-pwdIdNumber">-</span>
+                                                                    </div>
+                                                                    <div class="review-item">
+                                                                        <span class="review-label">Disability Type:</span>
+                                                                        <span class="review-value" id="review-disabilityType">-</span>
+                                                                    </div>
+                                                                    <div class="review-item">
+                                                                        <span class="review-label">Accommodation Needs:</span>
+                                                                        <span class="review-value" id="review-accommodationNeeds">-</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- Senior Citizen Review -->
+                                                            <div id="review-senior-section" class="review-subsection">
+                                                                <h4>Senior Citizen Information</h4>
+                                                                <div class="review-grid">
+                                                                    <div class="review-item">
+                                                                        <span class="review-label">Senior ID Number:</span>
+                                                                        <span class="review-value" id="review-seniorIdNumber">-</span>
+                                                                    </div>
+                                                                    <div class="review-item">
+                                                                        <span class="review-label">Pensioner Status:</span>
+                                                                        <span class="review-value" id="review-pensioner">-</span>
+                                                                    </div>
+                                                                    <div class="review-item">
+                                                                        <span class="review-label">Living Arrangement:</span>
+                                                                        <span class="review-value" id="review-livingArrangement">-</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="review-section">
+                                                            <h3>Medical Information</h3>
+                                                            <div class="review-grid">
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Medical Conditions:</span>
+                                                                    <span class="review-value" id="review-disease">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Health Insurance:</span>
+                                                                    <span class="review-value" id="review-healthInsurance">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Blood Type:</span>
+                                                                    <span class="review-value" id="review-bloodType">-</span>
+                                                                </div>
+                                                                <div class="review-item">
+                                                                    <span class="review-label">Current Medications:</span>
+                                                                    <span class="review-value" id="review-medications">-</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <div class="checkbox-item consent-checkbox">
+                                                            <input type="checkbox" id="consent" name="consent" required>
+                                                            <label for="consent" class="required">I hereby certify that the information provided is true and correct to the best of my knowledge.</label>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="buttons-container">
+                                                        <button type="button" class="btn btn-secondary" onclick="prevStep(5)"><i class="fas fa-arrow-left"></i> Previous</button>
+                                                        <button type="submit" class="btn btn-success" id="submitButton" disabled>Submit Registration <i class="fas fa-paper-plane"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                                      
 
                                                         
@@ -822,6 +798,32 @@
 
   gtag('config', 'UA-23581568-13');
 
+
+  function handleSpecialCategoryChange(checkbox) {
+    const checkboxes = document.querySelectorAll('input[name="status"]');
+    
+    if (checkbox.checked) {
+        // Disable all other checkboxes
+        checkboxes.forEach(cb => {
+            if (cb !== checkbox) {
+                cb.disabled = true;
+            }
+        });
+    } else {
+        // Enable all checkboxes when current one is unchecked
+        checkboxes.forEach(cb => {
+            cb.disabled = false;
+        });
+    }
+    
+    // Call your existing toggle functions if needed
+    if (checkbox.id === 'pwd') {
+        togglePWDSection();
+    } else if (checkbox.id === 'senior') {
+        toggleSeniorSection();
+    }
+    // Add any other specific functions you need to call
+}
 
 </script>
 </body>
