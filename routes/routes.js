@@ -27,6 +27,16 @@ router.get('/Analytics', requireAuth,(req, res) => {
     res.render('admin/admin_analytics');
 });
 
+router.get('/Senior-form', requireAuth,(req, res) => {
+    res.render('staff/staff_senior');
+});
+
+router.get('/Pwd-form', requireAuth,(req, res) => {
+    res.render('staff/staff_pwd');
+});
+
+
+
 
 router.post('/create-user',controller.createUser);
 router.post('/login',controller.login);
