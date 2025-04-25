@@ -324,18 +324,12 @@
                                     <ul class="pcoded-submenu">
                                         <li class="">
                                             <a href="/Index">
-                                                <span class="pcoded-mtext">Default</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/Map">
-                                                <span class="pcoded-mtext">Map</span>
+                                                <span class="">PWD TABLE</span>
                                             </a>
                                         </li>
                                         <li class="active">
                                             <a href="/Analytics">
-                                                <span class="pcoded-mtext">Analytics</span>
-                                                <span class="pcoded-badge label label-info ">NEW</span>
+                                                <span class="">SENIORS TABLE</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -348,68 +342,56 @@
                             <div class="main-body">
                                 <div class="page-wrapper">
 
-                                    <div class="container">
-                                        <div class="header">
-                                            <h1>Barangay and Purok Directory</h1>
-                                            <p class="subtitle">Comprehensive listing of all Barangays and their corresponding Puroks</p>
-                                        </div>
-                                    
-                                        <div class="controls">
-                                            <input type="text" class="search-bar" id="searchInput" placeholder="Search for Barangay or Purok...">
-                                            <select id="filterBarangay" class="custom-select">
-                                                <!-- Filter options will be populated dynamically -->
-                                            </select>
-                                        </div>
-                                    
+                                    <div class="dashboard-container">
+                                        <h1>Senior Citizens Statistics Dashboard</h1>
+                                        
                                         <div class="summary-stats">
                                             <div class="stat-card">
-                                                <i class="fas fa-wheelchair"></i>
-                                                <div class="stat-value" id="totalPWD">0</div>
-                                                <div class="stat-label">PWD Residents</div>
+                                                <h3>Total Barangays</h3>
+                                                <p id="total-barangays">0</p>
                                             </div>
                                             <div class="stat-card">
-                                                <i class="fas fa-user-friends"></i>
-                                                <div class="stat-value" id="totalSeniors">0</div>
-                                                <div class="stat-label">Senior Citizens</div>
+                                                <h3>Total Senior Citizens</h3>
+                                                <p id="total-seniors">0</p>
                                             </div>
                                             <div class="stat-card">
-                                                <i class="fas fa-map-marker-alt"></i>
-                                                <div class="stat-value" id="totalBarangays">0</div>
-                                                <div class="stat-label">Barangays</div>
+                                                <h3>Average per Barangay</h3>
+                                                <p id="avg-seniors">0</p>
                                             </div>
                                             <div class="stat-card">
-                                                <i class="fas fa-users"></i>
-                                                <div class="stat-value" id="totalPriority">0</div>
-                                                <div class="stat-label">Total Priority</div>
+                                                <h3>Highest Count</h3>
+                                                <p id="highest-count">0</p>
                                             </div>
                                         </div>
-                                    
-                                        <div class="table-container">
-                                            <table id="directoryTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Barangay</th>
-                                                        <th>Puroks</th>
-                                                        <th>PWD Count</th>
-                                                        <th>Senior Citizens</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- Table rows will be generated dynamically -->
-                                                </tbody>
-                                            </table>
+                                        
+                                        <div class="controls">
+                                            <input type="text" class="search-box" id="searchInput" placeholder="Search by barangay name...">
+                                            <div class="view-selector">
+                                                <button class="view-btn active" id="barangayView">Barangay View</button>
+                                                <button class="view-btn" id="purokView">Purok Details</button>
+                                            </div>
                                         </div>
-                                    
-                                        <div class="chart-container">
-                                            <canvas id="dashboardChart"></canvas>
-                                        </div>
-                                    
-                                        <div class="pagination" id="pagination">
-                                            <!-- Pagination will be generated dynamically if needed -->
-                                        </div>
+                                        
+                                        <table class="data-table" id="barangayTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Barangay</th>
+                                                    <th>Number of Puroks</th>
+                                                    <th>Senior Citizens</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="barangayTableBody"></tbody>
+                                        </table>
+                                        
+                                        <div class="chart-container" id="barangayChartContainer"></div>
+                                        
+                                        <div class="purok-chart-container" id="purokChartContainer"></div>
+                                        
+                                        <footer>
+                                            <p>Senior Citizens Statistics Dashboard | Data as of April 2025</p>
+                                        </footer>
                                     </div>
-
                                 
                                                 </div>
 
