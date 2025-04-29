@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="\assets\css\fill.css">
+    <title>Silay Housing Authority Office Information Form</title>
+</head>
+<body>
+<div class="container">
+    <h1 id="formTitle">SENIOR FORM</h1>
+        <form id="housingForm" action="" method="post" enctype="multipart/form-data">
+            <div class="progress-bar">
+                <div class="step active" onclick="showTab(0)"><span id="step1">PERSONAL INFORMATION</span></div>
+                <div class="step" onclick="showTab(1)"><span id="step2">FAMILY COMPOSITION</span></div>
+                <div class="step" onclick="showTab(2)"><span id="step3">ID'S</span></div>
+                <div class="step" onclick="showTab(3)"><span id="step4">EDUCATION / HR PROFILE</span></div>
+            </div>
+
+            <!-- Personal Information -->
+            <fieldset id="personalInfo" class="active">
+                <legend id="personalInfoLegend">Personal Information</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name" id="firstNameLabel">First Name</label>
+                        <input type="text" id="first_name" name="first_name" required placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="middle_name" id="middleNameLabel">Middle Name</label>
+                        <input type="text" id="middle_name" name="middle_name" placeholder="Middle Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name" id="lastNameLabel">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" required placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-row">
+    <!-- Barangay Dropdown -->
+    <div class="form-group">
+        <label for="barangay" id="barangayLabel">Barangay</label>
+        <select id="barangay" name="barangay" required onchange="updateFormFields()">
+            <option value="" disabled selected>Select Barangay</option>
+            <option value="1">Barangay 1</option>
+            <option value="2">Barangay 2</option>
+            <option value="3">Barangay 3</option>
+            <option value="4">Barangay 4</option>
+            <option value="5">Barangay 5</option>
+            <option value="6">Barangay Mambulac</option>
+            <option value="7">Barangay Guinhalaran</option>
+            <option value="8">Barangay E-Lopez</option>
+            <option value="9">Barangay Bagtic</option>
+            <option value="10">Barangay Balaring</option>
+            <option value="11">Barangay Hawaiian</option>
+            <option value="12">Barangay Patag</option>
+            <option value="13">Barangay Kapt. Ramon</option>
+            <option value="14">Barangay Guimbalaon</option>
+            <option value="15">Barangay Rizal</option>
+            <option value="16">Barangay Lantad</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="purok" id="purokLabel">Purok</label>
+        <select id="purok" name="purok" required>
+            <option value="" disabled selected>Select Purok</option>
+        </select>
+    </div>
+    </div>
+    
+    <div class="form-row">
+    <div class="form-group">
+        <label for="birthday" id="birthdayLabel">Birthday</label>
+        <input type="date" id="birthday" name="birthday" required onchange="calculateAge()">
+    </div>
+    <div class="form-group">
+        <label for="age" id="ageLabel">Age</label>
+        <input type="number" id="age" name="age" required placeholder="Age" readonly>
+    </div>
+</div>   
+
+<div class="form-group">
+    <label for="place_of_birth" id="placeOfBirthLabel">Place of Birth</label>
+    <input type="text" id="place_of_birth" name="place_of_birth" required placeholder="Place of Birth">
+</div>
+
+                    <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact" id="contactLabel">Contact Number</label>
+                        <input type="text" id="contact" name="contact" required placeholder="Contact Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" id="emailLabel">Email</label>
+                        <input type="text" id="email" name="email" required placeholder="example@gmail.com">
+                    </div>
+                </div>
+                    
+           
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="civil_status" id="civilStatusLabel">Civil Status</label>
+                        <select id="civil_status" name="civil_status" required onchange="toggleSpouseInput()">
+                            <option value="Single but Head of the Family">Single but Head of the Family</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="spouseGroup" style="display: none;">
+                        <label for="spouse_name" id="spouseNameLabel">Name of Spouse</label>
+                        <input type="text" id="spouse_name" name="spouse_name" placeholder="Name of Spouse">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset id="familyComposition">
+                <legend>Family Composition</legend>
+            
+                <!-- Father's Name -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fatherLastName">Father's Last Name</label>
+                        <input type="text" id="fatherLastName" name="fatherLastName" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fatherFirstName">Father's First Name</label>
+                        <input type="text" id="fatherFirstName" name="fatherFirstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fatherMiddleName">Father's Middle Name</label>
+                        <input type="text" id="fatherMiddleName" name="fatherMiddleName" placeholder="Middle Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fatherExtension">Extension (Jr/Sr)</label>
+                        <input type="text" id="fatherExtension" name="fatherExtension" placeholder="Extension (Jr, Sr)">
+                    </div>
+                </div>
+            
+                <!-- Mother's Maiden Name -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="motherLastName">Mother's Last Name</label>
+                        <input type="text" id="motherLastName" name="motherLastName" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="motherFirstName">Mother's First Name</label>
+                        <input type="text" id="motherFirstName" name="motherFirstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="motherMiddleName">Mother's Middle Name</label>
+                        <input type="text" id="motherMiddleName" name="motherMiddleName" placeholder="Middle Name">
+                    </div>
+                </div>
+            
+               <!-- Children Information -->
+<div class="form-row">
+    <legend>Child(ren) Information</legend>
+    
+    <div id="childrenContainer">
+        <div class="child-entry">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="childFullName[]" placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <label>Occupation</label>
+                    <input type="text" name="childOccupation[]" placeholder="Occupation">
+                </div>
+                <div class="form-group">
+                    <label>Income</label>
+                    <input type="number" name="childIncome[]" placeholder="Income">
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="childAge[]" placeholder="Age">
+                </div>
+                <div class="form-group">
+                    <label>Working/Not Working</label>
+                    <select name="childWorkingStatus[]">
+                        <option value="">Select</option>
+                        <option value="working">Working</option>
+                        <option value="not_working">Not Working</option>
+                    </select>
+                </div>
+                <button type="button" class="delete-child" style="display: none;">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+    <button type="button" id="addChild" class="add-child-btn">➕ Add Another Child</button>
+</div>
+
+    </fieldset>
+            
+
+
+
+          <!-- ID'S -->
+<fieldset id="requiredDocuments" class="hidden">
+    <legend id="requiredDocumentsLegend">ID'S</legend>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="osca_id" id="oscaIdLabel">OSCA ID No</label>
+            <input type="number" id="osca_id" name="osca_id" required>
+        </div>
+        <div class="form-group">
+            <label for="gsis_sss_no" id="gsisSssLabel">GSIS/SSS No</label>
+            <input type="number" id="gsis_sss_no" name="gsis_sss_no" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="tin_no" id="tinNoLabel">TIN No</label>
+            <input type="number" id="tin_no" name="tin_no" required>
+        </div>
+        <div class="form-group">
+            <label for="philhealth_no" id="philhealthLabel">Philhealth No</label>
+            <input type="number" id="philhealth_no" name="philhealth_no" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="sc_association_id" id="scAssociationLabel">SC Association / Org ID No</label>
+            <input type="number" id="sc_association_id" name="sc_association_id" required>
+        </div>
+        <div class="form-group">
+            <label for="other_govt_id" id="otherGovtLabel">Other Gov't ID</label>
+            <input type="number" id="other_govt_id" name="other_govt_id" required>
+        </div>
+    </div>
+</fieldset>
+
+
+  <!-- ID'S -->
+  <fieldset id="requiredDocuments" class="hidden">
+    <legend id="requiredDocumentsLegend">ID'S</legend>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="osca_id" id="oscaIdLabel">OSCA ID No</label>
+            <input type="number" id="osca_id" name="osca_id" required>
+        </div>
+        <div class="form-group">
+            <label for="gsis_sss_no" id="gsisSssLabel">GSIS/SSS No</label>
+            <input type="number" id="gsis_sss_no" name="gsis_sss_no" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="tin_no" id="tinNoLabel">TIN No</label>
+            <input type="number" id="tin_no" name="tin_no" required>
+        </div>
+        <div class="form-group">
+            <label for="philhealth_no" id="philhealthLabel">Philhealth No</label>
+            <input type="number" id="philhealth_no" name="philhealth_no" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="sc_association_id" id="scAssociationLabel">SC Association / Org ID No</label>
+            <input type="number" id="sc_association_id" name="sc_association_id" required>
+        </div>
+        <div class="form-group">
+            <label for="other_govt_id" id="otherGovtLabel">Other Gov't ID</label>
+            <input type="number" id="other_govt_id" name="other_govt_id" required>
+        </div>
+    </div>
+</fieldset>
+
+<div class="navigation">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)">BACK</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)">NEXT</button>
+    </div>
+</form>
+    
+    
+<script type="text/javascript" src="\assets\js\add.js"></script>
+<script type="text/javascript" src="\assets\js\fill.js"></script>
+<script> 
+document.addEventListener('DOMContentLoaded', function() {
+    const childrenContainer = document.getElementById('childrenContainer');
+    const addChildButton = document.getElementById('addChild');
+    
+    // Add new child entry
+    addChildButton.addEventListener('click', function() {
+        const childEntry = document.querySelector('.child-entry').cloneNode(true);
+        const inputs = childEntry.querySelectorAll('input, select');
+        
+        // Clear all input values in the cloned entry
+        inputs.forEach(input => {
+            if (input.type !== 'button') {
+                input.value = '';
+            }
+        });
+        
+        // Show the delete button for all entries except the first one
+        const deleteButtons = childrenContainer.querySelectorAll('.delete-child');
+        if (deleteButtons.length > 0) {
+            deleteButtons[0].style.display = 'inline-block';
+        }
+        
+        // Show delete button for the new entry
+        childEntry.querySelector('.delete-child').style.display = 'inline-block';
+        
+        childrenContainer.appendChild(childEntry);
+    });
+    
+    // Delete child entry
+    childrenContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-child')) {
+            const childEntries = childrenContainer.querySelectorAll('.child-entry');
+            if (childEntries.length > 1) {
+                e.target.closest('.child-entry').remove();
+                
+                // Hide delete button if only one entry remains
+                if (childrenContainer.querySelectorAll('.child-entry').length === 1) {
+                    childrenContainer.querySelector('.delete-child').style.display = 'none';
+                }
+            }
+        }
+    });
+});
+</script>    
+</body>
+</html>
