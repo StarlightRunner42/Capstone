@@ -1,8 +1,3 @@
-document.getElementById("acceptTerms").addEventListener("change", function() {
-    // Automatically select "Yes" when the checkbox is checked
-    document.getElementById("yesOption").checked = this.checked;
-});
-
 
 function calculateAge() {
     const birthdayInput = document.getElementById('birthday').value;
@@ -64,6 +59,50 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('barangay').value) {
         updatePurokOptions();
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const childrenContainer = document.getElementById('childrenContainer');
+  const addChildButton = document.getElementById('addChild');
+  
+  // Add new child entry
+  addChildButton.addEventListener('click', function() {
+      const childEntry = document.querySelector('.child-entry').cloneNode(true);
+      const inputs = childEntry.querySelectorAll('input, select');
+      
+      // Clear all input values in the cloned entry
+      inputs.forEach(input => {
+          if (input.type !== 'button') {
+              input.value = '';
+          }
+      });
+      
+      // Show the delete button for all entries except the first one
+      const deleteButtons = childrenContainer.querySelectorAll('.delete-child');
+      if (deleteButtons.length > 0) {
+          deleteButtons[0].style.display = 'inline-block';
+      }
+      
+      // Show delete button for the new entry
+      childEntry.querySelector('.delete-child').style.display = 'inline-block';
+      
+      childrenContainer.appendChild(childEntry);
+  });
+  
+  // Delete child entry
+  childrenContainer.addEventListener('click', function(e) {
+      if (e.target.classList.contains('delete-child')) {
+          const childEntries = childrenContainer.querySelectorAll('.child-entry');
+          if (childEntries.length > 1) {
+              e.target.closest('.child-entry').remove();
+              
+              // Hide delete button if only one entry remains
+              if (childrenContainer.querySelectorAll('.child-entry').length === 1) {
+                  childrenContainer.querySelector('.delete-child').style.display = 'none';
+              }
+          }
+      }
+  });
 });
     
 

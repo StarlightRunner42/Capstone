@@ -31,7 +31,7 @@ router.get('/Senior-form', requireAuth,(req, res) => {
     res.render('staff/staff_senior');
 });
 
-router.get('/add_senior', requireAuth,(req, res) => {
+router.get('/add_senior',(req, res) => {
     res.render('staff/staff_addSenior');
 });
 
