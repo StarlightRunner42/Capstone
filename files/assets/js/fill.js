@@ -21,166 +21,163 @@ function calculateAge() {
     document.getElementById('age').value = age;
 }
 
-// Puroks and HOA names for each Barangay
-const puroksAndHOA = {
-        1: { 
-            puroks: ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"], 
-            hoas: ["Lourdes Hiponia Lamis", "Joshua Hiponia Lamis", "Cheryl Mae Valero Lamis"]
-        },
-        2: { 
-            puroks: ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"], 
-            hoas: ["Barangay 2 HOA", "Barangay 2A HOA"]
-        },
-        3: { 
-            puroks: ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"], 
-            hoas: ["Barangay 3 HOA"]
-        },
-        4: { 
-            puroks: ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"], 
-            hoas: ["Barangay 4 HOA", "Barangay 4A HOA"]
-        },
-        5: { 
-            puroks: ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"], 
-            hoas: ["Barangay 5 HOA"]
-        },
-        6: { 
-            puroks: ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"], 
-            hoas: ["Barangay Mambulac HOA", "Barangay Mambulac A HOA"]
-        },
-        7: { 
-            puroks: ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"], 
-            hoas: ["Barangay Guinhalaran HOA"]
-        },
-        8: { 
-            puroks: ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"], 
-            hoas: ["Barangay E-Lopez HOA"]
-        },
-        9: { 
-            puroks: ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"], 
-            hoas: ["Barangay Bagtic HOA", "Barangay Bagtic A HOA"]
-        },
-        10: { 
-            puroks: ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"], 
-            hoas: ["Barangay Balaring HOA"]
-        },
-        11: { 
-            puroks: ["Colisap", "Phison", "balas", "Lunot", "Sandiego"], 
-            hoas: ["Barangay Hawaiian HOA"]
-        },
-        12: { 
-            puroks: ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"], 
-            hoas: ["Barangay Patag HOA"]
-        },
-        13: { 
-            puroks: ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"], 
-            hoas: ["Barangay Kapt. Ramon HOA"]
-        },
-        14: { 
-            puroks: ["Proper", "New Site", "Bactic Uno", "Kalbaryo", "Defuigo"], 
-            hoas: ["Barangay Guimbalaon HOA", "Barangay Guimbalaon A HOA"]
-        },
-        15: { 
-            puroks: ["Matagoy", "Paradise", "Kalubihan", "Baryo Rizal", "Hda Makina"], 
-            hoas: ["Barangay Rizal HOA"]
-        },
-        16: { 
-            puroks: ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"], 
-            hoas: ["Barangay Lantad HOA"]
-        }
-    };
+const puroks = {
+    "1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
+    "2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
+    "3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
+    "4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
+    "5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
+    "6": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
+    "7": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
+    "8": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
+    "9": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
+    "10": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
+    "11": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
+    "12": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
+    "13": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
+    "14": ["kalinti", "kadipota", "yuta"],
+    "15": ["kalinti", "kadipota", "yuta"],
+    "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
+};
 
-    // Function to update Purok options and HOA name based on selected Barangay
-    function updateFormFields() {
-        var barangay = document.getElementById("barangay").value; // Get selected barangay
-        var purokSelect = document.getElementById("purok"); // Get the purok select element
-       
-        // Clear existing options
-        purokSelect.innerHTML = "<option value='' disabled selected>Select Purok</option>";
-
-        // Check if barangay is selected
-        if (barangay && puroksAndHOA[barangay]) {
-            // Populate Purok dropdown
-            puroksAndHOA[barangay].puroks.forEach(function(purok) {
-                var option = document.createElement("option");
-                option.value = purok;
-                option.textContent = purok;
-                purokSelect.appendChild(option);
-            });
-
-        }
-    }
+function updatePurokOptions() {
+    const barangay = document.getElementById('barangay').value;
+    const purokSelect = document.getElementById('purok');
     
-function toggleHouseOwnerFields() {
-const houseTitleSelect = document.getElementById('house_title');
-const houseOwnerContainer = document.getElementById('houseOwnerContainer');
-houseOwnerContainer.style.display = houseTitleSelect.value === 'Yes' ? 'block' : 'none';
-}
+    // Clear existing options
+    purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
 
-function toggleLandOwnerFields() {
-const landTitleSelect = document.getElementById('land_title');
-const landOwnerContainer = document.getElementById('landOwnerContainer');
-landOwnerContainer.style.display = landTitleSelect.value === 'Yes' ? 'block' : 'none';
-}
-
-// Initialize the visibility of fields based on current selections
-document.addEventListener('DOMContentLoaded', () => {
-toggleHouseOwnerFields();
-toggleLandOwnerFields();
-});
-
-// JavaScript to toggle the 'Other' qualification input field
-function toggleOtherQualificationInput() {
-    const qualification = document.getElementById('qualification').value;
-    const otherQualificationRow = document.getElementById('otherQualificationRow');
-    if (qualification === 'Other') {
-        otherQualificationRow.style.display = 'block';
-    } else {
-        otherQualificationRow.style.display = 'none';
-    }
-}
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const childrenContainer = document.getElementById('childrenContainer');
-    const addChildButton = document.getElementById('addChild');
-    
-    // Add new child entry
-    addChildButton.addEventListener('click', function() {
-        const childEntry = document.querySelector('.child-entry').cloneNode(true);
-        const inputs = childEntry.querySelectorAll('input, select');
-        
-        // Clear all input values in the cloned entry
-        inputs.forEach(input => {
-            if (input.type !== 'button') {
-                input.value = '';
-            }
+    // Check if the selected barangay exists in our puroks object
+    if (puroks[barangay]) {
+        // Add each purok as an option
+        puroks[barangay].forEach(purok => {
+            const option = document.createElement('option');
+            option.value = purok;
+            option.textContent = purok;
+            purokSelect.appendChild(option);
         });
-        
-        // Show the delete button for all entries except the first one
-        const deleteButtons = childrenContainer.querySelectorAll('.delete-child');
-        if (deleteButtons.length > 0) {
-            deleteButtons[0].style.display = 'inline-block';
-        }
-        
-        // Show delete button for the new entry
-        childEntry.querySelector('.delete-child').style.display = 'inline-block';
-        
-        childrenContainer.appendChild(childEntry);
-    });
-    
-    // Delete child entry
-    childrenContainer.addEventListener('click', function(e) {
-        if (e.target.classList.contains('delete-child')) {
-            const childEntries = childrenContainer.querySelectorAll('.child-entry');
-            if (childEntries.length > 1) {
-                e.target.closest('.child-entry').remove();
-                
-                // Hide delete button if only one entry remains
-                if (childrenContainer.querySelectorAll('.child-entry').length === 1) {
-                    childrenContainer.querySelector('.delete-child').style.display = 'none';
-                }
-            }
-        }
-    });
+    }
+}
+
+// Initialize purok options if a barangay is already selected (useful if page reloads)
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('barangay').value) {
+        updatePurokOptions();
+    }
 });
+    
+
+function showPreview(inputId, previewId) {
+    var input = document.getElementById(inputId);
+    var preview = document.getElementById(previewId);
+  
+    // Ensure a file was selected
+    if (input.files && input.files[0]) {
+      var file = input.files[0];
+  
+      // Check if the file is an image
+      if (file.type.match("image.*")) {
+        var reader = new FileReader();
+  
+        // When the file is loaded, set it as the image source
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = "block"; // Make the image visible
+        };
+  
+        reader.readAsDataURL(file); // Read the file as a Data URL
+      } else {
+        alert("Please upload a valid image file (e.g., .jpg, .png).");
+        input.value = ""; // Reset the file input if not an image
+      }
+    }
+  }
+  
+  function showTab(n) {
+    // Function to display a specific tab of the form
+    let x = document.getElementsByTagName("fieldset");
+    x[n].style.display = "block";
+  }
+  
+  function nextPrev(n) {
+    // Function to navigate through the steps of the form
+    let x = document.getElementsByTagName("fieldset");
+    x[0].style.display = "none";
+    x[1].style.display = "none";
+    x[2].style.display = "none";
+    x[3].style.display = "none";
+  
+    if (n === 1) {
+      x[currentTab].style.display = "block";
+    }
+  }
+  
+  function toggleSpouseInput() {
+    // Function to show/hide spouse name input based on civil status
+    let civilStatus = document.getElementById("civil_status").value;
+    let spouseGroup = document.getElementById("spouseGroup");
+    spouseGroup.style.display = civilStatus === "Married" ? "block" : "none";
+  }
+  
+  function showCheckmark(groupId) {
+    // Function to show checkmark when a file is selected
+    document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
+  }
+  
+  function toggleSpouseInput() {
+    var civilStatus = document.getElementById("civil_status").value;
+    var spouseGroup = document.getElementById("spouseGroup");
+    if (civilStatus === "Married") {
+      spouseGroup.style.display = "block";
+    } else {
+      spouseGroup.style.display = "none";
+    }
+  }
+  
+  function showCheckmark(groupId) {
+    var group = document.getElementById(groupId);
+    group.classList.add("checked");
+  }
+  
+  var currentTab = 0;
+  showTab(currentTab);
+  
+  function showTab(n) {
+    var x = document.getElementsByTagName("fieldset");
+    x[n].style.display = "block";
+    if (n == 0) {
+      document.getElementById("prevBtn").style.display = "none";
+    } else {
+      document.getElementById("prevBtn").style.display = "inline";
+    }
+    if (n == x.length - 1) {
+      document.getElementById("nextBtn").innerHTML = "Submit";
+      document.getElementById("nextBtn").setAttribute("type", "submit");
+    } else {
+      document.getElementById("nextBtn").innerHTML = "Next";
+      document.getElementById("nextBtn").removeAttribute("type");
+    }
+    fixStepIndicator(n);
+  }
+  
+  function nextPrev(n) {
+    var x = document.getElementsByTagName("fieldset");
+    x[currentTab].style.display = "none";
+    currentTab = currentTab + n;
+    if (currentTab >= x.length) {
+      document.getElementById("housingForm").submit();
+      return false;
+    }
+    showTab(currentTab);
+  }
+  
+  function fixStepIndicator(n) {
+    var i,
+      x = document.getElementsByClassName("step");
+    for (i = 0; i < x.length; i++) {
+      x[i].className = x[i].className.replace(" active", "");
+    }
+    x[n].className += " active";
+  }
+
+
