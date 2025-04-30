@@ -4,7 +4,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
-const { User,Resident } = require("../model/schema");
+const { User,Senior } = require("../model/schema");
 
 exports.createUser = async (req, res) => {
     try {
