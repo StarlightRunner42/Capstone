@@ -34,38 +34,37 @@
                         <input type="text" id="last_name" name="last_name" required placeholder="Last Name">
                     </div>
                 </div>
-                <div class="form-row">
-    <!-- Barangay Dropdown -->
-    <div class="form-group">
-        <label for="barangay" id="barangayLabel">Barangay</label>
-        <select id="barangay" name="barangay" required onchange="updateFormFields()">
-            <option value="" disabled selected>Select Barangay</option>
-            <option value="1">Barangay 1</option>
-            <option value="2">Barangay 2</option>
-            <option value="3">Barangay 3</option>
-            <option value="4">Barangay 4</option>
-            <option value="5">Barangay 5</option>
-            <option value="6">Barangay Mambulac</option>
-            <option value="7">Barangay Guinhalaran</option>
-            <option value="8">Barangay E-Lopez</option>
-            <option value="9">Barangay Bagtic</option>
-            <option value="10">Barangay Balaring</option>
-            <option value="11">Barangay Hawaiian</option>
-            <option value="12">Barangay Patag</option>
-            <option value="13">Barangay Kapt. Ramon</option>
-            <option value="14">Barangay Guimbalaon</option>
-            <option value="15">Barangay Rizal</option>
-            <option value="16">Barangay Lantad</option>
-        </select>
-    </div>
 
-    <div class="form-group">
-        <label for="purok" id="purokLabel">Purok</label>
-        <select id="purok" name="purok" required>
-            <option value="" disabled selected>Select Purok</option>
-        </select>
-    </div>
-    </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="barangay" id="barangayLabel">Barangay:</label>
+                        <select id="barangay" name="barangay" required onchange="updatePurokOptions()">
+                            <option value="" disabled selected>Select Barangay</option>
+                            <option value="1">Barangay 1</option>
+                            <option value="2">Barangay 2</option>
+                            <option value="3">Barangay 3</option>
+                            <option value="4">Barangay 4</option>
+                            <option value="5">Barangay 5</option>
+                            <option value="6">Barangay Mambulac</option>
+                            <option value="7">Barangay Guinhalaran</option>
+                            <option value="8">Barangay E-Lopez</option>
+                            <option value="9">Barangay Bagtic</option>
+                            <option value="10">Barangay Balaring</option>
+                            <option value="11">Barangay Hawaiian</option>
+                            <option value="12">Barangay Patag</option>
+                            <option value="13">Barangay Kapt.ramon</option>
+                            <option value="14">Barangay Guimbalaon</option>
+                            <option value="15">Barangay Rizal</option>
+                            <option value="16">Barangay Lantad</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="purok" id="purokLabel">Purok:</label>
+                        <select id="purok" name="purok" required>
+                            <option value="" disabled selected>Select Purok</option>
+                        </select>
+                    </div>
+                </div>
     
     <div class="form-row">
     <div class="form-group">
@@ -277,8 +276,7 @@
     </div>
 </form>
     
-    
-<script type="text/javascript" src="\assets\js\add.js"></script>
+
 <script type="text/javascript" src="\assets\js\fill.js"></script>
 <script> 
 document.addEventListener('DOMContentLoaded', function() {
