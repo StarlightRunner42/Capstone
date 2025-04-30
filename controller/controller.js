@@ -132,70 +132,46 @@ exports.logout = (req, res) => {
 
 
 exports.createResident = async (req, res) => {
-  try {
-    const formData = req.body;
+  const {
+    // Personal Information
+    first_name,
+    middle_name,
+    last_name,
+    barangay,
+    purok,
+    birthday,
+    age,
+    place_of_birth,
+    contact,
+    email,
+    civil_status,
+    spouse_name,
     
-    // Transform the form data to match our schema
-    const residentData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      middleName: formData.middleName || undefined,
-      birthdate: new Date(formData.birthdate),
-      age: parseInt(formData.age),
-      gender: formData.gender,
-      barangay: formData.barangay,
-      purok: formData.purok,
-      
-      // Contact Information
-      contactNumber: formData.contactNumber || undefined,
-      email: formData.email || undefined,
-      emergencyContact: formData.emergencyContact || undefined,
-      emergencyContactName: formData.emergencyContactName || undefined,
-      relationship: formData.relationship || undefined,
-      
-      // Special Categories
-      status: getStatus(formData),
-      pwdInfo: formData.pwd ? {
-        idNumber: formData.pwdIdNumber || undefined,
-        disabilityType: formData.disabilityType || undefined,
-        accommodationNeeds: formData.accommodationNeeds || undefined
-      } : undefined,
-      seniorInfo: formData.senior ? {
-        idNumber: formData.seniorIdNumber || undefined,
-        pensioner: formData.pensioner || undefined,
-        livingArrangement: formData.livingArrangement || undefined
-      } : undefined,
-      
-      // Medical Information
-      medicalConditions: formData.disease || undefined,
-      healthInsurance: formData.healthInsurance || undefined,
-      bloodType: formData.bloodType || undefined,
-      medications: formData.medications || undefined
-    };
-
-    // Create new resident
-    const newResident = new Resident(residentData);
-    await newResident.save();
-
-    res.status(201).json({
-      success: true,
-      message: 'Resident registered successfully',
-      data: newResident
-    });
-  } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error registering resident',
-      error: error.message
-    });
-  }
+    // Father's Information
+    fatherLastName,
+    fatherFirstName,
+    fatherMiddleName,
+    fatherExtension,
+    
+    // Mother's Information
+    motherLastName,
+    motherFirstName,
+    motherMiddleName,
+    
+    // Children Information (arrays since there can be multiple)
+    childFullName,
+    childOccupation,
+    childIncome,
+    childAge,
+    childWorkingStatus,
+    
+    // ID Information
+    osca_id,
+    gsis_sss_no,
+    tin_no,
+    philhealth_no,
+    sc_association_id,
+    other_govt_id
+  } = req.body;
   };
 
-  function getStatus(formData) {
-    if (formData.indigent) return 'indigent';
-    if (formData.pwd && formData.senior) return 'indigent';
-    if (formData.pwd) return 'pwd';
-    if (formData.senior) return 'senior';
-    return null;
-  }
