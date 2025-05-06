@@ -219,4 +219,125 @@ function showPreview(inputId, previewId) {
     x[n].className += " active";
   }
 
+// Function to toggle income input visibility
+function toggleIncome(selectElement) {
+  const formRow = selectElement.closest('.form-row');
+  const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
+  if (selectElement.value === 'working') {
+      incomeInput.style.display = 'block';
+  } else {
+      incomeInput.style.display = 'none';
+      incomeInput.value = ''; // clear value if hidden
+  }
+}
 
+// Attach change listener to existing and future select elements
+function attachWorkingStatusListener(container) {
+  const selects = container.querySelectorAll('select[name="childWorkingStatus[]"]');
+  selects.forEach(select => {
+      select.addEventListener('change', function() {
+          toggleIncome(this);
+      });
+  });
+}
+
+// Initial setup for existing elements
+document.addEventListener('DOMContentLoaded', function() {
+  const childrenContainer = document.getElementById('childrenContainer');
+  attachWorkingStatusListener(childrenContainer);
+
+  // Add new child entry
+  document.getElementById('addChild').addEventListener('click', function() {
+      const childEntry = childrenContainer.querySelector('.child-entry');
+      const newChild = childEntry.cloneNode(true);
+
+      // Clear input values
+      newChild.querySelectorAll('input').forEach(input => {
+          input.value = '';
+          input.style.display = (input.name === 'childIncome[]') ? 'none' : 'block'; // hide income by default
+      });
+      newChild.querySelector('select').value = '';
+      newChild.querySelector('.delete-child').style.display = 'inline-block';
+
+      childrenContainer.appendChild(newChild);
+      attachWorkingStatusListener(newChild);
+  });
+
+  // Delete child entry
+  childrenContainer.addEventListener('click', function(e) {
+      if (e.target.classList.contains('delete-child')) {
+          e.target.closest('.child-entry').remove();
+      }
+  });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const contactsContainer = document.getElementById('contactsContainer');
+  const addContactButton = document.getElementById('addContact');
+  let contactCounter = 1;
+
+  addContactButton.addEventListener('click', function() {
+      contactCounter++;
+      const newContact = document.createElement('div');
+      newContact.className = 'contact-entry';
+      newContact.dataset.contactId = contactCounter;
+      
+      newContact.innerHTML = `
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Contact Type</label>
+                  <select class="contact-type" name="contacts[${contactCounter}][type]" required>
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                      <option value="emergency">Emergency</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="contacts[${contactCounter}][name]" required>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Relationship</label>
+                  <input type="text" name="contacts[${contactCounter}][relationship]" required>
+              </div>
+              <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" name="contacts[${contactCounter}][phone]" required>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" name="contacts[${contactCounter}][email]">
+              </div>
+              <div class="form-group">
+                  <button type="button" class="remove-contact">Remove</button>
+              </div>
+          </div>
+      `;
+      
+      contactsContainer.appendChild(newContact);
+      
+      // Add event listener to the new remove button
+      newContact.querySelector('.remove-contact').addEventListener('click', function() {
+          contactsContainer.removeChild(newContact);
+      });
+  });
+  
+  // Add event listeners to existing remove buttons (if any)
+  document.querySelectorAll('.remove-contact').forEach(button => {
+      button.addEventListener('click', function() {
+          if (!button.disabled) {
+              const contactEntry = button.closest('.contact-entry');
+              contactsContainer.removeChild(contactEntry);
+          }
+      });
+  });
+});

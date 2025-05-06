@@ -1,5 +1,5 @@
-   // Data structure with senior citizens count
-   const barangayData = {
+// Data structure with senior citizens count
+const barangayData = {
     1: { 
         name: "Barangay 1",
         puroks: ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"], 
@@ -82,6 +82,11 @@
     }
 };
 
+// Pagination variables
+let currentPage = 1;
+let itemsPerPage = 5;
+let filteredBarangays = [];
+
 // Calculate purok senior counts (distributing evenly among puroks with remainders going to first puroks)
 function calculatePurokSeniorCounts(barangayId) {
     const data = barangayData[barangayId];
@@ -128,70 +133,99 @@ function calculateSummaryStats() {
     };
 }
 
-// Populate barangay table
-function populateBarangayTable(searchTerm = '') {
+// Filter barangays based on search term
+function filterBarangays(searchTerm = '') {
+    filteredBarangays = Object.entries(barangayData)
+        .filter(([id, data]) => 
+            data.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        .sort((a, b) => b[1].seniorCount - a[1].seniorCount);
+    
+    // Reset to first page when filtering
+    currentPage = 1;
+    updatePagination();
+}
+
+// Update pagination controls
+function updatePagination() {
+    const totalPages = Math.ceil(filteredBarangays.length / itemsPerPage);
+    const pageInfo = document.getElementById('pageInfo');
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+}
+
+// Get current page data
+function getCurrentPageData() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredBarangays.slice(startIndex, endIndex);
+}
+
+// Populate barangay table with pagination
+function populateBarangayTable() {
     const tableBody = document.getElementById('barangayTableBody');
     tableBody.innerHTML = '';
     
-    Object.entries(barangayData)
-        .filter(([id, data]) => 
-            data.name.toLowerCase().includes(searchTerm.toLowerCase()))
-        .sort((a, b) => b[1].seniorCount - a[1].seniorCount) // Sort by senior count (highest first)
-        .forEach(([id, data]) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${data.name}</td>
-                <td>${data.puroks.length}</td>
-                <td>${data.seniorCount}</td>
-                <td>
-                    <button class="expand-btn" data-id="${id}">View Puroks</button>
-                </td>
-            `;
-            tableBody.appendChild(row);
-            
-            // Create purok details row (hidden by default)
-            const purokRow = document.createElement('tr');
-            purokRow.className = 'purok-row';
-            purokRow.id = `purok-details-${id}`;
-            
-            // Calculate purok-level data
-            const purokData = calculatePurokSeniorCounts(id);
-            
-            // Create purok table
-            let purokTableHTML = `
-                <td colspan="4">
-                    <h4>Purok Details for ${data.name}</h4>
-                    <table class="purok-table">
-                        <thead>
-                            <tr>
-                                <th>Purok Name</th>
-                                <th>Senior Citizens</th>
-                                <th>% of Barangay Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            purokData.forEach(purok => {
-                const percentage = ((purok.count / data.seniorCount) * 100).toFixed(1);
-                purokTableHTML += `
-                    <tr>
-                        <td>${purok.name}</td>
-                        <td>${purok.count}</td>
-                        <td>${percentage}%</td>
-                    </tr>
-                `;
-            });
-            
+    const currentData = getCurrentPageData();
+    
+    currentData.forEach(([id, data]) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${data.name}</td>
+            <td>${data.puroks.length}</td>
+            <td>${data.seniorCount}</td>
+            <td>
+                <button class="expand-btn" data-id="${id}">View Puroks</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+        
+        // Create purok details row (hidden by default)
+        const purokRow = document.createElement('tr');
+        purokRow.className = 'purok-row';
+        purokRow.id = `purok-details-${id}`;
+        
+        // Calculate purok-level data
+        const purokData = calculatePurokSeniorCounts(id);
+        
+        // Create purok table
+        let purokTableHTML = `
+            <td colspan="4">
+                <h4>Purok Details for ${data.name}</h4>
+                <table class="purok-table">
+                    <thead>
+                        <tr>
+                            <th>Purok Name</th>
+                            <th>Senior Citizens</th>
+                            <th>% of Barangay Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        purokData.forEach(purok => {
+            const percentage = ((purok.count / data.seniorCount) * 100).toFixed(1);
             purokTableHTML += `
-                        </tbody>
-                    </table>
-                </td>
+                <tr>
+                    <td>${purok.name}</td>
+                    <td>${purok.count}</td>
+                    <td>${percentage}%</td>
+                </tr>
             `;
-            
-            purokRow.innerHTML = purokTableHTML;
-            tableBody.appendChild(purokRow);
         });
+        
+        purokTableHTML += `
+                    </tbody>
+                </table>
+            </td>
+        `;
+        
+        purokRow.innerHTML = purokTableHTML;
+        tableBody.appendChild(purokRow);
+    });
     
     // Add event listeners to expand buttons
     document.querySelectorAll('.expand-btn').forEach(button => {
@@ -380,6 +414,9 @@ function initDashboard() {
     // Calculate stats
     calculateSummaryStats();
     
+    // Initialize filtered barangays
+    filterBarangays();
+    
     // Populate table
     populateBarangayTable();
     
@@ -388,7 +425,34 @@ function initDashboard() {
     
     // Add search functionality
     document.getElementById('searchInput').addEventListener('input', function() {
-        populateBarangayTable(this.value);
+        filterBarangays(this.value);
+        populateBarangayTable();
+    });
+    
+    // Add pagination event listeners
+    document.getElementById('prevPage').addEventListener('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            populateBarangayTable();
+            updatePagination();
+        }
+    });
+    
+    document.getElementById('nextPage').addEventListener('click', function() {
+        const totalPages = Math.ceil(filteredBarangays.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            populateBarangayTable();
+            updatePagination();
+        }
+    });
+    
+    // Add items per page change listener
+    document.getElementById('itemsPerPage').addEventListener('change', function() {
+        itemsPerPage = parseInt(this.value);
+        currentPage = 1;
+        populateBarangayTable();
+        updatePagination();
     });
     
     // Add view toggle functionality

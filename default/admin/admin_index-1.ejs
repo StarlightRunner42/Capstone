@@ -332,6 +332,11 @@
                                                 <span class="">SENIORS TABLE</span>
                                             </a>
                                         </li>
+                                        <li class="">
+                                            <a href="/Admin">
+                                                <span class="">ADMIN</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -343,7 +348,7 @@
                                 <div class="page-wrapper">
 
                                     <div class="dashboard-container">
-                                        <!-- <h1>Pwd Citizens Statistics Dashboard</h1> -->
+                                        <!-- <h1>Senior Citizens Dashboard</h1> -->
                                         
                                         <div class="summary-stats">
                                             <div class="stat-card">
@@ -372,17 +377,37 @@
                                             </div>
                                         </div>
                                         
-                                        <table class="data-table" id="barangayTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Barangay</th>
-                                                    <th>Number of Puroks</th>
-                                                    <th>Senior Citizens</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="barangayTableBody"></tbody>
-                                        </table>
+                                        <div class="table-container">
+                                            <table class="data-table" id="barangayTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Barangay</th>
+                                                        <th>Number of Puroks</th>
+                                                        <th>Senior Citizens</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="barangayTableBody"></tbody>
+                                            </table>
+                                            
+                                            <div class="pagination-controls">
+                                                <div class="items-per-page">
+                                                    <span>Items per page:</span>
+                                                    <select id="itemsPerPage">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="16">All</option>
+                                                    </select>
+                                                </div>
+                                                <div class="page-info">
+                                                    <span id="pageInfo">Page 1 of 1</span>
+                                                </div>
+                                                <div class="page-buttons">
+                                                    <button id="prevPage" disabled>Previous</button>
+                                                    <button id="nextPage" disabled>Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
                                         <div class="chart-container" id="barangayChartContainer"></div>
                                         
@@ -392,6 +417,7 @@
                                             <p>Senior Citizens Statistics Dashboard | Data as of April 2025</p>
                                         </footer>
                                     </div>
+                                    
                                 
                                                 </div>
 
@@ -457,6 +483,7 @@
 <![endif]-->
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="/bower_components/jquery/js/jquery.min.js"></script>
     <script type="text/javascript" src="/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/bower_components/popper.js/js/popper.min.js"></script>

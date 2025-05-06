@@ -1,1461 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<title>Adminty - Senior Citizens Table</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Favicon -->
+		<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+		<!-- CSS Frameworks -->
+		<link rel="stylesheet" href="/bower_components/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/assets/icon/feather/css/feather.css">
+		<link rel="stylesheet" href="/assets/css/senior.css">
+		<link rel="stylesheet" href="/assets/css/style.css">
+		<link rel="stylesheet" href="/assets/css/jquery.mCustomScrollbar.css">
+		<!-- DataTables CSS -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+	</head>
+	<body>
+		<!-- Pre-loader start -->
+		<div class="theme-loader">
+			<div class="ball-scale">
+				<div class='contain'>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Pre-loader end -->
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav class="navbar header-navbar pcoded-header">
+					<div class="navbar-wrapper">
+						<div class="navbar-logo">
+							<a class="mobile-menu" id="mobile-collapse" href="#!">
+								<i class="feather icon-menu"></i>
+							</a>
+							<a href="index-1.htm">
+								<img class="img-fluid" src="\assets\images\logo.png" alt="Theme-Logo">
+							</a>
+							<a class="mobile-options">
+								<i class="feather icon-more-horizontal"></i>
+							</a>
+						</div>
+						<div class="navbar-container container-fluid">
+							<ul class="nav-left">
+								<li class="header-search">
+									<div class="main-search morphsearch-search">
+										<div class="input-group">
+											<span class="input-group-addon search-close">
+												<i class="feather icon-x"></i>
+											</span>
+											<input type="text" class="form-control" placeholder="Search...">
+											<span class="input-group-addon search-btn">
+												<i class="feather icon-search"></i>
+											</span>
+										</div>
+									</div>
+								</li>
+								<li>
+									<a href="#!" onclick="javascript:toggleFullScreen()">
+										<i class="feather icon-maximize full-screen"></i>
+									</a>
+								</li>
+								<li>
+									<a href="/add_senior" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
+										<i class="feather icon-user-plus"></i> Add Senior </a>
+								</li>
+							</ul>
+							<ul class="nav-right"></ul>
+							<ul class="nav-right">
+								<li class="user-profile header-notification">
+									<div class="dropdown-primary dropdown">
+										<div class="dropdown-toggle" data-toggle="dropdown">
+											<img src="\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+											<span>John Doe</span>
+											<i class="feather icon-chevron-down"></i>
+										</div>
+										<ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+											<li>
+												<a href="#!">
+													<i class="feather icon-settings"></i> Settings </a>
+											</li>
+											<li>
+												<a href="/logout">
+													<i class="feather icon-log-out"></i> Logout </a>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav class="pcoded-navbar">
+							<div class="pcoded-inner-navbar main-menu">
+								<div class="pcoded-navigatio-lavel">Navigation</div>
+								<ul class="pcoded-item pcoded-left-item">
+									<li class="pcoded-hasmenu active pcoded-trigger">
+										<a href="javascript:void(0)">
+											<span class="pcoded-micon">
+												<i class="feather icon-home"></i>
+											</span>
+											<span class="pcoded-mtext">Dashboard</span>
+										</a>
+										<ul class="pcoded-submenu">
+											<li class="">
+												<a href="/Pwd-form">
+													<span class="">PWD FORM</span>
+												</a>
+											</li>
+											<li class="active">
+												<a href="/Senior-form">
+													<span class="">SENIORS FORM</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</nav>
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<div class="main-body">
+									<div class="page-wrapper">
 
-<head>
-    <title>Adminty - Premium Admin Template by Colorlib </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="#">
-    <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
-    <meta name="author" content="#">
-    <!-- Favicon icon -->
-    <link rel="icon" href="\assets\images\favicon.ico" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="\bower_components\bootstrap\css\bootstrap.min.css">
-    <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="\assets\icon\feather\css\feather.css">
-    <link rel="stylesheet" type="text/css" href="\assets\css\senior.css">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="\assets\css\style.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/jquery.mCustomScrollbar.css">
-   
-</head>
+										<div class="container">
+											<h1>Senior Citizens Table</h1>
+											
+												<div class="filter-container">
+													<div class="filter-group">
+														<label for="barangay-filter">Barangay:</label>
+														<select id="barangay-filter">
+															<option value="1">Barangay 1</option>
+															<option value="2">Barangay 2</option>
+															<option value="3">Barangay 3</option>
+															<option value="4">Barangay 4</option>
+															<option value="5">Barangay 5</option>
+															<option value="mambulac">Barangay Mambulac</option>
+															<option value="guinhalaran">Barangay Guinhalaran</option>
+															<option value="elopez">Barangay E-Lopez</option>
+															<option value="bagtic">Barangay Bagtic</option>
+															<option value="balaring">Barangay Balaring</option>
+															<option value="hawaiian">Barangay Hawaiian</option>
+															<option value="patag">Barangay Patag</option>
+															<option value="kaptRamon">Barangay Kapt. Ramon</option>
+															<option value="guimbalaon">Barangay Guimbalaon</option>
+															<option value="rizal">Barangay Rizal</option>
+															<option value="lantad">Barangay Lantad</option>
+														</select>
+													</div>
+													<div class="filter-group">
+														<label for="purok-filter">Purok:</label>
+														<select id="purok-filter">
+															<option value="all">Puroks</option>
+														</select>
+													</div>
+												</div>
+												<table id="example" class="display" style="width:100%">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Addres</th>
+															<th>purok</th>
+															<th>brgy</th>
+															<th>Needs</th>
+															<th>actions</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+													</tbody>
+												</table>
 
-<body>
-    <!-- Pre-loader start -->
-    <div class="theme-loader">
-        <div class="ball-scale">
-            <div class='contain'>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Pre-loader end -->
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-
-            <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
-
-                    <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                            <i class="feather icon-menu"></i>
-                        </a>
-                        <a href="index-1.htm">
-                            <img class="img-fluid" src="\assets\images\logo.png" alt="Theme-Logo">
-                        </a>
-                        <a class="mobile-options">
-                            <i class="feather icon-more-horizontal"></i>
-                        </a>
-                    </div>
-
-                    <div class="navbar-container container-fluid">
-                        <ul class="nav-left">
-                            <li class="header-search">
-                                <div class="main-search morphsearch-search">
-                                    <div class="input-group">
-                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
-                                        <input type="text" class="form-control" placeholder="Search...">
-                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
-                                    <i class="feather icon-maximize full-screen"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/add_senior" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
-                                    <i class="feather icon-user-plus"></i> Add Senior
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav-right">
-                          
-                        </ul>
-                        <ul class="nav-right">      
-                            <li class="user-profile header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                                        <span>John Doe</span>
-                                        <i class="feather icon-chevron-down"></i>
-                                    </div>
-                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
-                                            <a href="#!">
-                                                <i class="feather icon-settings"></i> Settings
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/logout">
-                                                <i class="feather icon-log-out"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-           
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    <nav class="pcoded-navbar">
-                        <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel">Navigation</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu active pcoded-trigger">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="">
-                                            <a href="/Pwd-form">
-                                                <span class="">PWD FORM</span>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="/Senior-form">
-                                                <span class="">SENIORS FORM</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                    <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
-                            <div class="main-body">
-
-                                <div class="page-wrapper">
-
-                                    <div class="container">
-                                        <h1>Senior Citizens Database</h1>
+										</div>  <!-- Container div -->
                                         
-                                        <div class="controls">
-                                            <div class="filter-container">
-                                                <div class="filter-group">
-                                                    <label for="barangay-filter">Barangay:</label>
-                                                    <select id="barangay-filter">
-                                                        <option value="all">All Barangays</option>
-                                                        <option value="1">Barangay 1</option>
-                                                        <option value="2">Barangay 2</option>
-                                                        <option value="3">Barangay 3</option>
-                                                        <option value="4">Barangay 4</option>
-                                                        <option value="5">Barangay 5</option>
-                                                        <option value="mambulac">Barangay Mambulac</option>
-                                                        <option value="guinhalaran">Barangay Guinhalaran</option>
-                                                        <option value="elopez">Barangay E-Lopez</option>
-                                                        <option value="bagtic">Barangay Bagtic</option>
-                                                        <option value="balaring">Barangay Balaring</option>
-                                                        <option value="hawaiian">Barangay Hawaiian</option>
-                                                        <option value="patag">Barangay Patag</option>
-                                                        <option value="kaptRamon">Barangay Kapt. Ramon</option>
-                                                        <option value="guimbalaon">Barangay Guimbalaon</option>
-                                                        <option value="rizal">Barangay Rizal</option>
-                                                        <option value="lantad">Barangay Lantad</option>
-                                                    </select>
-                                                </div>
-                                                <div class="filter-group">
-                                                    <label for="purok-filter">Purok:</label>
-                                                    <select id="purok-filter">
-                                                        <option value="all">All Puroks</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="search-container">
-                                                <input type="text" id="search" placeholder="Search by name...">
-                                                <button id="search-btn">Search</button>
-                                            </div>
-                                        </div>
-                                        
-                                        <div id="seniors-content">
-                                            <!-- Barangay 1 -->
-                                            <div class="barangay-section" id="barangay-1">
-                                                <div class="barangay-header">Barangay 1</div>
-                                                
-                                                <div class="purok-section" id="barangay-1-kamagong">
-                                                    <div class="purok-header">Purok Kamagong</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>001</td>
-                                                                <td>Maria Santos</td>
-                                                                <td>72</td>
-                                                                <td>123 Main St., Brgy. 1, Purok Kamagong</td>
-                                                                <td>09123456789</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>002</td>
-                                                                <td>Pedro Reyes</td>
-                                                                <td>68</td>
-                                                                <td>45 Central Ave., Brgy. 1, Purok Kamagong</td>
-                                                                <td>09234567890</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>003</td>
-                                                                <td>Lucia Mendoza</td>
-                                                                <td>75</td>
-                                                                <td>78 Pine St., Brgy. 1, Purok Kamagong</td>
-                                                                <td>09345678901</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-1-narra">
-                                                    <div class="purok-header">Purok Narra</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>004</td>
-                                                                <td>Antonio Villanueva</td>
-                                                                <td>79</td>
-                                                                <td>256 Oak St., Brgy. 1, Purok Narra</td>
-                                                                <td>09456789012</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>005</td>
-                                                                <td>Elena Gomez</td>
-                                                                <td>67</td>
-                                                                <td>89 Maple Ave., Brgy. 1, Purok Narra</td>
-                                                                <td>09567890123</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-1-ipil-ipil">
-                                                    <div class="purok-header">Purok Ipil-Ipil</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>006</td>
-                                                                <td>Juan Dela Cruz</td>
-                                                                <td>71</td>
-                                                                <td>34 Ipil St., Brgy. 1, Purok Ipil-Ipil</td>
-                                                                <td>09678901234</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>007</td>
-                                                                <td>Ana Reyes</td>
-                                                                <td>69</td>
-                                                                <td>56 Acacia Ave., Brgy. 1, Purok Ipil-Ipil</td>
-                                                                <td>09789012345</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-1-akasya">
-                                                    <div class="purok-header">Purok Akasya</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>008</td>
-                                                                <td>Roberto Garcia</td>
-                                                                <td>73</td>
-                                                                <td>78 Akasya St., Brgy. 1, Purok Akasya</td>
-                                                                <td>09890123456</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-1-flying-e">
-                                                    <div class="purok-header">Purok Flying-E</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>009</td>
-                                                                <td>Lourdes Mendoza</td>
-                                                                <td>76</td>
-                                                                <td>90 Flying-E St., Brgy. 1, Purok Flying-E</td>
-                                                                <td>09901234567</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>010</td>
-                                                                <td>Carlos Bautista</td>
-                                                                <td>68</td>
-                                                                <td>12 Flying-E Ave., Brgy. 1, Purok Flying-E</td>
-                                                                <td>09112345678</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Barangay 2 -->
-                                            <div class="barangay-section" id="barangay-2">
-                                                <div class="barangay-header">Barangay 2</div>
-                                                
-                                                <div class="purok-section" id="barangay-2-gomez">
-                                                    <div class="purok-header">Purok Gomez</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>011</td>
-                                                                <td>Ricardo Santos</td>
-                                                                <td>74</td>
-                                                                <td>34 Gomez St., Brgy. 2, Purok Gomez</td>
-                                                                <td>09223456789</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>012</td>
-                                                                <td>Carmen Reyes</td>
-                                                                <td>71</td>
-                                                                <td>56 Gomez Ave., Brgy. 2, Purok Gomez</td>
-                                                                <td>09334567890</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-2-katipunan">
-                                                    <div class="purok-header">Purok Katipunan</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>013</td>
-                                                                <td>Eduardo Cruz</td>
-                                                                <td>79</td>
-                                                                <td>78 Katipunan St., Brgy. 2, Purok Katipunan</td>
-                                                                <td>09445678901</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="styleSelector"></div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		<!-- Required Jquery -->
+		<script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
+		<script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
+		<script type="text/javascript" src="\bower_components\popper.js\js\popper.min.js"></script>
+		<script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
+		<!-- DataTables JS -->
+		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	
+		<!-- Other scripts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+		<script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
+		<script type="text/javascript" src="\bower_components\modernizr\js\modernizr.js"></script>
+		<script type="text/javascript" src="\bower_components\modernizr\js\css-scrollbars.js"></script>
+		<script type="text/javascript" src="\bower_components\chart.js\js\Chart.js"></script>
+		<script src="\assets\pages\widget\amchart\amcharts.js"></script>
+		<script src="\assets\pages\widget\amchart\serial.js"></script>
+		<script src="\assets\pages\widget\amchart\light.js"></script>
+		<script type="text/javascript" src="\assets\js\SmoothScroll.js"></script>
+		<script src="\assets\js\pcoded.min.js"></script>
+		<script src="\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
+		<script src="\assets\js\vartical-layout.min.js"></script>
+		<script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
+		<script type="text/javascript" src="\assets\js\script.js"></script>
+		<script type="text/javascript" src="\assets\js\senior.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
 
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-23581568-13');
 
-                                            <!-- Barangay 3 -->
-<div class="barangay-section" id="barangay-3">
-    <div class="barangay-header">Barangay 3</div>
-    
-    <div class="purok-section" id="barangay-3-paghidaet-a">
-        <div class="purok-header">Purok Paghida.et A</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>014</td>
-                    <td>Rodrigo Tan</td>
-                    <td>76</td>
-                    <td>56 Mango St., Brgy. 3, Purok Paghida.et A</td>
-                    <td>09556789012</td>
-                </tr>
-                <tr>
-                    <td>015</td>
-                    <td>Rosario Lim</td>
-                    <td>73</td>
-                    <td>43 Coconut Ave., Brgy. 3, Purok Paghida.et A</td>
-                    <td>09667890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-3-paghidaet-b">
-        <div class="purok-header">Purok Paghida.et B</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>016</td>
-                    <td>Manuel Cruz</td>
-                    <td>82</td>
-                    <td>78 Banana St., Brgy. 3, Purok Paghida.et B</td>
-                    <td>09778901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-3-ilimnan">
-        <div class="purok-header">Purok Ilimnan</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>017</td>
-                    <td>Example Resident</td>
-                    <td>65</td>
-                    <td>123 Example St., Brgy. 3, Purok Ilimnan</td>
-                    <td>09889012345</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-3-guintipunan">
-        <div class="purok-header">Purok Guintipunan</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>018</td>
-                    <td>Example Resident</td>
-                    <td>70</td>
-                    <td>456 Sample Ave., Brgy. 3, Purok Guintipunan</td>
-                    <td>09990123456</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-3-mahigugmaon">
-        <div class="purok-header">Purok Mahigugmaon</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>019</td>
-                    <td>Example Resident</td>
-                    <td>68</td>
-                    <td>789 Test Rd., Brgy. 3, Purok Mahigugmaon</td>
-                    <td>09101234567</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-<!-- Barangay 4 -->
-<div class="barangay-section" id="barangay-4">
-    <div class="barangay-header">Barangay 4</div>
-    
-    <div class="purok-section" id="barangay-4-antilla-subd">
-        <div class="purok-header">Purok Antilla Subd</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>020</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>68</td>
-                    <td>12 Antilla St., Brgy. 4, Purok Antilla Subd</td>
-                    <td>09123456789</td>
-                </tr>
-                <tr>
-                    <td>021</td>
-                    <td>Maria Santos</td>
-                    <td>72</td>
-                    <td>34 Subdivision Ave., Brgy. 4, Purok Antilla Subd</td>
-                    <td>09234567890</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-4-gomez-extension">
-        <div class="purok-header">Purok Gomez Extension</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>022</td>
-                    <td>Pedro Gomez</td>
-                    <td>75</td>
-                    <td>56 Extension Rd., Brgy. 4, Purok Gomez Extension</td>
-                    <td>09345678901</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-4-bonifacio-extension">
-        <div class="purok-header">Purok Bonifacio Extension</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>023</td>
-                    <td>Andres Bonifacio</td>
-                    <td>70</td>
-                    <td>78 Freedom Lane, Brgy. 4, Purok Bonifacio Extension</td>
-                    <td>09456789012</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-4-mckinley-bukid">
-        <div class="purok-header">Purok Mckinley Bukid</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>024</td>
-                    <td>William Mckinley</td>
-                    <td>65</td>
-                    <td>90 Hillside Rd., Brgy. 4, Purok Mckinley Bukid</td>
-                    <td>09567890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-4-zulueta-bukid">
-        <div class="purok-header">Purok Zulueta Bukid</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>025</td>
-                    <td>Carlos Zulueta</td>
-                    <td>80</td>
-                    <td>112 Mountain View, Brgy. 4, Purok Zulueta Bukid</td>
-                    <td>09678901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Barangay 5 -->
-<div class="barangay-section" id="barangay-5">
-    <div class="barangay-header">Barangay 5</div>
-    
-    <div class="purok-section" id="barangay-5-elina-subd">
-        <div class="purok-header">Purok Elina Subd</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>026</td>
-                    <td>Elina Reyes</td>
-                    <td>72</td>
-                    <td>23 Elina Street, Brgy. 5, Purok Elina Subd</td>
-                    <td>09123456789</td>
-                </tr>
-                <tr>
-                    <td>027</td>
-                    <td>Roberto Santiago</td>
-                    <td>68</td>
-                    <td>45 Subdivision Road, Brgy. 5, Purok Elina Subd</td>
-                    <td>09234567890</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-5-portuna">
-        <div class="purok-header">Purok Portuna</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>028</td>
-                    <td>Fortunato Dela Cruz</td>
-                    <td>75</td>
-                    <td>12 Portuna Avenue, Brgy. 5, Purok Portuna</td>
-                    <td>09345678901</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-5-st-francis">
-        <div class="purok-header">Purok St Francis</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>029</td>
-                    <td>Francisco Mendoza</td>
-                    <td>80</td>
-                    <td>34 St. Francis Street, Brgy. 5, Purok St Francis</td>
-                    <td>09456789012</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-5-carmilla-paste-3">
-        <div class="purok-header">Purok Carmilla Paste 3</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>030</td>
-                    <td>Carmen Villa</td>
-                    <td>65</td>
-                    <td>56 Pasteur Road, Brgy. 5, Purok Carmilla Paste 3</td>
-                    <td>09567890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-5-villa-carmen">
-        <div class="purok-header">Purok Villa Carmen</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>031</td>
-                    <td>Carmelita Garcia</td>
-                    <td>70</td>
-                    <td>78 Villa Carmen Compound, Brgy. 5, Purok Villa Carmen</td>
-                    <td>09678901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-                                            
-                                           <!-- Barangay Mambulac -->
-<div class="barangay-section" id="barangay-mambulac">
-    <div class="barangay-header">Barangay Mambulac</div>
-    
-    <div class="purok-section" id="barangay-mambulac-paghidaet">
-        <div class="purok-header">Purok Paghidaet</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>014</td>
-                    <td>Rodrigo Tan</td>
-                    <td>76</td>
-                    <td>56 Mango St., Brgy. Mambulac, Purok Paghidaet</td>
-                    <td>09556789012</td>
-                </tr>
-                <tr>
-                    <td>015</td>
-                    <td>Rosario Lim</td>
-                    <td>73</td>
-                    <td>43 Coconut Ave., Brgy. Mambulac, Purok Paghidaet</td>
-                    <td>09667890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-mambulac-antoni-luna">
-        <div class="purok-header">Purok Antoni Luna</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>016</td>
-                    <td>Manuel Cruz</td>
-                    <td>82</td>
-                    <td>78 Banana St., Brgy. Mambulac, Purok Antoni Luna</td>
-                    <td>09778901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-mambulac-swimming-pool">
-        <div class="purok-header">Purok Swimming Pool</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>016</td>
-                    <td>Manuel Cruz</td>
-                    <td>82</td>
-                    <td>78 Banana St., Brgy. Mambulac, Purok Antoni Luna</td>
-                    <td>09778901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-mambulac-boulevard">
-        <div class="purok-header">Purok Boulevard</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>016</td>
-                    <td>Manuel Cruz</td>
-                    <td>82</td>
-                    <td>78 Banana St., Brgy. Mambulac, Purok Antoni Luna</td>
-                    <td>09778901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-mambulac-barra">
-        <div class="purok-header">Purok Barra</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>016</td>
-                    <td>Manuel Cruz</td>
-                    <td>82</td>
-                    <td>78 Banana St., Brgy. Mambulac, Purok Antoni Luna</td>
-                    <td>09778901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Barangay Guinhalaran -->
-<div class="barangay-section" id="barangay-guinhalaran">
-    <div class="barangay-header">Barangay Guinhalaran</div>
-    
-    <div class="purok-section" id="barangay-guinhalaran-katilingban">
-        <div class="purok-header">Purok Katilingban</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>032</td>
-                    <td>Juan Delos Santos</td>
-                    <td>72</td>
-                    <td>12 Katilingban Street, Brgy. Guinhalaran, Purok Katilingban</td>
-                    <td>09123456789</td>
-                </tr>
-                <tr>
-                    <td>033</td>
-                    <td>Maria Katilingban</td>
-                    <td>68</td>
-                    <td>34 Community Road, Brgy. Guinhalaran, Purok Katilingban</td>
-                    <td>09234567890</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-guinhalaran-sawmill">
-        <div class="purok-header">Purok Sawmill</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>034</td>
-                    <td>Pedro Sawali</td>
-                    <td>75</td>
-                    <td>56 Lumber Street, Brgy. Guinhalaran, Purok Sawmill</td>
-                    <td>09345678901</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-guinhalaran-paghidait">
-        <div class="purok-header">Purok Paghidait</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>035</td>
-                    <td>Francisco Harmony</td>
-                    <td>80</td>
-                    <td>78 Peace Avenue, Brgy. Guinhalaran, Purok Paghidait</td>
-                    <td>09456789012</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-guinhalaran-mangingisda">
-        <div class="purok-header">Purok Mangingisda</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>036</td>
-                    <td>Roberto Fisher</td>
-                    <td>65</td>
-                    <td>90 Fisherman's Wharf, Brgy. Guinhalaran, Purok Mangingisda</td>
-                    <td>09567890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-guinhalaran-baybayon">
-        <div class="purok-header">Purok Baybayon</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>037</td>
-                    <td>Marina Delmar</td>
-                    <td>70</td>
-                    <td>112 Coastal Road, Brgy. Guinhalaran, Purok Baybayon</td>
-                    <td>09678901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Barangay E-Lopez -->
-<div class="barangay-section" id="barangay-elopez">
-    <div class="barangay-header">Barangay E-Lopez</div>
-    
-    <div class="purok-section" id="barangay-elopez-sunshine">
-        <div class="purok-header">Purok Sunshine</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>032</td>
-                    <td>Juan Delos Santos</td>
-                    <td>72</td>
-                    <td>12 Sunshine Street, Brgy. E-Lopez, Purok Sunshine</td>
-                    <td>09123456789</td>
-                </tr>
-                <tr>
-                    <td>033</td>
-                    <td>Maria Sunshine</td>
-                    <td>68</td>
-                    <td>34 Sunshine Road, Brgy. E-Lopez, Purok Sunshine</td>
-                    <td>09234567890</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-sunrise">
-        <div class="purok-header">Purok Sunrise</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>034</td>
-                    <td>Pedro Sunrise</td>
-                    <td>75</td>
-                    <td>56 Sunrise Avenue, Brgy. E-Lopez, Purok Sunrise</td>
-                    <td>09345678901</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-sunset">
-        <div class="purok-header">Purok Sunset</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>035</td>
-                    <td>Francisco Sunset</td>
-                    <td>80</td>
-                    <td>78 Sunset Boulevard, Brgy. E-Lopez, Purok Sunset</td>
-                    <td>09456789012</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-sampaguita">
-        <div class="purok-header">Purok Sampaguita</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>036</td>
-                    <td>Roberto Sampaguita</td>
-                    <td>65</td>
-                    <td>90 Sampaguita Lane, Brgy. E-Lopez, Purok Sampaguita</td>
-                    <td>09567890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-newsite">
-        <div class="purok-header">Purok Newsite</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>037</td>
-                    <td>Marina Newsite</td>
-                    <td>70</td>
-                    <td>112 Newsite Road, Brgy. E-Lopez, Purok Newsite</td>
-                    <td>09678901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-<!-- Barangay  bagtic-->
-<div class="barangay-section" id="barangay-bagtic">
-    <div class="barangay-header">Barangay E-Lopez</div>
-    
-    <div class="purok-section" id="barangay-bagtic-proper">
-        <div class="purok-header">Purok Sunshine</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>032</td>
-                    <td>Juan Delos Santos</td>
-                    <td>72</td>
-                    <td>12 Sunshine Street, Brgy. E-Lopez, Purok Sunshine</td>
-                    <td>09123456789</td>
-                </tr>
-                <tr>
-                    <td>033</td>
-                    <td>Maria Sunshine</td>
-                    <td>68</td>
-                    <td>34 Sunshine Road, Brgy. E-Lopez, Purok Sunshine</td>
-                    <td>09234567890</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-new-site">
-        <div class="purok-header">Purok Sunrise</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>034</td>
-                    <td>Pedro Sunrise</td>
-                    <td>75</td>
-                    <td>56 Sunrise Avenue, Brgy. E-Lopez, Purok Sunrise</td>
-                    <td>09345678901</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-bagtic-uno">
-        <div class="purok-header">Purok Sunset</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>035</td>
-                    <td>Francisco Sunset</td>
-                    <td>80</td>
-                    <td>78 Sunset Boulevard, Brgy. E-Lopez, Purok Sunset</td>
-                    <td>09456789012</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-kalbaryo">
-        <div class="purok-header">Purok Sampaguita</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>036</td>
-                    <td>Roberto Sampaguita</td>
-                    <td>65</td>
-                    <td>90 Sampaguita Lane, Brgy. E-Lopez, Purok Sampaguita</td>
-                    <td>09567890123</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="purok-section" id="barangay-elopez-defuigo">
-        <div class="purok-header">Purok Newsite</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>037</td>
-                    <td>Marina Newsite</td>
-                    <td>70</td>
-                    <td>112 Newsite Road, Brgy. E-Lopez, Purok Newsite</td>
-                    <td>09678901234</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-
-
-
-
-
-                                        <div class="pagination">
-                                            <button id="prev-page">Previous</button>
-                                            <button id="next-page">Next</button>
-                                        </div>
-                                    </div>
-
-                                  
-
-                                                                                                    
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- social end -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="styleSelector">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   
-    <!-- Required Jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
-    <script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
-    <script type="text/javascript" src="\bower_components\popper.js\js\popper.min.js"></script>
-    <script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
-    <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
-    <!-- modernizr js -->
-    <script type="text/javascript" src="\bower_components\modernizr\js\modernizr.js"></script>
-    <script type="text/javascript" src="\bower_components\modernizr\js\css-scrollbars.js"></script>
-    <!-- Chart js -->
-    <script type="text/javascript" src="\bower_components\chart.js\js\Chart.js"></script>
-    <!-- amchart js -->
-    <script src="\assets\pages\widget\amchart\amcharts.js"></script>
-    <script src="\assets\pages\widget\amchart\serial.js"></script>
-    <script src="\assets\pages\widget\amchart\light.js"></script>
-    <!-- Custom js -->
-    <script type="text/javascript" src="\assets\js\SmoothScroll.js"></script>
-    <script src="\assets\js\pcoded.min.js"></script>
-    <script src="\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="\assets\js\vartical-layout.min.js"></script>
-    <script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
-    <script type="text/javascript" src="\assets\js\script.js"></script>
-    <script type="text/javascript" src="\assets\js\senior.js"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-
-  function handleSpecialCategoryChange(checkbox) {
-    const checkboxes = document.querySelectorAll('input[name="status"]');
-    
-    if (checkbox.checked) {
-        // Disable all other checkboxes
-        checkboxes.forEach(cb => {
-            if (cb !== checkbox) {
-                cb.disabled = true;
-            }
-        });
-    } else {
-        // Enable all checkboxes when current one is unchecked
-        checkboxes.forEach(cb => {
-            cb.disabled = false;
-        });
-    }
-    
-    // Call your existing toggle functions if needed
-    if (checkbox.id === 'pwd') {
-        togglePWDSection();
-    } else if (checkbox.id === 'senior') {
-        toggleSeniorSection();
-    }
-    // Add any other specific functions you need to call
-}
-
-    
-</script>
-</body>
-
+            $(document).ready(function() {
+				$('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true
+				});
+			});
+		</script>
+	</body>
 </html>

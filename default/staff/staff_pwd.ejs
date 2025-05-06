@@ -1,694 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<title>Adminty - Senior Citizens Table</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Favicon -->
+		<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+		<!-- CSS Frameworks -->
+		<link rel="stylesheet" href="/bower_components/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/assets/icon/feather/css/feather.css">
+		<link rel="stylesheet" href="/assets/css/senior.css">
+		<link rel="stylesheet" href="/assets/css/style.css">
+		<link rel="stylesheet" href="/assets/css/jquery.mCustomScrollbar.css">
+		<!-- DataTables CSS -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+	</head>
+	<body>
+		<!-- Pre-loader start -->
+		<div class="theme-loader">
+			<div class="ball-scale">
+				<div class='contain'>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Pre-loader end -->
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav class="navbar header-navbar pcoded-header">
+					<div class="navbar-wrapper">
+						<div class="navbar-logo">
+							<a class="mobile-menu" id="mobile-collapse" href="#!">
+								<i class="feather icon-menu"></i>
+							</a>
+							<a href="index-1.htm">
+								<img class="img-fluid" src="\assets\images\logo.png" alt="Theme-Logo">
+							</a>
+							<a class="mobile-options">
+								<i class="feather icon-more-horizontal"></i>
+							</a>
+						</div>
+						<div class="navbar-container container-fluid">
+							<ul class="nav-left">
+								<li class="header-search">
+									<div class="main-search morphsearch-search">
+										<div class="input-group">
+											<span class="input-group-addon search-close">
+												<i class="feather icon-x"></i>
+											</span>
+											<input type="text" class="form-control" placeholder="Search...">
+											<span class="input-group-addon search-btn">
+												<i class="feather icon-search"></i>
+											</span>
+										</div>
+									</div>
+								</li>
+								<li>
+									<a href="#!" onclick="javascript:toggleFullScreen()">
+										<i class="feather icon-maximize full-screen"></i>
+									</a>
+								</li>
+								<li>
+									<a href="/add_senior" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
+										<i class="feather icon-user-plus"></i> Add Senior </a>
+								</li>
+							</ul>
+							<ul class="nav-right"></ul>
+							<ul class="nav-right">
+								<li class="user-profile header-notification">
+									<div class="dropdown-primary dropdown">
+										<div class="dropdown-toggle" data-toggle="dropdown">
+											<img src="\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+											<span>John Doe</span>
+											<i class="feather icon-chevron-down"></i>
+										</div>
+										<ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+											<li>
+												<a href="#!">
+													<i class="feather icon-settings"></i> Settings </a>
+											</li>
+											<li>
+												<a href="/logout">
+													<i class="feather icon-log-out"></i> Logout </a>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav class="pcoded-navbar">
+							<div class="pcoded-inner-navbar main-menu">
+								<div class="pcoded-navigatio-lavel">Navigation</div>
+								<ul class="pcoded-item pcoded-left-item">
+									<li class="pcoded-hasmenu active pcoded-trigger">
+										<a href="javascript:void(0)">
+											<span class="pcoded-micon">
+												<i class="feather icon-home"></i>
+											</span>
+											<span class="pcoded-mtext">Dashboard</span>
+										</a>
+										<ul class="pcoded-submenu">
+											<li class="active">
+												<a href="/Pwd-form">
+													<span class="">PWD FORM</span>
+												</a>
+											</li>
+											<li class="">
+												<a href="/Senior-form">
+													<span class="">SENIORS FORM</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</nav>
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<div class="main-body">
+									<div class="page-wrapper">
 
-<head>
-    <title>Adminty - Premium Admin Template by Colorlib </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="#">
-    <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
-    <meta name="author" content="#">
-    <!-- Favicon icon -->
-    <link rel="icon" href="\assets\images\favicon.ico" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="\bower_components\bootstrap\css\bootstrap.min.css">
-    <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="\assets\icon\feather\css\feather.css">
-    <link rel="stylesheet" type="text/css" href="\assets\css\senior.css">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="\assets\css\style.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/jquery.mCustomScrollbar.css">
-   
-</head>
+										<div class="container">
+											<h1>Senior Citizens Table</h1>
+											
+												<div class="filter-container">
+													<div class="filter-group">
+														<label for="barangay-filter">Barangay:</label>
+														<select id="barangay-filter">
+															<option value="1">Barangay 1</option>
+															<option value="2">Barangay 2</option>
+															<option value="3">Barangay 3</option>
+															<option value="4">Barangay 4</option>
+															<option value="5">Barangay 5</option>
+															<option value="mambulac">Barangay Mambulac</option>
+															<option value="guinhalaran">Barangay Guinhalaran</option>
+															<option value="elopez">Barangay E-Lopez</option>
+															<option value="bagtic">Barangay Bagtic</option>
+															<option value="balaring">Barangay Balaring</option>
+															<option value="hawaiian">Barangay Hawaiian</option>
+															<option value="patag">Barangay Patag</option>
+															<option value="kaptRamon">Barangay Kapt. Ramon</option>
+															<option value="guimbalaon">Barangay Guimbalaon</option>
+															<option value="rizal">Barangay Rizal</option>
+															<option value="lantad">Barangay Lantad</option>
+														</select>
+													</div>
+													<div class="filter-group">
+														<label for="purok-filter">Purok:</label>
+														<select id="purok-filter">
+															<option value="all">Puroks</option>
+														</select>
+													</div>
+												</div>
+												<table id="example" class="display" style="width:100%">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Addres</th>
+															<th>purok</th>
+															<th>brgy</th>
+															<th>Needs</th>
+															<th>actions</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+														<tr>
+															<td>Tiger Nixon</td>
+															<td>System Architect</td>
+															<td>Edinburgh</td>
+															<td>61</td>
+															<td>2011-04-25</td>
+															<td>$320,800</td>
+														</tr>
+														<tr>
+															<td>Garrett Winters</td>
+															<td>Accountant</td>
+															<td>Tokyo</td>
+															<td>63</td>
+															<td>2011-07-25</td>
+															<td>$170,750</td>
+														</tr>
+														<tr>
+															<td>Ashton Cox</td>
+															<td>Junior Technical Author</td>
+															<td>San Francisco</td>
+															<td>66</td>
+															<td>2009-01-12</td>
+															<td>$86,000</td>
+														</tr>
+													</tbody>
+												</table>
 
-<body>
-    <!-- Pre-loader start -->
-    <div class="theme-loader">
-        <div class="ball-scale">
-            <div class='contain'>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Pre-loader end -->
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-
-            <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
-
-                    <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                            <i class="feather icon-menu"></i>
-                        </a>
-                        <a href="index-1.htm">
-                            <img class="img-fluid" src="\assets\images\logo.png" alt="Theme-Logo">
-                        </a>
-                        <a class="mobile-options">
-                            <i class="feather icon-more-horizontal"></i>
-                        </a>
-                    </div>
-
-                    <div class="navbar-container container-fluid">
-                        <ul class="nav-left">
-                            <li class="header-search">
-                                <div class="main-search morphsearch-search">
-                                    <div class="input-group">
-                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
-                                        <input type="text" class="form-control">
-                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
-                                    <i class="feather icon-maximize full-screen"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav-right">
-                            <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-bell"></i>
-                                        <span class="badge bg-c-pink">5</span>
-                                    </div>
-                                    <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
-                                            <h6>Notifications</h6>
-                                            <label class="label label-danger">New</label>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="\assets\images\avatar-3.jpg" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Joseph William</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Sara Soudein</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-message-square"></i>
-                                        <span class="badge bg-c-green">3</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="user-profile header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                                        <span>John Doe</span>
-                                        <i class="feather icon-chevron-down"></i>
-                                    </div>
-                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
-                                            <a href="#!">
-                                                <i class="feather icon-settings"></i> Settings
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="user-profile.htm">
-                                                <i class="feather icon-user"></i> Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="email-inbox.htm">
-                                                <i class="feather icon-mail"></i> My Messages
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="auth-lock-screen.htm">
-                                                <i class="feather icon-lock"></i> Lock Screen
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/logout">
-                                                <i class="feather icon-log-out"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Sidebar chat start -->
-            <div id="sidebar" class="users p-chat-user showChat">
-                <div class="had-container">
-                    <div class="card card_main p-fixed users-main">
-                        <div class="user-box">
-                            <div class="chat-inner-header">
-                                <div class="back_chatBox">
-                                    <div class="right-icon-control">
-                                        <input type="text" class="form-control  search-text" placeholder="Search Friend" id="search-friends">
-                                        <div class="form-icon">
-                                            <i class="icofont icofont-search"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="main-friend-list">
-                                <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius img-radius" src="\assets\images\avatar-3.jpg" alt="Generic placeholder image ">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Josephin Doe</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe" data-toggle="tooltip" data-placement="left" title="Lary Doe">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="\assets\images\avatar-2.jpg" alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Lary Doe</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Alice</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="4" data-status="online" data-username="Alia" data-toggle="tooltip" data-placement="left" title="Alia">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="\assets\images\avatar-3.jpg" alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Alia</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="5" data-status="online" data-username="Suzen" data-toggle="tooltip" data-placement="left" title="Suzen">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="\assets\images\avatar-2.jpg" alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Suzen</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Sidebar inner chat start-->
-            <div class="showChat_inner">
-                <div class="media chat-inner-header">
-                    <a class="back_chatBox">
-                        <i class="feather icon-chevron-left"></i> Josephin Doe
-                    </a>
-                </div>
-                <div class="media chat-messages">
-                    <a class="media-left photo-table" href="#!">
-                        <img class="media-object img-radius img-radius m-t-5" src="\assets\images\avatar-3.jpg" alt="Generic placeholder image">
-                    </a>
-                    <div class="media-body chat-menu-content">
-                        <div class="">
-                            <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
-                            <p class="chat-time">8:20 a.m.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="media chat-messages">
-                    <div class="media-body chat-menu-reply">
-                        <div class="">
-                            <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
-                            <p class="chat-time">8:20 a.m.</p>
-                        </div>
-                    </div>
-                    <div class="media-right photo-table">
-                        <a href="#!">
-                            <img class="media-object img-radius img-radius m-t-5" src="\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                        </a>
-                    </div>
-                </div>
-                <div class="chat-reply-box p-b-20">
-                    <div class="right-icon-control">
-                        <input type="text" class="form-control search-text" placeholder="Share Your Thoughts">
-                        <div class="form-icon">
-                            <i class="feather icon-navigation"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Sidebar inner chat end-->
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    <nav class="pcoded-navbar">
-                        <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel">Navigation</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu active pcoded-trigger">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="">
-                                            <a href="/Pwd-form">
-                                                <span class="">PWD FORM</span>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="/Senior-form">
-                                                <span class="">SENIORS FORM</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                    <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
-                            <div class="main-body">
-
-                                <div class="page-wrapper">
-
-                                    <div class="container">
-                                        <h1>Senior Citizens Database</h1>
+										</div>  <!-- Container div -->
                                         
-                                        <div class="controls">
-                                            <div class="filter-container">
-                                                <div class="filter-group">
-                                                    <label for="barangay-filter">Barangay:</label>
-                                                    <select id="barangay-filter">
-                                                        <option value="all">All Barangays</option>
-                                                        <option value="1">Barangay 1</option>
-                                                        <option value="2">Barangay 2</option>
-                                                        <option value="3">Barangay 3</option>
-                                                        <option value="4">Barangay 4</option>
-                                                        <option value="5">Barangay 5</option>
-                                                        <option value="mambulac">Barangay Mambulac</option>
-                                                        <option value="guinhalaran">Barangay Guinhalaran</option>
-                                                        <option value="elopez">Barangay E-Lopez</option>
-                                                        <option value="bagtic">Barangay Bagtic</option>
-                                                        <option value="balaring">Barangay Balaring</option>
-                                                        <option value="hawaiian">Barangay Hawaiian</option>
-                                                        <option value="patag">Barangay Patag</option>
-                                                        <option value="kaptRamon">Barangay Kapt. Ramon</option>
-                                                        <option value="guimbalaon">Barangay Guimbalaon</option>
-                                                        <option value="rizal">Barangay Rizal</option>
-                                                        <option value="lantad">Barangay Lantad</option>
-                                                    </select>
-                                                </div>
-                                                <div class="filter-group">
-                                                    <label for="purok-filter">Purok:</label>
-                                                    <select id="purok-filter">
-                                                        <option value="all">All Puroks</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="search-container">
-                                                <input type="text" id="search" placeholder="Search by name...">
-                                                <button id="search-btn">Search</button>
-                                            </div>
-                                        </div>
-                                        
-                                        <div id="seniors-content">
-                                            <!-- Barangay 1 -->
-                                            <div class="barangay-section" id="barangay-1">
-                                                <div class="barangay-header">Barangay 1</div>
-                                                
-                                                <div class="purok-section" id="barangay-1-purok-1">
-                                                    <div class="purok-header">Purok 1</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>001</td>
-                                                                <td>Maria Santos</td>
-                                                                <td>72</td>
-                                                                <td>123 Main St., Brgy. 1, Purok 1</td>
-                                                                <td>09123456789</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>002</td>
-                                                                <td>Pedro Reyes</td>
-                                                                <td>68</td>
-                                                                <td>45 Central Ave., Brgy. 1, Purok 1</td>
-                                                                <td>09234567890</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>003</td>
-                                                                <td>Lucia Mendoza</td>
-                                                                <td>75</td>
-                                                                <td>78 Pine St., Brgy. 1, Purok 1</td>
-                                                                <td>09345678901</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-1-purok-2">
-                                                    <div class="purok-header">Purok 2</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>004</td>
-                                                                <td>Antonio Villanueva</td>
-                                                                <td>79</td>
-                                                                <td>256 Oak St., Brgy. 1, Purok 2</td>
-                                                                <td>09456789012</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>005</td>
-                                                                <td>Elena Gomez</td>
-                                                                <td>67</td>
-                                                                <td>89 Maple Ave., Brgy. 1, Purok 2</td>
-                                                                <td>09567890123</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Barangay 2 -->
-                                            <div class="barangay-section" id="barangay-2">
-                                                <div class="barangay-header">Barangay 2</div>
-                                                
-                                                <div class="purok-section" id="barangay-2-purok-1">
-                                                    <div class="purok-header">Purok 1</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>006</td>
-                                                                <td>Carlos Bautista</td>
-                                                                <td>81</td>
-                                                                <td>34 Rivera St., Brgy. 2, Purok 1</td>
-                                                                <td>09678901234</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>007</td>
-                                                                <td>Teresa Dizon</td>
-                                                                <td>69</td>
-                                                                <td>121 Luna St., Brgy. 2, Purok 1</td>
-                                                                <td>09789012345</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Barangay Mambulac -->
-                                            <div class="barangay-section" id="barangay-mambulac">
-                                                <div class="barangay-header">Barangay Mambulac</div>
-                                                
-                                                <div class="purok-section" id="barangay-mambulac-purok-1">
-                                                    <div class="purok-header">Purok Sampaguita</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>008</td>
-                                                                <td>Rodrigo Tan</td>
-                                                                <td>76</td>
-                                                                <td>56 Mango St., Brgy. Mambulac, Purok Sampaguita</td>
-                                                                <td>09890123456</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>009</td>
-                                                                <td>Rosario Lim</td>
-                                                                <td>73</td>
-                                                                <td>43 Coconut Ave., Brgy. Mambulac, Purok Sampaguita</td>
-                                                                <td>09901234567</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>010</td>
-                                                                <td>Manuel Cruz</td>
-                                                                <td>82</td>
-                                                                <td>78 Banana St., Brgy. Mambulac, Purok Sampaguita</td>
-                                                                <td>09112345678</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div class="purok-section" id="barangay-mambulac-purok-2">
-                                                    <div class="purok-header">Purok Rosal</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>011</td>
-                                                                <td>Gloria Ramos</td>
-                                                                <td>77</td>
-                                                                <td>34 Pineapple St., Brgy. Mambulac, Purok Rosal</td>
-                                                                <td>09223456789</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>012</td>
-                                                                <td>Roberto Garcia</td>
-                                                                <td>70</td>
-                                                                <td>123 Avocado Ave., Brgy. Mambulac, Purok Rosal</td>
-                                                                <td>09334567890</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Barangay Guinhalaran -->
-                                            <div class="barangay-section" id="barangay-guinhalaran">
-                                                <div class="barangay-header">Barangay Guinhalaran</div>
-                                                
-                                                <div class="purok-section" id="barangay-guinhalaran-purok-1">
-                                                    <div class="purok-header">Purok 1</div>
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>Age</th>
-                                                                <th>Address</th>
-                                                                <th>Contact Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>013</td>
-                                                                <td>Juana Dela Cruz</td>
-                                                                <td>68</td>
-                                                                <td>44 Dapdap St., Brgy. Guinhalaran, Purok 1</td>
-                                                                <td>09445678901</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>014</td>
-                                                                <td>Eduardo Santos</td>
-                                                                <td>75</td>
-                                                                <td>67 Acacia Ave., Brgy. Guinhalaran, Purok 1</td>
-                                                                <td>09556789012</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="pagination">
-                                            <button id="prev-page">Previous</button>
-                                            <button id="next-page">Next</button>
-                                        </div>
-                                    </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="styleSelector"></div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		<!-- Required Jquery -->
+		<script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
+		<script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
+		<script type="text/javascript" src="\bower_components\popper.js\js\popper.min.js"></script>
+		<script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
+		<!-- DataTables JS -->
+		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+		<!-- Initialize DataTables -->
+		<script>
+			$(document).ready(function() {
+				$('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true
+				});
+			});
+		</script>
+		<!-- Other scripts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+		<script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
+		<script type="text/javascript" src="\bower_components\modernizr\js\modernizr.js"></script>
+		<script type="text/javascript" src="\bower_components\modernizr\js\css-scrollbars.js"></script>
+		<script type="text/javascript" src="\bower_components\chart.js\js\Chart.js"></script>
+		<script src="\assets\pages\widget\amchart\amcharts.js"></script>
+		<script src="\assets\pages\widget\amchart\serial.js"></script>
+		<script src="\assets\pages\widget\amchart\light.js"></script>
+		<script type="text/javascript" src="\assets\js\SmoothScroll.js"></script>
+		<script src="\assets\js\pcoded.min.js"></script>
+		<script src="\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
+		<script src="\assets\js\vartical-layout.min.js"></script>
+		<script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
+		<script type="text/javascript" src="\assets\js\script.js"></script>
+		<script type="text/javascript" src="\assets\js\senior.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
 
-                                  
-
-                                                                                                    
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- social end -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="styleSelector">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   
-    <!-- Required Jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
-    <script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
-    <script type="text/javascript" src="\bower_components\popper.js\js\popper.min.js"></script>
-    <script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
-    <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
-    <!-- modernizr js -->
-    <script type="text/javascript" src="\bower_components\modernizr\js\modernizr.js"></script>
-    <script type="text/javascript" src="\bower_components\modernizr\js\css-scrollbars.js"></script>
-    <!-- Chart js -->
-    <script type="text/javascript" src="\bower_components\chart.js\js\Chart.js"></script>
-    <!-- amchart js -->
-    <script src="\assets\pages\widget\amchart\amcharts.js"></script>
-    <script src="\assets\pages\widget\amchart\serial.js"></script>
-    <script src="\assets\pages\widget\amchart\light.js"></script>
-    <!-- Custom js -->
-    <script type="text/javascript" src="\assets\js\SmoothScroll.js"></script>
-    <script src="\assets\js\pcoded.min.js"></script>
-    <script src="\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="\assets\js\vartical-layout.min.js"></script>
-    <script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
-    <script type="text/javascript" src="\assets\js\script.js"></script>
-    <script type="text/javascript" src="\assets\js\senior.js"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-
-  function handleSpecialCategoryChange(checkbox) {
-    const checkboxes = document.querySelectorAll('input[name="status"]');
-    
-    if (checkbox.checked) {
-        // Disable all other checkboxes
-        checkboxes.forEach(cb => {
-            if (cb !== checkbox) {
-                cb.disabled = true;
-            }
-        });
-    } else {
-        // Enable all checkboxes when current one is unchecked
-        checkboxes.forEach(cb => {
-            cb.disabled = false;
-        });
-    }
-    
-    // Call your existing toggle functions if needed
-    if (checkbox.id === 'pwd') {
-        togglePWDSection();
-    } else if (checkbox.id === 'senior') {
-        toggleSeniorSection();
-    }
-    // Add any other specific functions you need to call
-}
-
-    
-</script>
-</body>
-
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-23581568-13');
+		</script>
+	</body>
 </html>
