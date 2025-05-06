@@ -270,3 +270,74 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   });
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const contactsContainer = document.getElementById('contactsContainer');
+  const addContactButton = document.getElementById('addContact');
+  let contactCounter = 1;
+
+  addContactButton.addEventListener('click', function() {
+      contactCounter++;
+      const newContact = document.createElement('div');
+      newContact.className = 'contact-entry';
+      newContact.dataset.contactId = contactCounter;
+      
+      newContact.innerHTML = `
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Contact Type</label>
+                  <select class="contact-type" name="contacts[${contactCounter}][type]" required>
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                      <option value="emergency">Emergency</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="contacts[${contactCounter}][name]" required>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Relationship</label>
+                  <input type="text" name="contacts[${contactCounter}][relationship]" required>
+              </div>
+              <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" name="contacts[${contactCounter}][phone]" required>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" name="contacts[${contactCounter}][email]">
+              </div>
+              <div class="form-group">
+                  <button type="button" class="remove-contact">Remove</button>
+              </div>
+          </div>
+      `;
+      
+      contactsContainer.appendChild(newContact);
+      
+      // Add event listener to the new remove button
+      newContact.querySelector('.remove-contact').addEventListener('click', function() {
+          contactsContainer.removeChild(newContact);
+      });
+  });
+  
+  // Add event listeners to existing remove buttons (if any)
+  document.querySelectorAll('.remove-contact').forEach(button => {
+      button.addEventListener('click', function() {
+          if (!button.disabled) {
+              const contactEntry = button.closest('.contact-entry');
+              contactsContainer.removeChild(contactEntry);
+          }
+      });
+  });
+});

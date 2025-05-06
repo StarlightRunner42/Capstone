@@ -39,6 +39,13 @@ router.get('/Pwd-form', requireAuth,(req, res) => {
     res.render('staff/staff_pwd');
 });
 
+router.get('/Admin', requireAuth,(req, res) => {
+    res.render('admin/admin_super_admin');
+});
+
+
+
+
 
 
 

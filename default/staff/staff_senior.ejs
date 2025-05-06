@@ -322,17 +322,7 @@
 		<script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
 		<!-- DataTables JS -->
 		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-		<!-- Initialize DataTables -->
-		<script>
-			$(document).ready(function() {
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true
-				});
-			});
-		</script>
+	
 		<!-- Other scripts -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 		<script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
@@ -359,6 +349,15 @@
 			}
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
+
+            $(document).ready(function() {
+				$('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true
+				});
+			});
 		</script>
 	</body>
 </html>

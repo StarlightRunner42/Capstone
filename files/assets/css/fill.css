@@ -197,7 +197,7 @@ body {
   
   .step.active {
     font-weight: bold;
-    color: #FF6363;
+    color: #f80000;
   }
   
   .step::before {
@@ -213,7 +213,7 @@ body {
   }
   
   .step.active::before {
-    background-color: #FF6363;
+    background-color: #ff0000;
     transform: scale(1.1);
     box-shadow: 0 0 0 4px rgba(253, 251, 238, 0.2);
   }
