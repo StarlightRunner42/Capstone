@@ -47,6 +47,24 @@ const puroks = {
   "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
 };
 
+
+function calculateAge() {
+  const birthdayInput = document.getElementById('birthday').value;
+  const birthday = new Date(birthdayInput);
+  const today = new Date();
+
+  
+  let age = today.getFullYear() - birthday.getFullYear();
+  const monthDifference = today.getMonth() - birthday.getMonth();
+
+  
+  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
+      age--;
+  }
+
+  document.getElementById('age').value = age;
+}
+
 function updatePurokOptions() {
   const barangay = document.getElementById('barangay').value;
   const purokSelect = document.getElementById('purok');
@@ -115,56 +133,77 @@ function validateCurrentStep(currentStep) {
       alert('Please complete all required fields before proceeding.');
   }
   
-  return isValid;
-}
-
-// Email validation helper
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-}
-
-// Form navigation with validation
-var currentTab = 0;
-showTab(currentTab);
-
-function showTab(n) {
-  const x = document.getElementsByTagName('fieldset');
-  x[n].style.display = 'block';
-  
-  // Update button visibility
-  document.getElementById('prevBtn').style.display = n === 0 ? 'none' : 'inline';
-  document.getElementById('nextBtn').innerHTML = n === x.length - 1 ? 'Submit' : 'Next';
-  
-  // Update progress steps
-  fixStepIndicator(n);
-}
-
-function nextPrev(n) {
-  const x = document.getElementsByTagName('fieldset');
-  
-  // Validate before proceeding forward
-  if (n === 1 && !validateCurrentStep(currentTab)) {
-      return false;
+  function showCheckmark(groupId) {
+    // Function to show checkmark when a file is selected
+    document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
   }
   
-  x[currentTab].style.display = 'none';
-  currentTab = currentTab + n;
-  
-  if (currentTab >= x.length) {
-      document.getElementById('housingForm').submit();
-      return false;
+  function toggleSpouseInput() {
+    var civilStatus = document.getElementById("civil_status").value;
+    var spouseGroup = document.getElementById("spouseGroup");
+    if (civilStatus === "Married") {
+      spouseGroup.style.display = "block";
+    } else {
+      spouseGroup.style.display = "none";
+    }
   }
   
+  function showCheckmark(groupId) {
+    var group = document.getElementById(groupId);
+    group.classList.add("checked");
+  }
+  
+  var currentTab = 0;
   showTab(currentTab);
-}
-
-function fixStepIndicator(n) {
-  const steps = document.getElementsByClassName('step');
-  for (let i = 0; i < steps.length; i++) {
-      steps[i].classList.remove('active');
+  
+  function showTab(n) {
+    var x = document.getElementsByTagName("fieldset");
+    x[n].style.display = "block";
+    if (n == 0) {
+      document.getElementById("prevBtn").style.display = "none";
+    } else {
+      document.getElementById("prevBtn").style.display = "inline";
+    }
+    if (n == x.length - 1) {
+      document.getElementById("nextBtn").innerHTML = "Submit";
+      document.getElementById("nextBtn").setAttribute("type", "submit");
+    } else {
+      document.getElementById("nextBtn").innerHTML = "Next";
+      document.getElementById("nextBtn").removeAttribute("type");
+    }
+    fixStepIndicator(n);
   }
-  steps[n].classList.add('active');
+  
+  function nextPrev(n) {
+    var x = document.getElementsByTagName("fieldset");
+    x[currentTab].style.display = "none";
+    currentTab = currentTab + n;
+    if (currentTab >= x.length) {
+      document.getElementById("housingForm").submit();
+      return false;
+    }
+    showTab(currentTab);
+  }
+  
+  function fixStepIndicator(n) {
+    var i,
+      x = document.getElementsByClassName("step");
+    for (i = 0; i < x.length; i++) {
+      x[i].className = x[i].className.replace(" active", "");
+    }
+    x[n].className += " active";
+  }
+
+// Function to toggle income input visibility
+function toggleIncome(selectElement) {
+  const formRow = selectElement.closest('.form-row');
+  const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
+  if (selectElement.value === 'working') {
+      incomeInput.style.display = 'block';
+  } else {
+      incomeInput.style.display = 'none';
+      incomeInput.value = ''; // clear value if hidden
+  }
 }
 
 // Child information management
