@@ -7,126 +7,185 @@ const UserSchema = new mongoose.Schema({
     role: { type: String, enum: ['Admin', 'Staff','Encoder'], required: true }
 });
 
-const SeniorCitizenSchema = new mongoose.Schema({
-  reference_code: { type: String },
-
-  identifying_information: {
-      name: {
-          last_name: { type: String },
-          first_name: { type: String },
-          middle_name: { type: String },
-          extension: { type: String }
-      },
-      address: {
-          barangay: { type: String },
-          purok: { type: String },
-      },
-      date_of_birth: { type: Date },
-      place_of_birth: { type: String },
-      marital_status: { type: String },
-      gender: { type: String },
-      contact_number: { type: Number },
-      email_address: { type: String },
-      religion: { type: String },
-      ethnic_origin: { type: String },
-      language_spoken_written: { type: String },
-      osca_id_number: { type: String },
-      gsis_sss: { type: String },
-      philhealth: { type: String },
-      sc_association_org_id_no: { type: String },
-      tin: { type: String },
-      other_govt_id: { type: String },
-      capability_to_travel: { type: Boolean },
-      service_business_employment: { type: String },
-      current_pension: { type: String }
-  },
-
-  family_composition: {
-      spouse: {
-          last_name: { type: String },
-          first_name: { type: String },
-          middle_name: { type: String },
-          extension: { type: String }
-      },
-      father: {
-          last_name: { type: String },
-          first_name: { type: String },
-          middle_name: { type: String }
-      },
-      mother: {
-          last_name: { type: String },
-          first_name: { type: String },
-          middle_name: { type: String }
-      },
-      children: [{
-          full_name: { type: String },
-          occupation: { type: String },
-          income: { type: Number },
-          age: { type: Number },
-          working: { type: Boolean }
-      }],
-      other_dependents: { type: String }
-  },
-
-  education_hr_profile: {
-    educational_attainment: {
-        type: String,
-        enum: [
-            'Elementary Level', 'Elementary Graduate',
-            'High School Level', 'High School Graduate',
-            'College Level', 'College Graduate',
-            'Post Graduate', 'Vocational', 'Not Attended School'
-        ]
-    },
-    areas_of_specialization: [{
-        type: String,
-        enum: [
-            'Medical',
-            'Teaching',
-            'Legal Services',
-            'Dental',
-            'Counseling',
-            'Farming',
-            'Fishing',
-            'Cooking',
-            'Arts',
-            'Engineering',
-            'Carpenter',
-            'Plumber',
-            'Barber',
-            'Mason',
-            'Sewing',
-            'Evangelization',
-            'Tailor',
-            'Chef/Cook',
-            'Millwright',
-            'Others, specify'
-        ]
-    }],
-    share_skills: [{ type: Number }],
-    community_service_involvement: [{
-        type: String,
-        enum: [
-            'Medical',
-            'Resource Volunteer',
-            'Community Beautification',
-            'Community / Organization Leader',
-            'Dental',
-            'Friendly Visits',
-            'Neighborhood Support Services',
-            'Legal Services',
-            'Religious',
-            'Counseling / Referral',
-            'Sponsorship',
-            'Others, specify'
-        ]
-    }]
-}
+const BarangaySchema = new mongoose.Schema({
+    barangay: { type: String, required: true },
+    puroks: [{ type: String, required: true }]
 });
 
+const SeniorCitizenSchema = new mongoose.Schema({
+    reference_code: { type: String },
+  
+    identifying_information: {
+      name: {
+        last_name: { type: String, required: true },
+        first_name: { type: String, required: true },
+        middle_name: { type: String },
+        extension: { type: String }
+      },
+      address: {
+        barangay: { 
+          type: String, 
+          required: true,
+          enum: [
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+            '11', '12', '13', '14', '15', '16', // Matches your barangay dropdown
+            'Barangay Mambulac', 'Barangay Guinhalaran', 'Barangay E-Lopez',
+            'Barangay Bagtic', 'Barangay Balaring', 'Barangay Hawaiian',
+            'Barangay Patag', 'Barangay Kapt.ramon', 'Barangay Guimbalaon',
+            'Barangay Rizal', 'Barangay Lantad'
+          ]
+        },
+        purok: { type: String, required: true }
+      },
+      date_of_birth: { type: Date }, // Will be populated from birthday field
+      age: { type: Number, required: true },
+      place_of_birth: { type: [String] }, // Array to match form field
+      marital_status: { 
+        type: String, 
+        required: true,
+        enum: [
+          'Single but Head of the Family',
+          'Single',
+          'Married',
+          'Widowed',
+          'Separated',
+          'Divorced'
+        ]
+      },
+      gender: { 
+        type: String, 
+        required: true,
+        enum: ['Male', 'Female', 'Other', 'Prefer not to say'] 
+      },
+      contacts: [{
+        type: { 
+          type: String, 
+          enum: ['primary', 'secondary', 'emergency'],
+          required: true
+        },
+        name: { type: String, required: true },
+        relationship: { type: String, required: true },
+        phone: { type: String, required: true },
+        email: { type: String }
+      }],
+      osca_id_number: { type: String }, // Matches osca_id
+      gsis_sss: { type: String },      // Matches gsis_sss_no
+      philhealth: { type: String },    // Matches philhealth_no
+      sc_association_org_id_no: { type: String }, // Matches sc_association_id
+      tin: { type: String },           // Matches tin_no
+      other_govt_id: { type: String },
+      service_business_employment: { type: String }, // Matches service
+      current_pension: { type: String },  // Matches pension
+      capability_to_travel: { // Added to match your form
+        type: String,
+        enum: ['Yes', 'No']
+      }
+    },
+  
+    family_composition: {
+      spouse: {
+        name: { type: String }  // Matches spouse_name
+      },
+      father: {
+        last_name: { type: String },
+        first_name: { type: String },
+        middle_name: { type: String },
+        extension: { type: String }
+      },
+      mother: {
+        last_name: { type: String },
+        first_name: { type: String },
+        middle_name: { type: String }
+      },
+      children: [{
+        full_name: { type: String },
+        occupation: { type: String },
+        income: { type: String },  // String to handle empty values
+        age: { type: Number },
+        working_status: { 
+          type: String,
+          enum: ['working', 'not_working', 'studying'] 
+        }
+      }]
+    },
+  
+    education_hr_profile: {
+      educational_attainment: {
+        type: [String],
+        enum: [
+          'Yes', // To handle your form's initial value
+          'No',
+          'Elementary Level', 
+          'Elementary Graduate',
+          'High School Level', 
+          'High School Graduate',
+          'College Level', 
+          'College Graduate',
+          'Post Graduate', 
+          'Vocational', 
+          'Not Attended School'
+        ]
+      },
+      skills: [{
+        type: String,
+        enum: [
+          'Medical',
+          'Teaching',
+          'Legal Services',
+          'Dental',
+          'Counseling',
+          'Farming',
+          'Fishing',
+          'Cooking',
+          'Arts',
+          'Engineering',
+          'Carpenter',
+          'Plumber',
+          'Barber',
+          'Mason',
+          'Sewing',
+          'Evangelization',
+          'Tailor',
+          'Chef/Cook',
+          'Millwright',
+          'Sapatero', // Added to match your form
+          'Other' // For the "Others" checkbox
+        ]
+      }],
+      skill_other_text: { type: String }  // For "Others, specify" field
+    }
+  }, { timestamps: true });
+  
+  // Middleware to clean data before saving
+  SeniorCitizenSchema.pre('save', function(next) {
+    // Clean education_level array
+    if (this.education_hr_profile?.educational_attainment) {
+      this.education_hr_profile.educational_attainment = 
+        this.education_hr_profile.educational_attainment
+          .filter(val => val !== 'Yes' && val !== 'No');
+    }
+    
+    // Handle "Other" skills
+    if (this.education_hr_profile?.skills?.includes('Other') && 
+        this.education_hr_profile?.skill_other_text) {
+      this.education_hr_profile.skills = this.education_hr_profile.skills
+        .filter(skill => skill !== 'Other');
+      this.education_hr_profile.skills.push(this.education_hr_profile.skill_other_text);
+    }
+    
+    // Convert birthday string to Date if needed
+    if (this.identifying_information?.date_of_birth && 
+        typeof this.identifying_information.date_of_birth === 'string') {
+      this.identifying_information.date_of_birth = new Date(this.identifying_information.date_of_birth);
+    }
+    
+    next();
+  });
+
+
 const User = mongoose.model('User', UserSchema);
-const Senior = mongoose.model('SeniorCitizen', SeniorCitizenSchema);
+const SeniorCitizen  = mongoose.model('SeniorCitizen', SeniorCitizenSchema);
+const Barangay = mongoose.model('Barangay', BarangaySchema);
 
 
-
-module.exports = { User,Senior };
+module.exports = { User,SeniorCitizen ,Barangay };

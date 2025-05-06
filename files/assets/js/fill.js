@@ -19,7 +19,12 @@ function calculateAge() {
   // Validate senior age (60+)
   if (age < 60) {
       ageInput.style.borderColor = 'red';
-      alert('You must be at least 60 years old to register as a senior.');
+      document.getElementById('age').value = '';
+      Swal.fire({
+        title: "You must be 60 years old or older to register.",
+        text: "Please check your date of birth.",
+        icon: "Error"
+      });
       return false;
   } else {
       ageInput.style.borderColor = '';
@@ -112,7 +117,12 @@ function validateCurrentStep(currentStep) {
   }
   
   if (!isValid) {
-      alert('Please complete all required fields before proceeding.');
+      //alert('');
+      Swal.fire({
+        title: "Please complete all required fields before proceeding.",
+        text: "Some fields are Empty.",
+        icon: "Error"
+      });
   }
   return isValid;
 }

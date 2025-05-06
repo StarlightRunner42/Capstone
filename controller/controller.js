@@ -4,7 +4,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
-const { User,Senior } = require("../model/schema");
+const { User,SeniorCitizen  } = require("../model/schema");
 
 exports.createUser = async (req, res) => {
     try {
@@ -131,47 +131,117 @@ exports.logout = (req, res) => {
   };
 
 
-exports.createResident = async (req, res) => {
-  const {
-    // Personal Information
-    first_name,
-    middle_name,
-    last_name,
-    barangay,
-    purok,
-    birthday,
-    age,
-    place_of_birth,
-    contact,
-    email,
-    civil_status,
-    spouse_name,
-    
-    // Father's Information
-    fatherLastName,
-    fatherFirstName,
-    fatherMiddleName,
-    fatherExtension,
-    
-    // Mother's Information
-    motherLastName,
-    motherFirstName,
-    motherMiddleName,
-    
-    // Children Information (arrays since there can be multiple)
-    childFullName,
-    childOccupation,
-    childIncome,
-    childAge,
-    childWorkingStatus,
-    
-    // ID Information
-    osca_id,
-    gsis_sss_no,
-    tin_no,
-    philhealth_no,
-    sc_association_id,
-    other_govt_id
-  } = req.body;
+  exports.createResident = async (req, res) => {
+    console.log('Raw body:', req.body);
+  
+    try {
+      // Transform the form data to match the schema structure
+      const residentData = {
+        identifying_information: {
+          name: {
+            first_name: req.body.first_name,
+            middle_name: req.body.middle_name,
+            last_name: req.body.last_name
+          },
+          address: {
+            barangay: req.body.barangay,
+            purok: req.body.purok
+          },
+          date_of_birth: req.body.birthday, // Will be converted to Date by middleware
+          age: parseInt(req.body.age),
+          place_of_birth: Array.isArray(req.body.place_of_birth) 
+            ? req.body.place_of_birth 
+            : [req.body.place_of_birth],
+          marital_status: req.body.civil_status,
+          gender: req.body.gender,
+          contacts: Array.isArray(req.body.contacts) 
+            ? req.body.contacts 
+            : [req.body.contacts],
+          osca_id_number: req.body.osca_id,
+          gsis_sss: req.body.gsis_sss_no,
+          philhealth: req.body.philhealth_no,
+          sc_association_org_id_no: req.body.sc_association_id,
+          tin: req.body.tin_no,
+          other_govt_id: req.body.other_govt_id,
+          service_business_employment: req.body.service,
+          current_pension: req.body.pension,
+          capability_to_travel: req.body.education_level === 'Yes' ? 'Yes' : 'No'
+        },
+        family_composition: {
+          spouse: {
+            name: req.body.spouse_name || undefined
+          },
+          father: {
+            last_name: req.body.fatherLastName,
+            first_name: req.body.fatherFirstName,
+            middle_name: req.body.fatherMiddleName,
+            extension: req.body.fatherExtension || undefined
+          },
+          mother: {
+            last_name: req.body.motherLastName,
+            first_name: req.body.motherFirstName,
+            middle_name: req.body.motherMiddleName
+          },
+          children: req.body.childFullName?.map((name, index) => ({
+            full_name: name,
+            occupation: req.body.childOccupation?.[index],
+            age: parseInt(req.body.childAge?.[index]) || undefined,
+            working_status: req.body.childWorkingStatus?.[index],
+            income: req.body.childIncome?.[index] || undefined
+          })) || []
+        },
+        education_hr_profile: {
+          educational_attainment: Array.isArray(req.body.education_level)
+            ? req.body.education_level
+            : [req.body.education_level],
+          skills: Array.isArray(req.body.skills) ? req.body.skills : [],
+          skill_other_text: req.body.skill_other_text || undefined
+        }
+      };
+  
+      // Create new resident
+      const newResident = new SeniorCitizen(residentData);
+      
+      // Save to database
+      const savedResident = await newResident.save();
+  
+      // Send response
+      res.status(201).json({
+        success: true,
+        message: 'Senior citizen record created successfully',
+        data: savedResident,
+        reference_code: savedResident.reference_code // If you have auto-generated reference
+      });
+  
+    } catch (error) {
+      console.error('Error creating resident:', error);
+      
+      // Handle validation errors
+      if (error.name === 'ValidationError') {
+        const errors = Object.values(error.errors).map(err => err.message);
+        return res.status(400).json({
+          success: false,
+          message: 'Validation error',
+          errors: errors
+        });
+      }
+      
+      // Handle duplicate key errors
+      if (error.code === 11000) {
+        return res.status(400).json({
+          success: false,
+          message: 'Duplicate key error',
+          field: Object.keys(error.keyPattern)[0],
+          value: error.keyValue[Object.keys(error.keyPattern)[0]]
+        });
+      }
+  
+      // Generic error handler
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
+    }
   };
 

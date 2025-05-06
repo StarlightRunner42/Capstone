@@ -10,7 +10,7 @@
         
 		<div class="container">
 			<h1 id="formTitle">SENIOR FORM</h1>
-			<form id="housingForm" action="" method="post" enctype="multipart/form-data">
+			<form id="housingForm" action="/add-data" method="post">
 				<div class="progress-bar">
 					<div class="step active"">
 									<span id=" step1">PERSONAL INFORMATION</span>
@@ -116,16 +116,6 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group">
-							<label for="contact" id="contactLabel">Contact Number</label>
-							<input type="number" id="contact" name="contact" required placeholder="Contact Number">
-						</div>
-						<div class="form-group">
-							<label for="email" id="emailLabel">Email</label>
-							<input type="text" id="email" name="email" required placeholder="example@gmail.com">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group">
 							<label for="civil_status" id="civilStatusLabel">Civil Status</label>
 							<select id="civil_status" name="civil_status" required onchange="toggleSpouseInput()">
 								<option value="Single but Head of the Family">Single but Head of the Family</option>
@@ -137,7 +127,17 @@
 							<label for="spouse_name" id="spouseNameLabel">Name of Spouse</label>
 							<input type="text" id="spouse_name" name="spouse_name" placeholder="Name of Spouse">
 						</div>
-					</div>
+						<div class="form-group">
+							<label for="gender">Gender</label>
+							<select id="gender" name="gender" required>
+								<option value="">-- Select One --</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Other">Other</option>
+								<option value="Prefer not to say">Prefer not to say</option>
+							</select>
+						</div>
+						</div>
 				</fieldset>
                 
 				<fieldset id="contactInformation">
@@ -427,6 +427,8 @@
 				</div>
 			</form>
 
+
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			<script type="text/javascript" src="\assets\js\fill.js"></script>
 	</body>
 </html>
