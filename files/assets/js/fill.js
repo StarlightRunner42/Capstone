@@ -1,20 +1,4 @@
 
-function calculateAge() {
-    const birthdayInput = document.getElementById('birthday').value;
-    const birthday = new Date(birthdayInput);
-    const today = new Date();
-
-    
-    let age = today.getFullYear() - birthday.getFullYear();
-    const monthDifference = today.getMonth() - birthday.getMonth();
-
-    
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
-        age--;
-    }
-
-    document.getElementById('age').value = age;
-}
 
 const puroks = {
     "1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
@@ -34,6 +18,24 @@ const puroks = {
     "15": ["kalinti", "kadipota", "yuta"],
     "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
 };
+
+
+function calculateAge() {
+  const birthdayInput = document.getElementById('birthday').value;
+  const birthday = new Date(birthdayInput);
+  const today = new Date();
+
+  
+  let age = today.getFullYear() - birthday.getFullYear();
+  const monthDifference = today.getMonth() - birthday.getMonth();
+
+  
+  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
+      age--;
+  }
+
+  document.getElementById('age').value = age;
+}
 
 function updatePurokOptions() {
     const barangay = document.getElementById('barangay').value;
@@ -198,17 +200,40 @@ function showPreview(inputId, previewId) {
     }
     fixStepIndicator(n);
   }
+
+  function validateForm() {
+    var valid = true;
+    var currentFields = document.getElementsByTagName("fieldset")[currentTab].querySelectorAll("input, select, textarea");
+
+    currentFields.forEach(function(field) {
+        if (field.hasAttribute("required") && !field.value.trim()) {
+            field.classList.add("invalid"); 
+            valid = false;
+        } else {
+            field.classList.remove("invalid");
+        }
+    });
+
+    return valid;
+}
   
   function nextPrev(n) {
     var x = document.getElementsByTagName("fieldset");
+
+    if (n === 1 && !validateForm()) {
+        return false; 
+    }
+
     x[currentTab].style.display = "none";
     currentTab = currentTab + n;
+
     if (currentTab >= x.length) {
-      document.getElementById("housingForm").submit();
-      return false;
+        document.getElementById("housingForm").submit();
+        return false;
     }
     showTab(currentTab);
-  }
+}
+
   
   function fixStepIndicator(n) {
     var i,
