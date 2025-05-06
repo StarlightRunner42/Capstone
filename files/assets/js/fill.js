@@ -47,24 +47,6 @@ const puroks = {
   "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
 };
 
-
-function calculateAge() {
-  const birthdayInput = document.getElementById('birthday').value;
-  const birthday = new Date(birthdayInput);
-  const today = new Date();
-
-  
-  let age = today.getFullYear() - birthday.getFullYear();
-  const monthDifference = today.getMonth() - birthday.getMonth();
-
-  
-  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
-      age--;
-  }
-
-  document.getElementById('age').value = age;
-}
-
 function updatePurokOptions() {
   const barangay = document.getElementById('barangay').value;
   const purokSelect = document.getElementById('purok');
@@ -132,67 +114,70 @@ function validateCurrentStep(currentStep) {
   if (!isValid) {
       alert('Please complete all required fields before proceeding.');
   }
-  
-  function showCheckmark(groupId) {
-    // Function to show checkmark when a file is selected
-    document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
+  return isValid;
+}
+
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+function showCheckmark(groupId) {
+  document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
+}
+
+function toggleSpouseInput() {
+  var civilStatus = document.getElementById("civil_status").value;
+  var spouseGroup = document.getElementById("spouseGroup");
+  if (civilStatus === "Married") {
+    spouseGroup.style.display = "block";
+  } else {
+    spouseGroup.style.display = "none";
   }
-  
-  function toggleSpouseInput() {
-    var civilStatus = document.getElementById("civil_status").value;
-    var spouseGroup = document.getElementById("spouseGroup");
-    if (civilStatus === "Married") {
-      spouseGroup.style.display = "block";
-    } else {
-      spouseGroup.style.display = "none";
-    }
+}
+
+var currentTab = 0;
+showTab(currentTab);
+
+function showTab(n) {
+  var x = document.getElementsByTagName("fieldset");
+  x[n].style.display = "block";
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
+  } else {
+    document.getElementById("prevBtn").style.display = "inline";
   }
-  
-  function showCheckmark(groupId) {
-    var group = document.getElementById(groupId);
-    group.classList.add("checked");
+  if (n == x.length - 1) {
+    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").setAttribute("type", "submit");
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("nextBtn").removeAttribute("type");
   }
+  fixStepIndicator(n);
+}
+
+function nextPrev(n) {
+  var x = document.getElementsByTagName("fieldset");
+  if (n > 0 && !validateCurrentStep(currentTab)) return false;
   
-  var currentTab = 0;
+  x[currentTab].style.display = "none";
+  currentTab = currentTab + n;
+  if (currentTab >= x.length) {
+    document.getElementById("housingForm").submit();
+    return false;
+  }
   showTab(currentTab);
-  
-  function showTab(n) {
-    var x = document.getElementsByTagName("fieldset");
-    x[n].style.display = "block";
-    if (n == 0) {
-      document.getElementById("prevBtn").style.display = "none";
-    } else {
-      document.getElementById("prevBtn").style.display = "inline";
-    }
-    if (n == x.length - 1) {
-      document.getElementById("nextBtn").innerHTML = "Submit";
-      document.getElementById("nextBtn").setAttribute("type", "submit");
-    } else {
-      document.getElementById("nextBtn").innerHTML = "Next";
-      document.getElementById("nextBtn").removeAttribute("type");
-    }
-    fixStepIndicator(n);
+}
+
+function fixStepIndicator(n) {
+  var i,
+    x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
   }
-  
-  function nextPrev(n) {
-    var x = document.getElementsByTagName("fieldset");
-    x[currentTab].style.display = "none";
-    currentTab = currentTab + n;
-    if (currentTab >= x.length) {
-      document.getElementById("housingForm").submit();
-      return false;
-    }
-    showTab(currentTab);
-  }
-  
-  function fixStepIndicator(n) {
-    var i,
-      x = document.getElementsByClassName("step");
-    for (i = 0; i < x.length; i++) {
-      x[i].className = x[i].className.replace(" active", "");
-    }
-    x[n].className += " active";
-  }
+  x[n].className += " active";
+}
 
 // Function to toggle income input visibility
 function toggleIncome(selectElement) {
@@ -302,55 +287,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Spouse input toggle
-function toggleSpouseInput() {
-  const civilStatus = document.getElementById('civil_status').value;
-  const spouseGroup = document.getElementById('spouseGroup');
-  spouseGroup.style.display = civilStatus === 'Married' ? 'block' : 'none';
-  
-  // Validate spouse name if married
-  if (civilStatus === 'Married') {
-      const spouseName = document.getElementById('spouse_name');
-      if (!spouseName.value.trim()) {
-          spouseName.style.borderColor = 'red';
-          return false;
-      }
-  }
-  return true;
-}
-
-// Working status toggle for children
-function toggleIncome(selectElement) {
-  const formRow = selectElement.closest('.form-row');
-  const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
-  
-  // Make sure we found the income input
-  if (!incomeInput) return;
-  
-  if (selectElement.value === 'working') {
-    incomeInput.style.display = 'block';
-    incomeInput.setAttribute('required', 'required');
-  } else {
-    incomeInput.style.display = 'none';
-    incomeInput.removeAttribute('required');
-    incomeInput.value = ''; // clear value if hidden
-  }
-}
-
-
-function attachWorkingStatusListeners() {
-  document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
-    select.addEventListener('change', function() {
-      toggleIncome(this);
-    });
-    
-    // Initialize visibility based on current value
-    toggleIncome(select);
-  });
-}
-
-
-
 // Initialize purok options if a barangay is already selected
 document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('barangay').value) {
@@ -372,4 +308,15 @@ document.addEventListener('DOMContentLoaded', function() {
           }
       });
   });
-}); 
+});
+
+function attachWorkingStatusListeners() {
+  document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
+    select.addEventListener('change', function() {
+      toggleIncome(this);
+    });
+    
+    // Initialize visibility based on current value
+    toggleIncome(select);
+  });
+}
