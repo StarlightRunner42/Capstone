@@ -340,106 +340,102 @@
 								<div class="main-body">
 									<div class="page-wrapper"></div>
 
-									<div class="container">
-										<h1>Barangay and Purok Management System</h1>
+									<div class="app-container">
+										<header class="app-header">
+											<h1 class="app-title">Barangay & Purok Registration</h1>
+										</header>
 										
-										<div class="notification" id="notification"></div>
+										<div class="maintenance-alert">
+											<svg class="alert-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M8.4375 5.625H11.5625L11.0625 11.25H8.9375L8.4375 5.625Z" fill="currentColor"/>
+												<path d="M10 14.375C10.5178 14.375 10.9375 13.9553 10.9375 13.4375C10.9375 12.9197 10.5178 12.5 10 12.5C9.48223 12.5 9.0625 12.9197 9.0625 13.4375C9.0625 13.9553 9.48223 14.375 10 14.375Z" fill="currentColor"/>
+												<path fill-rule="evenodd" clip-rule="evenodd" d="M10 18.125C14.4873 18.125 18.125 14.4873 18.125 10C18.125 5.51269 14.4873 1.875 10 1.875C5.51269 1.875 1.875 5.51269 1.875 10C1.875 14.4873 5.51269 18.125 10 18.125ZM10 16.875C13.7989 16.875 16.875 13.799 16.875 10C16.875 6.20101 13.7989 3.125 10 3.125C6.20101 3.125 3.125 6.20101 3.125 10C3.125 13.799 6.20101 16.875 10 16.875Z" fill="currentColor"/>
+											</svg>
+											<span><strong>Note:</strong> Maintenance section - Changes affect system operations</span>
+										</div>
 										
 										<div class="tabs">
-											<div class="tab active" data-tab="barangay">Barangay</div>
-											<div class="tab" data-tab="purok">Purok</div>
-											<div class="tab" data-tab="view">View Data</div>
+											<div class="tab active" id="tab-barangay">New Barangay</div>
+											<div class="tab" id="tab-purok">Add Purok</div>
 										</div>
 										
-										<!-- Barangay Form -->
-										<div class="tab-content active" id="barangay-tab">
-											<div class="form-section">
-												<h2>Add New Barangay</h2>
-												<form id="barangayForm">
-													<div class="form-group">
-														<label for="barangayName">Barangay Name:</label>
-														<input type="text" id="barangayName" name="barangayName" required>
+										<div class="content-area">
+											<div class="form-container active" id="form-barangay">
+												<form id="registerBarangay">
+													<div class="form-row">
+														<div class="form-col">
+															<label class="required" for="barangayName">Barangay Name</label>
+															<input type="text" id="barangayName" placeholder="Enter barangay name" required>
+														</div>
+														<div class="form-col">
+															<label class="required" for="barangayCode">Barangay Code</label>
+															<input type="text" id="barangayCode" placeholder="Enter unique code" required>
+														</div>
 													</div>
-													<div class="form-group">
-														<label for="barangayDescription">Description (Optional):</label>
-														<textarea id="barangayDescription" name="barangayDescription"></textarea>
+													
+													<div class="form-row">
+														<div class="form-col">
+															<label for="barangayCaptain">Barangay Captain</label>
+															<input type="text" id="barangayCaptain" placeholder="Enter captain's name">
+														</div>
+														<div class="form-col">
+															<label for="barangayContact">Contact Number</label>
+															<input type="text" id="barangayContact" placeholder="e.g. +63 998 765 4321">
+														</div>
 													</div>
-													<button type="submit">Save Barangay</button>
+													
+													<button type="submit" class="btn">
+														<svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<path d="M10 4.375V15.625" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+															<path d="M4.375 10H15.625" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+														</svg>
+														Register Barangay
+													</button>
 												</form>
-											</div>
-										</div>
-										
-										<!-- Purok Form -->
-										<div class="tab-content" id="purok-tab">
-											<div class="form-section">
-												<h2>Add New Purok</h2>
-												<form id="purokForm">
-													<div class="form-group">
-														<label for="purokBarangay">Barangay:</label>
-														<select id="purokBarangay" name="purokBarangay" required>
-															<option value="">Select Barangay</option>
-															<!-- Options will be populated by JavaScript -->
-														</select>
-													</div>
-													<div class="form-group">
-														<label for="purokName">Purok Name:</label>
-														<input type="text" id="purokName" name="purokName" required>
-													</div>
-													<div class="form-group">
-														<label for="purokLeader">Purok Leader (Optional):</label>
-														<input type="text" id="purokLeader" name="purokLeader">
-													</div>
-													<div class="form-group">
-														<label for="purokContact">Contact Number (Optional):</label>
-														<input type="tel" id="purokContact" name="purokContact">
-													</div>
-													<button type="submit">Save Purok</button>
-												</form>
-											</div>
-										</div>
-										
-										<!-- View Data -->
-										<div class="tab-content" id="view-tab">
-											<div class="form-section">
-												<h2>Barangay List</h2>
-												<table id="barangayTable">
-													<thead>
-														<tr>
-															<th>ID</th>
-															<th>Name</th>
-															<th>Description</th>
-															<th>Date Created</th>
-															<th>Actions</th>
-														</tr>
-													</thead>
-													<tbody>
-														<!-- Data will be populated by JavaScript -->
-													</tbody>
-												</table>
 											</div>
 											
-											<div class="form-section">
-												<h2>Purok List</h2>
-												<table id="purokTable">
-													<thead>
-														<tr>
-															<th>ID</th>
-															<th>Name</th>
-															<th>Barangay</th>
-															<th>Leader</th>
-															<th>Contact</th>
-															<th>Date Created</th>
-															<th>Actions</th>
-														</tr>
-													</thead>
-													<tbody>
-														<!-- Data will be populated by JavaScript -->
-													</tbody>
-												</table>
+											<div class="form-container" id="form-purok">
+												<form id="registerPurok">
+													<div class="form-group">
+														<label class="required" for="selectBarangay">Select Barangay</label>
+														<select id="selectBarangay" required>
+															<option value="" disabled selected>-- Select Barangay --</option>
+															<option value="1">Barangay 1</option>
+															<option value="2">Barangay 2</option>
+															<option value="3">Barangay 3</option>
+															<option value="4">Barangay 4</option>
+															<option value="5">Barangay 5</option>
+														</select>
+													</div>
+													
+													<div class="form-row">
+														<div class="form-col">
+															<label class="required" for="purokName">Purok Name</label>
+															<input type="text" id="purokName" placeholder="Enter purok name" required>
+														</div>
+														<div class="form-col">
+															<label class="required" for="purokNumber">Purok Number</label>
+															<input type="text" id="purokNumber" placeholder="Enter purok number" required>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="purokLeader">Purok Leader</label>
+														<input type="text" id="purokLeader" placeholder="Enter leader's name">
+													</div>
+													
+													<button type="submit" class="btn">
+														<svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<path d="M10 4.375V15.625" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+															<path d="M4.375 10H15.625" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+														</svg>
+														Add Purok
+													</button>
+												</form>
 											</div>
 										</div>
 									</div>
-
+									
 								</div>
 								<!-- latest activity end -->
 							</div>
@@ -484,7 +480,7 @@
 		<script src="/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 		<script type="text/javascript" src="/assets/pages/dashboard/crm-dashboard.min.js"></script>
 		<script type="text/javascript" src="/assets/js/script.js"></script>
-		<script type="text/javascript" src="/assets/js/superadmins.js"></script>
+		<script type="text/javascript" src="/assets/js/admin.js"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 		<script>

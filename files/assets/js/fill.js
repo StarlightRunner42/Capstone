@@ -1,279 +1,211 @@
-
+// Age calculation with validation
 function calculateAge() {
-    const birthdayInput = document.getElementById('birthday').value;
-    const birthday = new Date(birthdayInput);
-    const today = new Date();
+  const birthdayInput = document.getElementById('birthday').value;
+  if (!birthdayInput) return false;
+  
+  const birthday = new Date(birthdayInput);
+  const today = new Date();
+  
+  let age = today.getFullYear() - birthday.getFullYear();
+  const monthDifference = today.getMonth() - birthday.getMonth();
 
-    
-    let age = today.getFullYear() - birthday.getFullYear();
-    const monthDifference = today.getMonth() - birthday.getMonth();
+  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
+      age--;
+  }
 
-    
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
-        age--;
-    }
-
-    document.getElementById('age').value = age;
+  const ageInput = document.getElementById('age');
+  ageInput.value = age;
+  
+  // Validate senior age (60+)
+  if (age < 60) {
+      ageInput.style.borderColor = 'red';
+      alert('You must be at least 60 years old to register as a senior.');
+      return false;
+  } else {
+      ageInput.style.borderColor = '';
+      return true;
+  }
 }
 
+// Purok dropdown population
 const puroks = {
-    "1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
-    "2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
-    "3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
-    "4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
-    "5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
-    "6": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
-    "7": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
-    "8": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
-    "9": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
-    "10": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
-    "11": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
-    "12": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
-    "13": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
-    "14": ["kalinti", "kadipota", "yuta"],
-    "15": ["kalinti", "kadipota", "yuta"],
-    "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
+  "1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
+  "2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
+  "3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
+  "4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
+  "5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
+  "6": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
+  "7": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
+  "8": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
+  "9": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
+  "10": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
+  "11": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
+  "12": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
+  "13": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
+  "14": ["kalinti", "kadipota", "yuta"],
+  "15": ["kalinti", "kadipota", "yuta"],
+  "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
 };
 
 function updatePurokOptions() {
-    const barangay = document.getElementById('barangay').value;
-    const purokSelect = document.getElementById('purok');
-    
-    // Clear existing options
-    purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
+  const barangay = document.getElementById('barangay').value;
+  const purokSelect = document.getElementById('purok');
+  
+  purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
 
-    // Check if the selected barangay exists in our puroks object
-    if (puroks[barangay]) {
-        // Add each purok as an option
-        puroks[barangay].forEach(purok => {
-            const option = document.createElement('option');
-            option.value = purok;
-            option.textContent = purok;
-            purokSelect.appendChild(option);
-        });
-    }
+  if (puroks[barangay]) {
+      puroks[barangay].forEach(purok => {
+          const option = document.createElement('option');
+          option.value = purok;
+          option.textContent = purok;
+          purokSelect.appendChild(option);
+      });
+  }
 }
 
-// Initialize purok options if a barangay is already selected (useful if page reloads)
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('barangay').value) {
-        updatePurokOptions();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  const childrenContainer = document.getElementById('childrenContainer');
-  const addChildButton = document.getElementById('addChild');
+// Form validation function
+function validateCurrentStep(currentStep) {
+  let isValid = true;
+  const currentFieldset = document.getElementsByTagName('fieldset')[currentStep];
+  const requiredInputs = currentFieldset.querySelectorAll('[required]');
   
-  // Add new child entry
-  addChildButton.addEventListener('click', function() {
-      const childEntry = document.querySelector('.child-entry').cloneNode(true);
-      const inputs = childEntry.querySelectorAll('input, select');
-      
-      // Clear all input values in the cloned entry
-      inputs.forEach(input => {
-          if (input.type !== 'button') {
-              input.value = '';
+  // Check all required fields in current step
+  requiredInputs.forEach(input => {
+      if (!input.value.trim()) {
+          input.style.borderColor = 'red';
+          isValid = false;
+          
+          // Scroll to the first invalid field
+          if (isValid === false) {
+              input.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
-      });
-      
-      // Show the delete button for all entries except the first one
-      const deleteButtons = childrenContainer.querySelectorAll('.delete-child');
-      if (deleteButtons.length > 0) {
-          deleteButtons[0].style.display = 'inline-block';
-      }
-      
-      // Show delete button for the new entry
-      childEntry.querySelector('.delete-child').style.display = 'inline-block';
-      
-      childrenContainer.appendChild(childEntry);
-  });
-  
-  // Delete child entry
-  childrenContainer.addEventListener('click', function(e) {
-      if (e.target.classList.contains('delete-child')) {
-          const childEntries = childrenContainer.querySelectorAll('.child-entry');
-          if (childEntries.length > 1) {
-              e.target.closest('.child-entry').remove();
-              
-              // Hide delete button if only one entry remains
-              if (childrenContainer.querySelectorAll('.child-entry').length === 1) {
-                  childrenContainer.querySelector('.delete-child').style.display = 'none';
-              }
-          }
-      }
-  });
-});
-    
-
-function showPreview(inputId, previewId) {
-    var input = document.getElementById(inputId);
-    var preview = document.getElementById(previewId);
-  
-    // Ensure a file was selected
-    if (input.files && input.files[0]) {
-      var file = input.files[0];
-  
-      // Check if the file is an image
-      if (file.type.match("image.*")) {
-        var reader = new FileReader();
-  
-        // When the file is loaded, set it as the image source
-        reader.onload = function (e) {
-          preview.src = e.target.result;
-          preview.style.display = "block"; // Make the image visible
-        };
-  
-        reader.readAsDataURL(file); // Read the file as a Data URL
       } else {
-        alert("Please upload a valid image file (e.g., .jpg, .png).");
-        input.value = ""; // Reset the file input if not an image
+          input.style.borderColor = '';
       }
-    }
-  }
-  
-  function showTab(n) {
-    // Function to display a specific tab of the form
-    let x = document.getElementsByTagName("fieldset");
-    x[n].style.display = "block";
-  }
-  
-  function nextPrev(n) {
-    // Function to navigate through the steps of the form
-    let x = document.getElementsByTagName("fieldset");
-    x[0].style.display = "none";
-    x[1].style.display = "none";
-    x[2].style.display = "none";
-    x[3].style.display = "none";
-  
-    if (n === 1) {
-      x[currentTab].style.display = "block";
-    }
-  }
-  
-  function toggleSpouseInput() {
-    // Function to show/hide spouse name input based on civil status
-    let civilStatus = document.getElementById("civil_status").value;
-    let spouseGroup = document.getElementById("spouseGroup");
-    spouseGroup.style.display = civilStatus === "Married" ? "block" : "none";
-  }
-  
-  function showCheckmark(groupId) {
-    // Function to show checkmark when a file is selected
-    document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
-  }
-  
-  function toggleSpouseInput() {
-    var civilStatus = document.getElementById("civil_status").value;
-    var spouseGroup = document.getElementById("spouseGroup");
-    if (civilStatus === "Married") {
-      spouseGroup.style.display = "block";
-    } else {
-      spouseGroup.style.display = "none";
-    }
-  }
-  
-  function showCheckmark(groupId) {
-    var group = document.getElementById(groupId);
-    group.classList.add("checked");
-  }
-  
-  var currentTab = 0;
-  showTab(currentTab);
-  
-  function showTab(n) {
-    var x = document.getElementsByTagName("fieldset");
-    x[n].style.display = "block";
-    if (n == 0) {
-      document.getElementById("prevBtn").style.display = "none";
-    } else {
-      document.getElementById("prevBtn").style.display = "inline";
-    }
-    if (n == x.length - 1) {
-      document.getElementById("nextBtn").innerHTML = "Submit";
-      document.getElementById("nextBtn").setAttribute("type", "submit");
-    } else {
-      document.getElementById("nextBtn").innerHTML = "Next";
-      document.getElementById("nextBtn").removeAttribute("type");
-    }
-    fixStepIndicator(n);
-  }
-  
-  function nextPrev(n) {
-    var x = document.getElementsByTagName("fieldset");
-    x[currentTab].style.display = "none";
-    currentTab = currentTab + n;
-    if (currentTab >= x.length) {
-      document.getElementById("housingForm").submit();
-      return false;
-    }
-    showTab(currentTab);
-  }
-  
-  function fixStepIndicator(n) {
-    var i,
-      x = document.getElementsByClassName("step");
-    for (i = 0; i < x.length; i++) {
-      x[i].className = x[i].className.replace(" active", "");
-    }
-    x[n].className += " active";
-  }
-
-// Function to toggle income input visibility
-function toggleIncome(selectElement) {
-  const formRow = selectElement.closest('.form-row');
-  const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
-  if (selectElement.value === 'working') {
-      incomeInput.style.display = 'block';
-  } else {
-      incomeInput.style.display = 'none';
-      incomeInput.value = ''; // clear value if hidden
-  }
-}
-
-// Attach change listener to existing and future select elements
-function attachWorkingStatusListener(container) {
-  const selects = container.querySelectorAll('select[name="childWorkingStatus[]"]');
-  selects.forEach(select => {
-      select.addEventListener('change', function() {
-          toggleIncome(this);
-      });
   });
+  
+  // Special validation for contact information
+  if (currentStep === 1) {
+      const contactEntries = document.querySelectorAll('.contact-entry');
+      contactEntries.forEach(entry => {
+          const contactType = entry.querySelector('.contact-type').value;
+          const name = entry.querySelector('input[name$="[name]"]').value;
+          const relationship = entry.querySelector('input[name$="[relationship]"]').value;
+          const phone = entry.querySelector('input[name$="[phone]"]').value;
+          
+          if (!name || !relationship || !phone) {
+              isValid = false;
+              entry.style.border = '1px solid red';
+          } else {
+              entry.style.border = '';
+          }
+      });
+  }
+  
+  // Validate email format if email field exists
+  if (currentStep === 0) {
+      const emailInput = document.getElementById('email');
+      if (emailInput && !validateEmail(emailInput.value.trim())) {
+          emailInput.style.borderColor = 'red';
+          isValid = false;
+      }
+  }
+  
+  if (!isValid) {
+      alert('Please complete all required fields before proceeding.');
+  }
+  
+  return isValid;
 }
 
-// Initial setup for existing elements
+// Email validation helper
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+// Form navigation with validation
+var currentTab = 0;
+showTab(currentTab);
+
+function showTab(n) {
+  const x = document.getElementsByTagName('fieldset');
+  x[n].style.display = 'block';
+  
+  // Update button visibility
+  document.getElementById('prevBtn').style.display = n === 0 ? 'none' : 'inline';
+  document.getElementById('nextBtn').innerHTML = n === x.length - 1 ? 'Submit' : 'Next';
+  
+  // Update progress steps
+  fixStepIndicator(n);
+}
+
+function nextPrev(n) {
+  const x = document.getElementsByTagName('fieldset');
+  
+  // Validate before proceeding forward
+  if (n === 1 && !validateCurrentStep(currentTab)) {
+      return false;
+  }
+  
+  x[currentTab].style.display = 'none';
+  currentTab = currentTab + n;
+  
+  if (currentTab >= x.length) {
+      document.getElementById('housingForm').submit();
+      return false;
+  }
+  
+  showTab(currentTab);
+}
+
+function fixStepIndicator(n) {
+  const steps = document.getElementsByClassName('step');
+  for (let i = 0; i < steps.length; i++) {
+      steps[i].classList.remove('active');
+  }
+  steps[n].classList.add('active');
+}
+
+// Child information management
 document.addEventListener('DOMContentLoaded', function() {
   const childrenContainer = document.getElementById('childrenContainer');
-  attachWorkingStatusListener(childrenContainer);
-
+  
   // Add new child entry
   document.getElementById('addChild').addEventListener('click', function() {
-      const childEntry = childrenContainer.querySelector('.child-entry');
-      const newChild = childEntry.cloneNode(true);
+    const childEntry = childrenContainer.querySelector('.child-entry');
+    const newChild = childEntry.cloneNode(true);
 
-      // Clear input values
-      newChild.querySelectorAll('input').forEach(input => {
-          input.value = '';
-          input.style.display = (input.name === 'childIncome[]') ? 'none' : 'block'; // hide income by default
-      });
-      newChild.querySelector('select').value = '';
-      newChild.querySelector('.delete-child').style.display = 'inline-block';
-
-      childrenContainer.appendChild(newChild);
-      attachWorkingStatusListener(newChild);
+    // Clear input values
+    newChild.querySelectorAll('input').forEach(input => {
+      input.value = '';
+    });
+    newChild.querySelector('select').value = 'not_working';
+    
+    // Show delete button for new entry
+    newChild.querySelector('.delete-child').style.display = 'inline-block';
+    
+    childrenContainer.appendChild(newChild);
+    
+    // Attach event listeners to new elements
+    attachWorkingStatusListeners();
   });
 
   // Delete child entry
   childrenContainer.addEventListener('click', function(e) {
-      if (e.target.classList.contains('delete-child')) {
-          e.target.closest('.child-entry').remove();
+    if (e.target.classList.contains('delete-child')) {
+      const childEntries = childrenContainer.querySelectorAll('.child-entry');
+      if (childEntries.length > 1) {
+        e.target.closest('.child-entry').remove();
       }
+    }
   });
+
+  // Initialize listeners for existing elements
+  attachWorkingStatusListeners();
 });
 
-
-
-
+// Contact information management
 document.addEventListener('DOMContentLoaded', function() {
   const contactsContainer = document.getElementById('contactsContainer');
   const addContactButton = document.getElementById('addContact');
@@ -325,19 +257,80 @@ document.addEventListener('DOMContentLoaded', function() {
       
       contactsContainer.appendChild(newContact);
       
-      // Add event listener to the new remove button
       newContact.querySelector('.remove-contact').addEventListener('click', function() {
           contactsContainer.removeChild(newContact);
       });
   });
+});
+
+// Spouse input toggle
+function toggleSpouseInput() {
+  const civilStatus = document.getElementById('civil_status').value;
+  const spouseGroup = document.getElementById('spouseGroup');
+  spouseGroup.style.display = civilStatus === 'Married' ? 'block' : 'none';
   
-  // Add event listeners to existing remove buttons (if any)
-  document.querySelectorAll('.remove-contact').forEach(button => {
-      button.addEventListener('click', function() {
-          if (!button.disabled) {
-              const contactEntry = button.closest('.contact-entry');
-              contactsContainer.removeChild(contactEntry);
+  // Validate spouse name if married
+  if (civilStatus === 'Married') {
+      const spouseName = document.getElementById('spouse_name');
+      if (!spouseName.value.trim()) {
+          spouseName.style.borderColor = 'red';
+          return false;
+      }
+  }
+  return true;
+}
+
+// Working status toggle for children
+function toggleIncome(selectElement) {
+  const formRow = selectElement.closest('.form-row');
+  const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
+  
+  // Make sure we found the income input
+  if (!incomeInput) return;
+  
+  if (selectElement.value === 'working') {
+    incomeInput.style.display = 'block';
+    incomeInput.setAttribute('required', 'required');
+  } else {
+    incomeInput.style.display = 'none';
+    incomeInput.removeAttribute('required');
+    incomeInput.value = ''; // clear value if hidden
+  }
+}
+
+
+function attachWorkingStatusListeners() {
+  document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
+    select.addEventListener('change', function() {
+      toggleIncome(this);
+    });
+    
+    // Initialize visibility based on current value
+    toggleIncome(select);
+  });
+}
+
+
+
+// Initialize purok options if a barangay is already selected
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('barangay').value) {
+      updatePurokOptions();
+  }
+  
+  // Add real-time validation for fields
+  const requiredInputs = document.querySelectorAll('[required]');
+  requiredInputs.forEach(input => {
+      input.addEventListener('input', function() {
+          if (this.value.trim()) {
+              this.style.borderColor = '';
+          }
+      });
+      
+      input.addEventListener('blur', function() {
+          if (!this.value.trim() && this.hasAttribute('required')) {
+              this.style.borderColor = 'red';
           }
       });
   });
-});
+}); 

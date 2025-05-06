@@ -7,6 +7,7 @@
 		<title>Silay Housing Authority Office Information Form</title>
 	</head>
 	<body>
+        
 		<div class="container">
 			<h1 id="formTitle">SENIOR FORM</h1>
 			<form id="housingForm" action="" method="post" enctype="multipart/form-data">
@@ -27,6 +28,7 @@
 						<span id="step5">EDUCATION / HR PROFILE</span>
 					</div>
 				</div>
+
 				<!-- Personal Information -->
 				<fieldset id="personalInfo" class="active">
 					<legend id="personalInfoLegend">Personal Information</legend>
@@ -300,6 +302,7 @@
 						</div>
 					</div>
 				</fieldset>
+
 				<fieldset id="educationalAttainment">
 					<legend>26. Educational Attainment</legend>
 					<div class="form-group">
@@ -316,12 +319,114 @@
 							<option value="Not Attended School">Not Attended School</option>
 						</select>
 					</div>
+
+					<div class="form-section skills-section">
+						<h3 class="section-title">27. Areas of Specialization / Technical Skills</h3>
+						<p class="section-subtitle">Check all applicable</p>
+						
+						<div class="skills-grid">
+						  <div class="skills-column">
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-medical" name="skills[]" value="Medical">
+							  <label for="skill-medical">Medical</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-dental" name="skills[]" value="Dental">
+							  <label for="skill-dental">Dental</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-fishing" name="skills[]" value="Fishing">
+							  <label for="skill-fishing">Fishing</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-engineering" name="skills[]" value="Engineering">
+							  <label for="skill-engineering">Engineering</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-barber" name="skills[]" value="Barber">
+							  <label for="skill-barber">Barber</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-evangelization" name="skills[]" value="Evangelization">
+							  <label for="skill-evangelization">Evangelization</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-millwright" name="skills[]" value="Millwright">
+							  <label for="skill-millwright">Millwright</label>
+							</div>
+						  </div>
+						  
+						  <div class="skills-column">
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-teaching" name="skills[]" value="Teaching">
+							  <label for="skill-teaching">Teaching</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-counseling" name="skills[]" value="Counseling">
+							  <label for="skill-counseling">Counseling</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-cooking" name="skills[]" value="Cooking">
+							  <label for="skill-cooking">Cooking</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-carpenter" name="skills[]" value="Carpenter">
+							  <label for="skill-carpenter">Carpenter</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-mason" name="skills[]" value="Mason">
+							  <label for="skill-mason">Mason</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-tailor" name="skills[]" value="Tailor">
+							  <label for="skill-tailor">Tailor</label>
+							</div>
+						  </div>
+						  
+						  <div class="skills-column">
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-legal" name="skills[]" value="Legal Services">
+							  <label for="skill-legal">Legal Services</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-farming" name="skills[]" value="Farming">
+							  <label for="skill-farming">Farming</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-arts" name="skills[]" value="Arts">
+							  <label for="skill-arts">Arts</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-plumber" name="skills[]" value="Plumber">
+							  <label for="skill-plumber">Plumber</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-sapatero" name="skills[]" value="Sapatero">
+							  <label for="skill-sapatero">Sapatero</label>
+							</div>
+							<div class="skill-item">
+							  <input type="checkbox" id="skill-chef" name="skills[]" value="Chef/Cook">
+							  <label for="skill-chef">Chef/Cook</label>
+							</div>
+						  </div>
+						</div>
+						
+						<div class="skill-item other-skill">
+						  <input type="checkbox" id="skill-other" name="skills[]" value="Other">
+						  <label for="skill-other">Others, specify:</label>
+						  <input type="text" id="skill-other-text" name="skill_other_text" class="other-input">
+						</div>
+					  </div>
+					  
 				</fieldset>
+
+				
 				<div class="navigation">
 					<button type="button" id="prevBtn" onclick="nextPrev(-1)">BACK</button>
 					<button type="button" id="nextBtn" onclick="nextPrev(1)">NEXT</button>
 				</div>
 			</form>
+
 			<script type="text/javascript" src="\assets\js\fill.js"></script>
 	</body>
 </html>
