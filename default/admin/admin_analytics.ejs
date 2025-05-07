@@ -348,8 +348,6 @@
                                 <div class="page-wrapper">
 
                                     <div class="dashboard-container">
-                                        <!-- <h1>Senior Citizens Dashboard</h1> -->
-                                        
                                         <div class="summary-stats">
                                             <div class="stat-card">
                                                 <h3>Total Barangays</h3>
@@ -411,7 +409,30 @@
                                         
                                         <div class="chart-container" id="barangayChartContainer"></div>
                                         
-                                        <div class="purok-chart-container" id="purokChartContainer"></div>
+                                        <!-- Modal for Purok Details -->
+                                        <div id="purokModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <h2 id="modalTitle">Purok Details</h2>
+                                                <div class="modal-body">
+                                                    <div class="modal-table-container">
+                                                        <table class="modal-table" id="purokTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Purok Name</th>
+                                                                    <th>Senior Citizens</th>
+                                                                    <th>% of Barangay Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="purokTableBody"></tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-chart-container">
+                                                        <canvas id="purokModalChart"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
                                         <footer>
                                             <p>Senior Citizens Statistics Dashboard | Data as of April 2025</p>

@@ -86,6 +86,7 @@ const barangayData = {
 let currentPage = 1;
 let itemsPerPage = 5;
 let filteredBarangays = [];
+let purokModalChart = null;
 
 // Calculate purok senior counts (distributing evenly among puroks with remainders going to first puroks)
 function calculatePurokSeniorCounts(barangayId) {
@@ -182,68 +183,124 @@ function populateBarangayTable() {
             </td>
         `;
         tableBody.appendChild(row);
-        
-        // Create purok details row (hidden by default)
-        const purokRow = document.createElement('tr');
-        purokRow.className = 'purok-row';
-        purokRow.id = `purok-details-${id}`;
-        
-        // Calculate purok-level data
-        const purokData = calculatePurokSeniorCounts(id);
-        
-        // Create purok table
-        let purokTableHTML = `
-            <td colspan="4">
-                <h4>Purok Details for ${data.name}</h4>
-                <table class="purok-table">
-                    <thead>
-                        <tr>
-                            <th>Purok Name</th>
-                            <th>Senior Citizens</th>
-                            <th>% of Barangay Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-        
-        purokData.forEach(purok => {
-            const percentage = ((purok.count / data.seniorCount) * 100).toFixed(1);
-            purokTableHTML += `
-                <tr>
-                    <td>${purok.name}</td>
-                    <td>${purok.count}</td>
-                    <td>${percentage}%</td>
-                </tr>
-            `;
-        });
-        
-        purokTableHTML += `
-                    </tbody>
-                </table>
-            </td>
-        `;
-        
-        purokRow.innerHTML = purokTableHTML;
-        tableBody.appendChild(purokRow);
     });
     
     // Add event listeners to expand buttons
     document.querySelectorAll('.expand-btn').forEach(button => {
         button.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
-            const purokRow = document.getElementById(`purok-details-${id}`);
-            
-            if (purokRow.style.display === 'table-row') {
-                purokRow.style.display = 'none';
-                this.textContent = 'View Puroks';
-            } else {
-                purokRow.style.display = 'table-row';
-                this.textContent = 'Hide Puroks';
-                
-                // Create purok chart when expanded
-                createPurokChart(id);
-            }
+            showPurokModal(id);
         });
+    });
+}
+
+// Show purok details in modal
+function showPurokModal(barangayId) {
+    const modal = document.getElementById('purokModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const purokTableBody = document.getElementById('purokTableBody');
+    const data = barangayData[barangayId];
+    
+    // Set modal title
+    modalTitle.textContent = `Purok Details for ${data.name}`;
+    
+    // Clear previous table data
+    purokTableBody.innerHTML = '';
+    
+    // Calculate purok-level data
+    const purokData = calculatePurokSeniorCounts(barangayId);
+    
+    // Populate purok table
+    purokData.forEach(purok => {
+        const percentage = ((purok.count / data.seniorCount) * 100).toFixed(1);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${purok.name}</td>
+            <td>${purok.count}</td>
+            <td>${percentage}%</td>
+        `;
+        purokTableBody.appendChild(row);
+    });
+    
+    // Create or update chart
+    createPurokModalChart(barangayId);
+    
+    // Show modal
+    modal.style.display = 'block';
+}
+
+// Create chart for purok modal
+function createPurokModalChart(barangayId) {
+    const data = barangayData[barangayId];
+    const purokData = calculatePurokSeniorCounts(barangayId);
+    
+    // Format data for chart
+    const labels = purokData.map(p => p.name);
+    const counts = purokData.map(p => p.count);
+    
+    const ctx = document.getElementById('purokModalChart');
+    
+    // Destroy previous chart if exists
+    if (purokModalChart) {
+        purokModalChart.destroy();
+    }
+    
+    purokModalChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: counts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(199, 199, 199, 0.7)',
+                    'rgba(83, 102, 255, 0.7)',
+                    'rgba(40, 159, 64, 0.7)',
+                    'rgba(210, 199, 199, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(199, 199, 199, 1)',
+                    'rgba(83, 102, 255, 1)',
+                    'rgba(40, 159, 64, 1)',
+                    'rgba(210, 199, 199, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Senior Citizens Distribution in ${data.name}`,
+                    font: {
+                        size: 16
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `${context.label}: ${value} (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
     });
 }
 
@@ -329,86 +386,6 @@ function createBarangayChart() {
     });
 }
 
-// Create purok chart
-function createPurokChart(barangayId) {
-    const chartContainer = document.getElementById('purokChartContainer');
-    chartContainer.style.display = 'block';
-    
-    const data = barangayData[barangayId];
-    const purokData = calculatePurokSeniorCounts(barangayId);
-    
-    // Format data for chart
-    const labels = purokData.map(p => p.name);
-    const counts = purokData.map(p => p.count);
-    
-    // Create chart
-    if (window.purokChart) {
-        window.purokChart.destroy();
-    }
-    
-    const ctx = document.createElement('canvas');
-    chartContainer.innerHTML = '';
-    chartContainer.appendChild(ctx);
-    
-    window.purokChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: counts,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)',
-                    'rgba(199, 199, 199, 0.7)',
-                    'rgba(83, 102, 255, 0.7)',
-                    'rgba(40, 159, 64, 0.7)',
-                    'rgba(210, 199, 199, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(199, 199, 199, 1)',
-                    'rgba(83, 102, 255, 1)',
-                    'rgba(40, 159, 64, 1)',
-                    'rgba(210, 199, 199, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: `Senior Citizens by Purok in ${data.name}`,
-                    font: {
-                        size: 16
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const value = context.raw;
-                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
-                            return `${context.label}: ${value} seniors (${percentage}%)`;
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
 // Initialize dashboard
 function initDashboard() {
     // Calculate stats
@@ -461,32 +438,19 @@ function initDashboard() {
         document.getElementById('purokView').classList.remove('active');
         document.getElementById('barangayTable').style.display = 'table';
         document.getElementById('barangayChartContainer').style.display = 'block';
-        document.getElementById('purokChartContainer').style.display = 'none';
-        
-        // Hide all purok rows
-        document.querySelectorAll('.purok-row').forEach(row => {
-            row.style.display = 'none';
-        });
-        
-        // Reset expand buttons
-        document.querySelectorAll('.expand-btn').forEach(btn => {
-            btn.textContent = 'View Puroks';
-        });
     });
     
-    document.getElementById('purokView').addEventListener('click', function() {
-        this.classList.add('active');
-        document.getElementById('barangayView').classList.remove('active');
-        
-        // Show all purok rows
-        document.querySelectorAll('.purok-row').forEach(row => {
-            row.style.display = 'table-row';
-        });
-        
-        // Update expand buttons
-        document.querySelectorAll('.expand-btn').forEach(btn => {
-            btn.textContent = 'Hide Puroks';
-        });
+    // Close modal when clicking X
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('purokModal').style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('purokModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 }
 
