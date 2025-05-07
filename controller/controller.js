@@ -133,8 +133,13 @@ exports.logout = (req, res) => {
 
   exports.createResident = async (req, res) => {
     console.log('Raw body:', req.body);
-  
+    
     try {
+      // Process skill_other_text to handle array case
+      const skillOtherText = Array.isArray(req.body.skill_other_text) 
+        ? req.body.skill_other_text.find(text => text && text.trim() !== '') // Get first non-empty
+        : req.body.skill_other_text;
+
       // Transform the form data to match the schema structure
       const residentData = {
         identifying_information: {
@@ -148,15 +153,17 @@ exports.logout = (req, res) => {
             purok: req.body.purok
           },
           date_of_birth: req.body.birthday, // Will be converted to Date by middleware
-          age: parseInt(req.body.age),
+          age: parseInt(req.body.age) || 0,
           place_of_birth: Array.isArray(req.body.place_of_birth) 
-            ? req.body.place_of_birth 
-            : [req.body.place_of_birth],
+            ? req.body.place_of_birth.filter(Boolean) // Remove empty values
+            : [req.body.place_of_birth].filter(Boolean),
           marital_status: req.body.civil_status,
           gender: req.body.gender,
           contacts: Array.isArray(req.body.contacts) 
-            ? req.body.contacts 
-            : [req.body.contacts],
+            ? req.body.contacts.filter(contact => contact && contact.name) // Filter empty contacts
+            : req.body.contacts 
+              ? [req.body.contacts] 
+              : [],
           osca_id_number: req.body.osca_id,
           gsis_sss: req.body.gsis_sss_no,
           philhealth: req.body.philhealth_no,
@@ -183,19 +190,21 @@ exports.logout = (req, res) => {
             middle_name: req.body.motherMiddleName
           },
           children: req.body.childFullName?.map((name, index) => ({
-            full_name: name,
-            occupation: req.body.childOccupation?.[index],
+            full_name: name || undefined,
+            occupation: req.body.childOccupation?.[index] || undefined,
             age: parseInt(req.body.childAge?.[index]) || undefined,
-            working_status: req.body.childWorkingStatus?.[index],
+            working_status: req.body.childWorkingStatus?.[index] || undefined,
             income: req.body.childIncome?.[index] || undefined
-          })) || []
+          })).filter(child => child.full_name) || [] // Remove children with no name
         },
         education_hr_profile: {
           educational_attainment: Array.isArray(req.body.education_level)
-            ? req.body.education_level
-            : [req.body.education_level],
-          skills: Array.isArray(req.body.skills) ? req.body.skills : [],
-          skill_other_text: req.body.skill_other_text || undefined
+            ? req.body.education_level.filter(Boolean) // Remove empty values
+            : [req.body.education_level].filter(Boolean),
+          skills: Array.isArray(req.body.skills) 
+            ? req.body.skills.filter(Boolean) 
+            : [],
+          skill_other_text: skillOtherText || undefined
         }
       };
   
@@ -210,7 +219,7 @@ exports.logout = (req, res) => {
         success: true,
         message: 'Senior citizen record created successfully',
         data: savedResident,
-        reference_code: savedResident.reference_code // If you have auto-generated reference
+        reference_code: savedResident.reference_code
       });
   
     } catch (error) {
@@ -218,7 +227,10 @@ exports.logout = (req, res) => {
       
       // Handle validation errors
       if (error.name === 'ValidationError') {
-        const errors = Object.values(error.errors).map(err => err.message);
+        const errors = Object.values(error.errors).map(err => ({
+          field: err.path,
+          message: err.message
+        }));
         return res.status(400).json({
           success: false,
           message: 'Validation error',
@@ -228,11 +240,12 @@ exports.logout = (req, res) => {
       
       // Handle duplicate key errors
       if (error.code === 11000) {
+        const field = Object.keys(error.keyPattern)[0];
         return res.status(400).json({
           success: false,
-          message: 'Duplicate key error',
-          field: Object.keys(error.keyPattern)[0],
-          value: error.keyValue[Object.keys(error.keyPattern)[0]]
+          message: `Duplicate value for ${field}`,
+          field: field,
+          value: error.keyValue[field]
         });
       }
   
@@ -240,7 +253,10 @@ exports.logout = (req, res) => {
       res.status(500).json({
         success: false,
         message: 'Internal server error',
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        error: process.env.NODE_ENV === 'development' ? {
+          message: error.message,
+          stack: error.stack
+        } : undefined
       });
     }
   };
