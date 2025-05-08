@@ -104,7 +104,7 @@ exports.login = async (req, res) => {
       if (user.role === "Admin") {
         return res.redirect("/index");
     } else if (user.role === "Staff") {
-        return res.redirect("/index-staff");
+        return res.redirect("/Pwd-form");
     }else if (user.role === "Super Admin") {
         return res.redirect("/index-superadmin");
     }else {

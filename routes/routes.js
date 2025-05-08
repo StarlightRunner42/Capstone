@@ -15,6 +15,10 @@ router.get('/Index', requireAuth,(req, res) => {
     res.render('admin/admin_index-1');
 });
 
+router.get('/superadmin', requireAuth,(req, res) => {
+    res.render('admin/admin_super_admin');
+});
+
 router.get('/index-staff',requireAuth,(req, res) => {
     res.render('staff/staff_dashboard');
 });

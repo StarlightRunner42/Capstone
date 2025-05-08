@@ -107,6 +107,10 @@
                                     <i class="feather icon-maximize full-screen"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="/Map" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
+                                    <i class="feather icon-user-plus"></i> View Map Pwd </a>
+                            </li>
                         </ul>
                         <ul class="nav-right">
                             <li class="user-profile header-notification">
@@ -192,8 +196,8 @@
                                         <div class="controls">
                                             <input type="text" class="search-box" id="searchInput" placeholder="Search by barangay name...">
                                             <div class="view-selector">
-                                                <button class="view-btn active" id="barangayView">Barangay View</button>
-                                                <button class="view-btn" id="purokView">Purok Details</button>
+                                                <button class="view-btn active" id="barangayView"></button>
+                                                <button class="view-btn" id="purokView"></button>
                                             </div>
                                         </div>
                                         
@@ -243,7 +247,7 @@
                                                                 <tr>
                                                                     <th>Purok Name</th>
                                                                     <th>Senior Citizens</th>
-                                                                    <th>% of Barangay Total</th>
+                                                                    <th>Total %</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="purokTableBody"></tbody>
