@@ -14,22 +14,22 @@
 			<form id="housingForm" action="/add-data" method="post">
 				<div class="progress-bar">
 					<div class="step active"">
-									<span id=" step1">PERSONAL INFORMATION</span>
+					<span id=" step1">Personal Information</span>
 					</div>
 					<div class="step">
-						<span id="step2">CONTACT INFORMATION</span>
+						<span id="step2">Contact Information</span>
 					</div>
 					<div class="step">
-						<span id="step3">FAMILY COMPOSITION</span>
+						<span id="step3">Family Composition</span>
 					</div>
 					<div class="step">
 						<span id="step4">ID'S</span>
 					</div>
 					<div class="step">
-						<span id="step5">EDUCATION / HR PROFILE</span>
+						<span id="step5">Education / HR Profile</span>
 					</div>
 					<div class="step">
-						<span id="step5">COMMUNITY SERVICE</span>
+						<span id="step5">Community Service</span>
 					</div>
 				</div>
 
@@ -79,6 +79,16 @@
 								<option value="" disabled selected>Select Purok</option>
 							</select>
 						</div>
+						<div class="form-group">
+							<label for="gender">Gender</label>
+							<select id="gender" name="gender" required>
+								<option value="">-- Select One --</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Other">Other</option>
+								<option value="Prefer not to say">Prefer not to say</option>
+							</select>
+						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group">
@@ -103,12 +113,6 @@
 							<label for="service" id="service">Service/Business/Employment(specify)</label>
 							<input type="text" id="service" name="service" required placeholder="Service">
 						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group">
-							<label for="place_of_birth" id="placeOfBirthLabel">Place of Birth</label>
-							<input type="text" id="place_of_birth" name="place_of_birth" required placeholder="Place of Birth">
-						</div>
 						<div class="form-group">
 							<label for="education_level">Capability to Travel</label>
 							<select id="education_level" name="education_level" required>
@@ -116,6 +120,12 @@
 								<option value="Yes">Yes</option>
 								<option value="No">No</option>
 							</select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label for="place_of_birth" id="placeOfBirthLabel">Place of Birth</label>
+							<input type="text" id="place_of_birth" name="place_of_birth" required placeholder="Place of Birth">
 						</div>
 					</div>
 					<div class="form-row">
@@ -131,16 +141,7 @@
 							<label for="spouse_name" id="spouseNameLabel">Name of Spouse</label>
 							<input type="text" id="spouse_name" name="spouse_name" placeholder="Name of Spouse">
 						</div>
-						<div class="form-group">
-							<label for="gender">Gender</label>
-							<select id="gender" name="gender" required>
-								<option value="">-- Select One --</option>
-								<option value="Male">Male</option>
-								<option value="Female">Female</option>
-								<option value="Other">Other</option>
-								<option value="Prefer not to say">Prefer not to say</option>
-							</select>
-						</div>
+						
 						</div>
 				</fieldset>
                 

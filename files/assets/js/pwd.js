@@ -1,33 +1,44 @@
-// Show/hide employment details based on selection
-document.getElementById('employment_status').addEventListener('change', function() {
-    const employeeDetails = document.getElementById('employeeDetails');
-    
-    if (this.value === 'Employee') {
-      employeeDetails.style.display = 'block';
-    } else {
-      employeeDetails.style.display = 'none';
-      // Clear the values when hidden
-      document.getElementById('employment_category').value = '';
-      document.getElementById('employment_type').value = '';
-    }
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the employment status dropdown
+  const employmentStatus = document.getElementById('employment_status');
+  // Get the category and type groups
+  const categoryGroup = document.getElementById('categoryGroup');
+  const typeGroup = document.getElementById('typeGroup');
+
+  // Add event listener for changes in employment status
+  employmentStatus.addEventListener('change', function() {
+      if (this.value === 'Employee') {
+          // Show both category and type fields for employees
+          categoryGroup.style.display = 'block';
+          typeGroup.style.display = 'block';
+      } else {
+          // Hide both fields for unemployed or self-employed
+          categoryGroup.style.display = 'none';
+          typeGroup.style.display = 'none';
+          
+          // Optional: Clear the values when hidden
+          document.getElementById('employment_category').value = '';
+          document.getElementById('employment_type').value = '';
+      }
   });
 
+  // Trigger the change event once in case there's a default value
+  employmentStatus.dispatchEvent(new Event('change'));
+});
 
-
-
-  // Age calculation with validation
+// Age calculation with validation
 function calculateAge() {
   const birthdayInput = document.getElementById('birthday').value;
   if (!birthdayInput) return false;
   
   const birthday = new Date(birthdayInput);
   if (isNaN(birthday.getTime())) {
-    Swal.fire({
-      title: "Invalid date",
-      text: "Please enter a valid date of birth",
-      icon: "error"
-    });
-    return false;
+      Swal.fire({
+          title: "Invalid date",
+          text: "Please enter a valid date of birth",
+          icon: "error"
+      });
+      return false;
   }
   
   const today = new Date();
@@ -35,26 +46,29 @@ function calculateAge() {
   const monthDifference = today.getMonth() - birthday.getMonth();
 
   if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
-    age--;
+      age--;
   }
 
   const ageInput = document.getElementById('age');
   ageInput.value = age;
   
-  // Validate senior age (60+)
-  // if (age < 60) {
-  //   ageInput.style.borderColor = 'red';
-  //   document.getElementById('age').value = '';
-  //   Swal.fire({
-  //     title: "You must be 60 years old or older to register.",
-  //     text: "Please check your date of birth.",
-  //     icon: "error"
-  //   });
-  //   return false;
-  // } else {
-  //   ageInput.style.borderColor = '';
-  //   return true;
-  // }
+  // Uncomment for senior age validation (60+)
+  /*
+  if (age < 60) {
+      ageInput.style.borderColor = 'red';
+      document.getElementById('age').value = '';
+      Swal.fire({
+          title: "You must be 60 years old or older to register.",
+          text: "Please check your date of birth.",
+          icon: "error"
+      });
+      return false;
+  } else {
+      ageInput.style.borderColor = '';
+      return true;
+  }
+  */
+  return true;
 }
 
 // Purok dropdown population
@@ -72,8 +86,8 @@ const puroks = {
   "11": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
   "12": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
   "13": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
-  "14": ["kalinti", "kadipota", "yuta"],
-  "15": ["kalinti", "kadipota", "yuta"],
+  "14": ["Kalinti", "Kadipota", "Yuta"],
+  "15": ["Mapisanon", "Nami-nami", "Bay-bay"], // Changed to be unique from barangay 14
   "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
 };
 
@@ -81,15 +95,16 @@ function updatePurokOptions() {
   const barangay = document.getElementById('barangay').value;
   const purokSelect = document.getElementById('purok');
   
+  // Clear existing options
   purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
 
   if (puroks[barangay]) {
-    puroks[barangay].forEach(purok => {
-      const option = document.createElement('option');
-      option.value = purok;
-      option.textContent = purok;
-      purokSelect.appendChild(option);
-    });
+      puroks[barangay].forEach(purok => {
+          const option = document.createElement('option');
+          option.value = purok;
+          option.textContent = purok;
+          purokSelect.appendChild(option);
+      });
   }
 }
 
@@ -99,50 +114,55 @@ function validateCurrentStep(currentStep) {
   const currentFieldset = document.getElementsByTagName('fieldset')[currentStep];
   const requiredInputs = currentFieldset.querySelectorAll('[required]');
   
+  // Validate required fields
   requiredInputs.forEach(input => {
-    if (!input.value.trim()) {
-      input.style.borderColor = 'red';
-      isValid = false;
-      
-      if (isValid === false) {
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (!input.value.trim()) {
+          input.style.borderColor = 'red';
+          isValid = false;
+          
+          // Scroll to first invalid field
+          if (!isValid) {
+              input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              isValid = false; // Ensure we don't override this
+          }
+      } else {
+          input.style.borderColor = '';
       }
-    } else {
-      input.style.borderColor = '';
-    }
   });
   
+  // Special validation for contact information step
   if (currentStep === 1) {
-    const contactEntries = document.querySelectorAll('.contact-entry');
-    contactEntries.forEach(entry => {
-      const contactType = entry.querySelector('.contact-type').value;
-      const name = entry.querySelector('input[name$="[name]"]').value;
-      const relationship = entry.querySelector('input[name$="[relationship]"]').value;
-      const phone = entry.querySelector('input[name$="[phone]"]').value;
-      
-      if (!name || !relationship || !phone) {
-        isValid = false;
-        entry.style.border = '1px solid red';
-      } else {
-        entry.style.border = '';
-      }
-    });
+      const contactEntries = document.querySelectorAll('.contact-entry');
+      contactEntries.forEach(entry => {
+          const contactType = entry.querySelector('.contact-type').value;
+          const name = entry.querySelector('input[name$="[name]"]').value;
+          const relationship = entry.querySelector('input[name$="[relationship]"]').value;
+          const phone = entry.querySelector('input[name$="[phone]"]').value;
+          
+          if (!name || !relationship || !phone) {
+              isValid = false;
+              entry.style.border = '1px solid red';
+          } else {
+              entry.style.border = '';
+          }
+      });
   }
   
+  // Email validation for first step
   if (currentStep === 0) {
-    const emailInput = document.getElementById('email');
-    if (emailInput && !validateEmail(emailInput.value.trim())) {
-      emailInput.style.borderColor = 'red';
-      isValid = false;
-    }
+      const emailInput = document.getElementById('email');
+      if (emailInput && emailInput.value.trim() && !validateEmail(emailInput.value.trim())) {
+          emailInput.style.borderColor = 'red';
+          isValid = false;
+      }
   }
   
   if (!isValid) {
-    Swal.fire({
-      title: "Please complete all required fields before proceeding.",
-      text: "Some fields are Empty.",
-      icon: "error"
-    });
+      Swal.fire({
+          title: "Validation Error",
+          text: "Please complete all required fields before proceeding.",
+          icon: "error"
+      });
   }
   return isValid;
 }
@@ -157,41 +177,37 @@ function showCheckmark(groupId) {
 }
 
 function toggleSpouseInput() {
-  var civilStatus = document.getElementById("civil_status").value;
-  var spouseGroup = document.getElementById("spouseGroup");
-  if (civilStatus === "Married") {
-    spouseGroup.style.display = "block";
-  } else {
-    spouseGroup.style.display = "none";
-  }
+  const civilStatus = document.getElementById("civil_status").value;
+  const spouseGroup = document.getElementById("spouseGroup");
+  spouseGroup.style.display = civilStatus === "Married" ? "block" : "none";
 }
 
-var currentTab = 0;
+let currentTab = 0;
 
 function showTab(n) {
-  var x = document.getElementsByTagName("fieldset");
-  for (var i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+    var x = document.getElementsByTagName("fieldset");
+    for (var i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    
+    x[n].style.display = "block";
+    
+    if (n == 0) {
+      document.getElementById("prevBtn").style.display = "none";
+    } else {
+      document.getElementById("prevBtn").style.display = "inline";
+    }
+    
+    if (n == x.length) {
+      document.getElementById("nextBtn").innerHTML = "Submit";
+      document.getElementById("nextBtn").setAttribute("type", "submit");
+    } else {
+      document.getElementById("nextBtn").innerHTML = "Next";
+      document.getElementById("nextBtn").setAttribute("type", "button");
+    }
+    
+    fixStepIndicator(n);
   }
-  
-  x[n].style.display = "block";
-  
-  if (n == 0) {
-    document.getElementById("prevBtn").style.display = "none";
-  } else {
-    document.getElementById("prevBtn").style.display = "inline";
-  }
-  
-  if (n == x.length) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
-    document.getElementById("nextBtn").setAttribute("type", "submit");
-  } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
-    document.getElementById("nextBtn").setAttribute("type", "button");
-  }
-  
-  fixStepIndicator(n);
-}
 
 function nextPrev(n) {
   var x = document.getElementsByTagName("fieldset");
@@ -211,133 +227,119 @@ function nextPrev(n) {
   showTab(currentTab);
 }
 
+
 function fixStepIndicator(n) {
-  var i, x = document.getElementsByClassName("step");
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].className.replace(" active", "");
+  const steps = document.getElementsByClassName("step");
+  for (let i = 0; i < steps.length; i++) {
+      steps[i].classList.remove("active");
   }
-  x[n].className += " active";
+  steps[n].classList.add("active");
 }
 
 function toggleIncome(selectElement) {
   const formRow = selectElement.closest('.form-row');
   const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
-  if (selectElement.value === 'working') {
-    incomeInput.style.display = 'block';
-  } else {
-    incomeInput.style.display = 'none';
-    incomeInput.value = '';
-  }
+  incomeInput.style.display = selectElement.value === 'working' ? 'block' : 'none';
+  if (selectElement.value !== 'working') incomeInput.value = '';
 }
 
 // Child information management
 document.addEventListener('DOMContentLoaded', function() {
   const childrenContainer = document.getElementById('childrenContainer');
   
+  // Add child entry
   document.getElementById('addChild').addEventListener('click', function() {
-    const childEntry = childrenContainer.querySelector('.child-entry');
-    const newChild = childEntry.cloneNode(true);
+      const childEntry = childrenContainer.querySelector('.child-entry');
+      const newChild = childEntry.cloneNode(true);
 
-    newChild.querySelectorAll('input').forEach(input => {
-      input.value = '';
-    });
-    newChild.querySelector('select').value = 'not_working';
-    newChild.querySelector('.delete-child').style.display = 'inline-block';
-    
-    childrenContainer.appendChild(newChild);
-    attachWorkingStatusListeners();
+      // Clear values
+      newChild.querySelectorAll('input').forEach(input => input.value = '');
+      newChild.querySelector('select').value = 'not_working';
+      newChild.querySelector('.delete-child').style.display = 'inline-block';
+      
+      childrenContainer.appendChild(newChild);
+      attachWorkingStatusListeners();
   });
 
+  // Delete child entry (event delegation)
   childrenContainer.addEventListener('click', function(e) {
-    if (e.target.classList.contains('delete-child')) {
-      const childEntries = childrenContainer.querySelectorAll('.child-entry');
-      if (childEntries.length > 1) {
-        e.target.closest('.child-entry').remove();
+      if (e.target.classList.contains('delete-child')) {
+          const childEntries = childrenContainer.querySelectorAll('.child-entry');
+          if (childEntries.length > 1) {
+              e.target.closest('.child-entry').remove();
+          }
       }
-    }
   });
 
-  attachWorkingStatusListeners();
-});
-
-// Contact information management
-document.addEventListener('DOMContentLoaded', function() {
+  // Contact information management
   const contactsContainer = document.getElementById('contactsContainer');
-  const addContactButton = document.getElementById('addContact');
-  let contactCounter = 1;
+  let contactCounter = document.querySelectorAll('.contact-entry').length;
 
-  addContactButton.addEventListener('click', function() {
-    contactCounter++;
-    const newContact = document.createElement('div');
-    newContact.className = 'contact-entry';
-    newContact.dataset.contactId = contactCounter;
-    
-    newContact.innerHTML = `
-      <div class="form-row">
-        <div class="form-group">
-          <label>Contact Type</label>
-          <select class="contact-type" name="contacts[${contactCounter}][type]" required>
-            <option value="primary">Primary</option>
-            <option value="secondary">Secondary</option>
-            <option value="emergency">Emergency</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" name="contacts[${contactCounter}][name]" required>
-        </div>
-      </div>
+  // Add contact entry
+  document.getElementById('addContact').addEventListener('click', function() {
+      contactCounter++;
+      const newContact = document.createElement('div');
+      newContact.className = 'contact-entry';
+      newContact.dataset.contactId = contactCounter;
       
-      <div class="form-row">
-        <div class="form-group">
-          <label>Relationship</label>
-          <input type="text" name="contacts[${contactCounter}][relationship]" required>
-        </div>
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" name="contacts[${contactCounter}][phone]" required>
-        </div>
-      </div>
+      newContact.innerHTML = `
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Contact Type</label>
+                  <select class="contact-type" name="contacts[${contactCounter}][type]" required>
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                      <option value="emergency">Emergency</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="contacts[${contactCounter}][name]" required>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Relationship</label>
+                  <input type="text" name="contacts[${contactCounter}][relationship]" required>
+              </div>
+              <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" name="contacts[${contactCounter}][phone]" required>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" name="contacts[${contactCounter}][email]">
+              </div>
+              <div class="form-group">
+                  <button type="button" class="remove-contact">Remove</button>
+              </div>
+          </div>
+      `;
       
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" name="contacts[${contactCounter}][email]">
-        </div>
-        <div class="form-group">
-          <button type="button" class="remove-contact">Remove</button>
-        </div>
-      </div>
-    `;
-    
-    contactsContainer.appendChild(newContact);
-    
-    newContact.querySelector('.remove-contact').addEventListener('click', function() {
-      contactsContainer.removeChild(newContact);
-    });
+      contactsContainer.appendChild(newContact);
   });
-});
 
-// Initialize purok options if a barangay is already selected
-document.addEventListener('DOMContentLoaded', function() {
+  // Remove contact entry (event delegation)
+  contactsContainer.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove-contact')) {
+          const contactEntries = contactsContainer.querySelectorAll('.contact-entry');
+          if (contactEntries.length > 1) {
+              e.target.closest('.contact-entry').remove();
+          }
+      }
+  });
+
+  // Initialize purok options if a barangay is already selected
   if (document.getElementById('barangay').value) {
-    updatePurokOptions();
+      updatePurokOptions();
   }
   
-  const requiredInputs = document.querySelectorAll('[required]');
-  requiredInputs.forEach(input => {
-    input.addEventListener('input', function() {
-      if (this.value.trim()) {
-        this.style.borderColor = '';
-      }
-    });
-    
-    input.addEventListener('blur', function() {
-      if (!this.value.trim() && this.hasAttribute('required')) {
-        this.style.borderColor = 'red';
-      }
-    });
-  });
+  // Initialize working status listeners
+  attachWorkingStatusListeners();
   
   // Initialize first tab
   showTab(0);
@@ -345,9 +347,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function attachWorkingStatusListeners() {
   document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
-    select.addEventListener('change', function() {
-      toggleIncome(this);
-    });
-    toggleIncome(select);
+      select.addEventListener('change', function() {
+          toggleIncome(this);
+      });
+      // Initialize visibility
+      toggleIncome(select);
   });
 }

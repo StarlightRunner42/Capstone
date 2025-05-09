@@ -12,22 +12,22 @@
 			<form id="housingForm" action="" method="post" enctype="multipart/form-data">
 				<div class="progress-bar">
 					<div class="step active"">
-									<span id=" step1">PERSONAL INFORMATION</span>
+					<span id=" step1">Personal Information</span>
 					</div>
 					<div class="step">
-						<span id="step2">CONTACT INFORMATION</span>
+						<span id="step2">Contact Informatiom</span>
 					</div>
 					<div class="step">
-						<span id="step3">FAMILY COMPOSITION</span>
+						<span id="step3">Family Composition</span>
 					</div>
 					<div class="step">
 						<span id="step4">ID'S</span>
 					</div>
 					<div class="step">
-						<span id="step5">EDUCATION / HR PROFILE</span>
+						<span id="step5">Education / HR Profile</span>
 					</div>
 					<div class="step">
-						<span id="step5">COMMUNITY SERVICE</span>
+						<span id="step5">Types / Cause Disability</span>
 					</div>
 				</div>
 				<!-- Personal Information -->
@@ -274,68 +274,117 @@
 				</fieldset>
 
 				
-				<fieldset id="service">
+				<fieldset id="disability">
 					<div class="form-section skills-section">
-						<h3 class="section-title">Community Service and Involvement (Check all applicable)</h3>
+						<h3 class="section-title">Types Of Disability</h3>
 						<div class="skills-grid">
 							<div class="skills-column">
 								<div class="skill-item">
-									<input type="checkbox" id="skill-medical" name="skills[]" value="Medical">
-									<label for="skill-medical">Medical</label>
+									<input type="checkbox" id="disability-deaf" name="disability[]" value="Deaf or Hard of Hearing">
+									<label for="disability-deaf">Deaf or Hard of Hearing</label>
 								</div>
 								<div class="skill-item">
-									<input type="checkbox" id="skill-community-leader" name="skills[]" value="Community / Organization Leader">
-									<label for="skill-community-leader">Community / Organization Leader</label>
+									<input type="checkbox" id="disability-intellectual" name="disability[]" value="Intellectual Disability">
+									<label for="disability-intellectual">Intellectual Disability</label>
 								</div>
 								<div class="skill-item">
-									<input type="checkbox" id="skill-neighborhood" name="skills[]" value="Neighborhood Support Services">
-									<label for="skill-neighborhood">Neighborhood Support Services</label>
+									<input type="checkbox" id="disability-learning" name="disability[]" value="Learning Disability">
+									<label for="disability-learning">Learning Disability</label>
 								</div>
 								<div class="skill-item">
-									<input type="checkbox" id="skill-counseling" name="skills[]" value="Counseling / Referral">
-									<label for="skill-counseling">Counseling / Referral</label>
-								</div>
-							</div>
-							<div class="skills-column">
-								<div class="skill-item">
-									<input type="checkbox" id="skill-resource" name="skills[]" value="Resource Volunteer">
-									<label for="skill-resource">Resource Volunteer</label>
+									<input type="checkbox" id="disability-mental" name="disability[]" value="Mental Disability">
+									<label for="disability-mental">Mental Disability</label>
 								</div>
 								<div class="skill-item">
-									<input type="checkbox" id="skill-dental" name="skills[]" value="Dental">
-									<label for="skill-dental">Dental</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="skill-legal" name="skills[]" value="Legal Services">
-									<label for="skill-legal">Legal Services</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="skill-sponsorship" name="skills[]" value="Sponsorship">
-									<label for="skill-sponsorship">Sponsorship</label>
+									<input type="checkbox" id="disability-physical" name="disability[]" value="Physical Disability (Orthopedic)">
+									<label for="disability-physical">Physical Disability (Orthopedic)</label>
 								</div>
 							</div>
 							<div class="skills-column">
 								<div class="skill-item">
-									<input type="checkbox" id="skill-beautification" name="skills[]" value="Community Beautification">
-									<label for="skill-beautification">Community Beautification</label>
+									<input type="checkbox" id="disability-psychosocial" name="disability[]" value="Psychosocial Disability">
+									<label for="disability-psychosocial">Psychosocial Disability</label>
 								</div>
 								<div class="skill-item">
-									<input type="checkbox" id="skill-visits" name="skills[]" value="Friendly Visits">
-									<label for="skill-visits">Friendly Visits</label>
+									<input type="checkbox" id="disability-speech" name="disability[]" value="Speech and Language Impairment">
+									<label for="disability-speech">Speech and Language Impairment</label>
 								</div>
 								<div class="skill-item">
-									<input type="checkbox" id="skill-religious" name="skills[]" value="Religious">
-									<label for="skill-religious">Religious</label>
+									<input type="checkbox" id="disability-visual" name="disability[]" value="Visual Disability">
+									<label for="disability-visual">Visual Disability</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="disability-cancer" name="disability[]" value="Cancer (RA11215)">
+									<label for="disability-cancer">Cancer (RA11215)</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="disability-rare" name="disability[]" value="Rare Disease (RA10747)">
+									<label for="disability-rare">Rare Disease (RA10747)</label>
 								</div>
 							</div>
 						</div>
 						<div class="skill-item">
-							<input type="checkbox" id="skill-other" name="skills[]" value="Other">
-							<label for="skill-other">Others, specify:</label>
-							<input type="text" id="skill-other-text" name="skill_other_text" class="other-input">
+							<input type="checkbox" id="disability-other" name="disability[]" value="Other">
+							<label for="disability-other">Others, specify:</label>
+							<input type="text" id="disability-other-text" name="disability_other_text" class="other-input">
+						</div>
+					</div>
+			
+				
+				
+					<div class="form-section skills-section">
+						<h3 class="section-title">Cause of Disability <span class="required">*</span></h3>
+						<div class="skills-grid">
+							<div class="skills-column">
+								<div class="skill-item">
+									<input type="checkbox" id="cause-congenital" name="cause_disability[]" value="Congenital / Inborn">
+									<label for="cause-congenital">Congenital / Inborn</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-autism" name="cause_disability[]" value="Autism">
+									<label for="cause-autism">Autism</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-adhd" name="cause_disability[]" value="ADHD">
+									<label for="cause-adhd">ADHD</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-cerebral-palsy" name="cause_disability[]" value="Cerebral Palsy">
+									<label for="cause-cerebral-palsy">Cerebral Palsy</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-down-syndrome" name="cause_disability[]" value="Down Syndrome">
+									<label for="cause-down-syndrome">Down Syndrome</label>
+								</div>
+							</div>
+							<div class="skills-column">
+								<div class="skill-item">
+									<input type="checkbox" id="cause-acquired" name="cause_disability[]" value="Acquired">
+									<label for="cause-acquired">Acquired</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-chronic-illness" name="cause_disability[]" value="Chronic Illness">
+									<label for="cause-chronic-illness">Chronic Illness</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-cerebral-palsy2" name="cause_disability[]" value="Cerebral Palsy">
+									<label for="cause-cerebral-palsy2">Cerebral Palsy</label>
+								</div>
+								<div class="skill-item">
+									<input type="checkbox" id="cause-injury" name="cause_disability[]" value="Injury">
+									<label for="cause-injury">Injury</label>
+								</div>
+							</div>
+						</div>
+						<div class="skill-item">
+							<input type="checkbox" id="cause-other" name="cause_disability[]" value="Other">
+							<label for="cause-other">Others, specify:</label>
+							<input type="text" id="cause-other-text" name="cause_other_text" class="other-input">
 						</div>
 					</div>
 				</fieldset>
+
+
 				<div class="navigation">
 					<button type="button" id="prevBtn" onclick="nextPrev(-1)">BACK</button>
 					<button type="button" id="nextBtn" onclick="nextPrev(1)">NEXT</button>
