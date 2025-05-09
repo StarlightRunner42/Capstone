@@ -42,22 +42,22 @@ function calculateAge() {
 
 // Purok dropdown population
 const puroks = {
-  "1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
-  "2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
-  "3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
-  "4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
-  "5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
-  "6": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
-  "7": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
-  "8": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
-  "9": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
-  "10": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
-  "11": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
-  "12": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
-  "13": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
-  "14": ["kalinti", "kadipota", "yuta"],
-  "15": ["kalinti", "kadipota", "yuta"],
-  "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
+  "Barangay 1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
+  "Barangay 2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
+  "Barangay 3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
+  "Barangay 4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
+  "Barangay 5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
+  "Barangay Mambulac": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
+  "Barangay Guinhalaran": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
+  "Barangay E-Lopez": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
+  "Barangay Bagtic": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
+  "Barangay Balaring": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
+  "Barangay Hawaiian": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
+  "Barangay Patag": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
+  "Barangay Kapt.ramon": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
+  "Barangay Guimbalao": ["kalinti", "kadipota", "yuta"],
+  "Barangay Rizal": ["kalinti", "kadipota", "yuta"],
+  "Barangay Lantad": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
 };
 
 function updatePurokOptions() {
@@ -165,12 +165,10 @@ function showTab(n) {
     document.getElementById("prevBtn").style.display = "inline";
   }
   
-  if (n == x.length) {
+  if (n == (x.length - 1)) {
     document.getElementById("nextBtn").innerHTML = "Submit";
-    document.getElementById("nextBtn").setAttribute("type", "submit");
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
-    document.getElementById("nextBtn").setAttribute("type", "button");
   }
   
   fixStepIndicator(n);
@@ -187,7 +185,8 @@ function nextPrev(n) {
   currentTab = currentTab + n;
   
   if (currentTab >= x.length) {
-    document.getElementById("housingForm").submit();
+    // Instead of directly submitting, we'll handle it with AJAX
+    submitForm();
     return false;
   }
   
@@ -332,5 +331,60 @@ function attachWorkingStatusListeners() {
       toggleIncome(this);
     });
     toggleIncome(select);
+  });
+}
+
+// Form submission with AJAX and SweetAlert
+function submitForm() {
+  const form = document.getElementById('housingForm');
+  const formData = new FormData(form);
+  
+  // Show loading indicator
+  Swal.fire({
+    title: 'Processing...',
+    text: 'Please wait while we save your information',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
+  // Disable submit button to prevent multiple submissions
+  const submitButton = document.querySelector('#nextBtn');
+  submitButton.disabled = true;
+
+  fetch(form.action, {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(err => Promise.reject(err));
+    }
+    return response.json();
+  })
+  .then(data => {
+    Swal.fire({
+      title: 'Success!',
+      text: data.message || 'Senior citizen record created successfully',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      // Optionally redirect or reset form
+      // window.location.href = '/success-page';
+      // form.reset();
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    Swal.fire({
+      title: 'Error!',
+      text: error.message || 'An error occurred while saving the data',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  })
+  .finally(() => {
+    submitButton.disabled = false;
   });
 }

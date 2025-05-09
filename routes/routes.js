@@ -59,4 +59,7 @@ router.get('/logout',controller.logout);
 
 //adding senior to database
 router.post('/add-data',controller.createResident);
+
+//get barangay and purok
+router.get('/get-barangay',controller.getBarangay);
 module.exports = router; 

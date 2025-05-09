@@ -4,7 +4,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
-const { User,SeniorCitizen  } = require("../model/schema");
+const { User,SeniorCitizen,Barangay  } = require("../model/schema");
 
 exports.createUser = async (req, res) => {
     try {
@@ -131,6 +131,7 @@ exports.logout = (req, res) => {
   };
 
 
+  //senior citizen form
   exports.createResident = async (req, res) => {
     console.log('Raw body:', req.body);
     
@@ -214,10 +215,16 @@ exports.logout = (req, res) => {
       // Save to database
       const savedResident = await newResident.save();
   
-      // Send response
+      // Send response with SweetAlert trigger
       res.status(201).json({
         success: true,
-        message: 'Senior citizen record created successfully',
+        alert: {
+          title: 'Success!',
+          text: 'Senior citizen record created successfully',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000
+        },
         data: savedResident,
         reference_code: savedResident.reference_code
       });
@@ -233,7 +240,12 @@ exports.logout = (req, res) => {
         }));
         return res.status(400).json({
           success: false,
-          message: 'Validation error',
+          alert: {
+            title: 'Validation Error',
+            text: 'Please check your input fields',
+            icon: 'error',
+            showConfirmButton: true
+          },
           errors: errors
         });
       }
@@ -243,7 +255,12 @@ exports.logout = (req, res) => {
         const field = Object.keys(error.keyPattern)[0];
         return res.status(400).json({
           success: false,
-          message: `Duplicate value for ${field}`,
+          alert: {
+            title: 'Duplicate Entry',
+            text: `The ${field} already exists in our records`,
+            icon: 'error',
+            showConfirmButton: true
+          },
           field: field,
           value: error.keyValue[field]
         });
@@ -252,7 +269,12 @@ exports.logout = (req, res) => {
       // Generic error handler
       res.status(500).json({
         success: false,
-        message: 'Internal server error',
+        alert: {
+          title: 'Error',
+          text: 'An unexpected error occurred',
+          icon: 'error',
+          showConfirmButton: true
+        },
         error: process.env.NODE_ENV === 'development' ? {
           message: error.message,
           stack: error.stack
@@ -260,4 +282,37 @@ exports.logout = (req, res) => {
       });
     }
   };
+
+  exports.getBarangay = async (req, res) => {
+    try {
+      const barangayList = await Barangay.find({});
+  
+      if (!barangayList || barangayList.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'No barangays found'
+        });
+      }
+  
+      // Transform into desired format
+      const puroks = {};
+      barangayList.forEach(({ barangay, puroks: purokList }) => {
+        puroks[barangay] = purokList;
+      });
+  
+      return res.status(200).json({
+        success: true,
+        data: puroks
+      });
+  
+    } catch (error) {
+      console.error('Error fetching barangays:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
+    }
+  };
+  
 
