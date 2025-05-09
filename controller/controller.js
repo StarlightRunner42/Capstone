@@ -134,88 +134,87 @@ exports.logout = (req, res) => {
   //senior citizen form
   exports.createResident = async (req, res) => {
     console.log('Raw body:', req.body);
-    
+  
     try {
-      // Process skill_other_text to handle array case
-      const skillOtherText = Array.isArray(req.body.skill_other_text) 
-        ? req.body.skill_other_text.find(text => text && text.trim() !== '') // Get first non-empty
-        : req.body.skill_other_text;
-
-      // Transform the form data to match the schema structure
+      const body = req.body;
+  
+      // Handle skill_other_text safely
+      const skillOtherText = Array.isArray(body.education_hr_profile?.skill_other_text)
+        ? body.education_hr_profile.skill_other_text.find(text => text && text.trim() !== '')
+        : body.education_hr_profile?.skill_other_text;
+  
       const residentData = {
         identifying_information: {
           name: {
-            first_name: req.body.first_name,
-            middle_name: req.body.middle_name,
-            last_name: req.body.last_name
+            first_name: body.identifying_information?.name?.first_name,
+            middle_name: body.identifying_information?.name?.middle_name,
+            last_name: body.identifying_information?.name?.last_name
           },
           address: {
-            barangay: req.body.barangay,
-            purok: req.body.purok
+            barangay: body.identifying_information?.address?.barangay,
+            purok: body.identifying_information?.address?.purok
           },
-          date_of_birth: req.body.birthday, // Will be converted to Date by middleware
-          age: parseInt(req.body.age) || 0,
-          place_of_birth: Array.isArray(req.body.place_of_birth) 
-            ? req.body.place_of_birth.filter(Boolean) // Remove empty values
-            : [req.body.place_of_birth].filter(Boolean),
-          marital_status: req.body.civil_status,
-          gender: req.body.gender,
-          contacts: Array.isArray(req.body.contacts) 
-            ? req.body.contacts.filter(contact => contact && contact.name) // Filter empty contacts
-            : req.body.contacts 
-              ? [req.body.contacts] 
-              : [],
-          osca_id_number: req.body.osca_id,
-          gsis_sss: req.body.gsis_sss_no,
-          philhealth: req.body.philhealth_no,
-          sc_association_org_id_no: req.body.sc_association_id,
-          tin: req.body.tin_no,
-          other_govt_id: req.body.other_govt_id,
-          service_business_employment: req.body.service,
-          current_pension: req.body.pension,
-          capability_to_travel: req.body.education_level === 'Yes' ? 'Yes' : 'No'
+          date_of_birth: body.identifying_information?.date_of_birth,
+          age: parseInt(body.identifying_information?.age) || 0,
+          place_of_birth: Array.isArray(body.identifying_information?.place_of_birth)
+            ? body.identifying_information.place_of_birth.filter(Boolean)
+            : [body.identifying_information?.place_of_birth].filter(Boolean),
+          marital_status: body.identifying_information?.marital_status,
+          gender: body.identifying_information?.gender,
+          contacts: Array.isArray(body.identifying_information?.contacts)
+            ? body.identifying_information.contacts.filter(c => c?.name)
+            : [],
+          osca_id_number: body.identifying_information?.osca_id_number,
+          gsis_sss: body.identifying_information?.gsis_sss,
+          philhealth: body.identifying_information?.philhealth,
+          sc_association_org_id_no: body.identifying_information?.sc_association_org_id_no,
+          tin: body.identifying_information?.tin,
+          other_govt_id: body.identifying_information?.other_govt_id,
+          service_business_employment: body.identifying_information?.service_business_employment,
+          current_pension: body.identifying_information?.current_pension,
+          capability_to_travel: body.identifying_information?.capability_to_travel === 'Yes' ? 'Yes' : 'No'
         },
         family_composition: {
           spouse: {
-            name: req.body.spouse_name || undefined
+            name: body.family_composition?.spouse?.name || undefined
           },
           father: {
-            last_name: req.body.fatherLastName,
-            first_name: req.body.fatherFirstName,
-            middle_name: req.body.fatherMiddleName,
-            extension: req.body.fatherExtension || undefined
+            last_name: body.family_composition?.father?.last_name,
+            first_name: body.family_composition?.father?.first_name,
+            middle_name: body.family_composition?.father?.middle_name,
+            extension: body.family_composition?.father?.extension || undefined
           },
           mother: {
-            last_name: req.body.motherLastName,
-            first_name: req.body.motherFirstName,
-            middle_name: req.body.motherMiddleName
+            last_name: body.family_composition?.mother?.last_name,
+            first_name: body.family_composition?.mother?.first_name,
+            middle_name: body.family_composition?.mother?.middle_name
           },
-          children: req.body.childFullName?.map((name, index) => ({
-            full_name: name || undefined,
-            occupation: req.body.childOccupation?.[index] || undefined,
-            age: parseInt(req.body.childAge?.[index]) || undefined,
-            working_status: req.body.childWorkingStatus?.[index] || undefined,
-            income: req.body.childIncome?.[index] || undefined
-          })).filter(child => child.full_name) || [] // Remove children with no name
+          children: Array.isArray(body.family_composition?.children)
+            ? body.family_composition.children
+                .map(child => ({
+                  full_name: child?.full_name || undefined,
+                  occupation: child?.occupation || undefined,
+                  age: parseInt(child?.age) || undefined,
+                  working_status: child?.working_status || undefined,
+                  income: child?.income || undefined
+                }))
+                .filter(child => child.full_name)
+            : []
         },
         education_hr_profile: {
-          educational_attainment: Array.isArray(req.body.education_level)
-            ? req.body.education_level.filter(Boolean) // Remove empty values
-            : [req.body.education_level].filter(Boolean),
-          skills: Array.isArray(req.body.skills) 
-            ? req.body.skills.filter(Boolean) 
+          educational_attainment: Array.isArray(body.education_hr_profile?.educational_attainment)
+            ? body.education_hr_profile.educational_attainment.filter(Boolean)
+            : [body.education_hr_profile?.educational_attainment].filter(Boolean),
+          skills: Array.isArray(body.education_hr_profile?.skills)
+            ? body.education_hr_profile.skills.filter(Boolean)
             : [],
           skill_other_text: skillOtherText || undefined
         }
       };
   
-      // Create new resident
       const newResident = new SeniorCitizen(residentData);
-      
-      // Save to database
       const savedResident = await newResident.save();
   
-      // Send response with SweetAlert trigger
       res.status(201).json({
         success: true,
         alert: {
@@ -231,8 +230,7 @@ exports.logout = (req, res) => {
   
     } catch (error) {
       console.error('Error creating resident:', error);
-      
-      // Handle validation errors
+  
       if (error.name === 'ValidationError') {
         const errors = Object.values(error.errors).map(err => ({
           field: err.path,
@@ -246,11 +244,10 @@ exports.logout = (req, res) => {
             icon: 'error',
             showConfirmButton: true
           },
-          errors: errors
+          errors
         });
       }
-      
-      // Handle duplicate key errors
+  
       if (error.code === 11000) {
         const field = Object.keys(error.keyPattern)[0];
         return res.status(400).json({
@@ -261,12 +258,11 @@ exports.logout = (req, res) => {
             icon: 'error',
             showConfirmButton: true
           },
-          field: field,
+          field,
           value: error.keyValue[field]
         });
       }
   
-      // Generic error handler
       res.status(500).json({
         success: false,
         alert: {
@@ -282,6 +278,7 @@ exports.logout = (req, res) => {
       });
     }
   };
+  
 
   exports.getBarangay = async (req, res) => {
     try {

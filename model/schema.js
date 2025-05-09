@@ -27,12 +27,22 @@ const SeniorCitizenSchema = new mongoose.Schema({
           type: String, 
           required: true,
           enum: [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', // Matches your barangay dropdown
-            'Barangay Mambulac', 'Barangay Guinhalaran', 'Barangay E-Lopez',
-            'Barangay Bagtic', 'Barangay Balaring', 'Barangay Hawaiian',
-            'Barangay Patag', 'Barangay Kapt.ramon', 'Barangay Guimbalaon',
-            'Barangay Rizal', 'Barangay Lantad'
+            'Barangay 1', 
+            'Barangay 2', 
+            'Barangay 3', 
+            'Barangay 4', 
+            'Barangay 5', 
+            'Barangay Mambulac', 
+            'Barangay Guinhalaran', 
+            'Barangay E-Lopez',
+            'Barangay Bagtic', 
+            'Barangay Balaring', 
+            'Barangay Hawaiian',
+            'Barangay Patag', 
+            'Barangay Kapt.ramon', 
+            'Barangay Guimbalaon',
+            'Barangay Rizal', 
+            'Barangay Lantad'
           ]
         },
         purok: { type: String, required: true }

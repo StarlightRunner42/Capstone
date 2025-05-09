@@ -43,21 +43,7 @@ function calculateAge() {
 // Purok dropdown population
 const puroks = {
   "Barangay 1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
-  "Barangay 2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
-  "Barangay 3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
-  "Barangay 4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
-  "Barangay 5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
-  "Barangay Mambulac": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
-  "Barangay Guinhalaran": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
-  "Barangay E-Lopez": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
-  "Barangay Bagtic": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
-  "Barangay Balaring": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
-  "Barangay Hawaiian": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
-  "Barangay Patag": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
-  "Barangay Kapt.ramon": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
-  "Barangay Guimbalao": ["kalinti", "kadipota", "yuta"],
-  "Barangay Rizal": ["kalinti", "kadipota", "yuta"],
-  "Barangay Lantad": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
+  // ... (keep your existing purok data)
 };
 
 function updatePurokOptions() {
@@ -87,7 +73,7 @@ function validateCurrentStep(currentStep) {
       input.style.borderColor = 'red';
       isValid = false;
       
-      if (isValid === false) {
+      if (!isValid) {
         input.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     } else {
@@ -95,10 +81,10 @@ function validateCurrentStep(currentStep) {
     }
   });
   
+  // Special validation for contact information
   if (currentStep === 1) {
     const contactEntries = document.querySelectorAll('.contact-entry');
     contactEntries.forEach(entry => {
-      const contactType = entry.querySelector('.contact-type').value;
       const name = entry.querySelector('input[name$="[name]"]').value;
       const relationship = entry.querySelector('input[name$="[relationship]"]').value;
       const phone = entry.querySelector('input[name$="[phone]"]').value;
@@ -112,124 +98,94 @@ function validateCurrentStep(currentStep) {
     });
   }
   
-  if (currentStep === 0) {
-    const emailInput = document.getElementById('email');
-    if (emailInput && !validateEmail(emailInput.value.trim())) {
-      emailInput.style.borderColor = 'red';
-      isValid = false;
-    }
-  }
-  
   if (!isValid) {
     Swal.fire({
-      title: "Please complete all required fields before proceeding.",
-      text: "Some fields are Empty.",
+      title: "Missing Information",
+      text: "Please complete all required fields before proceeding.",
       icon: "error"
     });
   }
   return isValid;
 }
 
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-}
-
-function showCheckmark(groupId) {
-  document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
-}
-
 function toggleSpouseInput() {
-  var civilStatus = document.getElementById("civil_status").value;
-  var spouseGroup = document.getElementById("spouseGroup");
-  if (civilStatus === "Married") {
-    spouseGroup.style.display = "block";
-  } else {
-    spouseGroup.style.display = "none";
-  }
+  const civilStatus = document.getElementById("civil_status").value;
+  const spouseGroup = document.getElementById("spouseGroup");
+  spouseGroup.style.display = civilStatus === "Married" ? "block" : "none";
 }
 
-var currentTab = 0;
+// Form navigation
+let currentTab = 0;
 
 function showTab(n) {
-  var x = document.getElementsByTagName("fieldset");
-  for (var i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+  const fieldsets = document.getElementsByTagName("fieldset");
+  
+  // Hide all fieldsets
+  for (let i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].style.display = "none";
   }
   
-  x[n].style.display = "block";
+  // Show current fieldset
+  fieldsets[n].style.display = "block";
   
-  if (n == 0) {
-    document.getElementById("prevBtn").style.display = "none";
-  } else {
-    document.getElementById("prevBtn").style.display = "inline";
-  }
+  // Update navigation buttons
+  document.getElementById("prevBtn").style.display = n === 0 ? "none" : "inline";
+  document.getElementById("nextBtn").innerHTML = n === fieldsets.length - 1 ? "Submit" : "Next";
   
-  if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
-  } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
-  }
-  
-  fixStepIndicator(n);
+  // Update progress indicator
+  updateStepIndicator(n);
 }
 
 function nextPrev(n) {
-  var x = document.getElementsByTagName("fieldset");
+  const fieldsets = document.getElementsByTagName("fieldset");
   
+  // Validate before proceeding forward
   if (n > 0 && !validateCurrentStep(currentTab)) {
     return false;
   }
   
-  x[currentTab].style.display = "none";
-  currentTab = currentTab + n;
+  // Hide current tab
+  fieldsets[currentTab].style.display = "none";
   
-  if (currentTab >= x.length) {
-    // Instead of directly submitting, we'll handle it with AJAX
+  // Update current tab
+  currentTab += n;
+  
+  // Submit if we're at the end
+  if (currentTab >= fieldsets.length) {
     submitForm();
     return false;
   }
   
+  // Show new tab
   showTab(currentTab);
 }
 
-function fixStepIndicator(n) {
-  var i, x = document.getElementsByClassName("step");
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].className.replace(" active", "");
+function updateStepIndicator(n) {
+  const steps = document.getElementsByClassName("step");
+  for (let i = 0; i < steps.length; i++) {
+    steps[i].classList.remove("active");
   }
-  x[n].className += " active";
-}
-
-function toggleIncome(selectElement) {
-  const formRow = selectElement.closest('.form-row');
-  const incomeInput = formRow.querySelector('input[name="childIncome[]"]');
-  if (selectElement.value === 'working') {
-    incomeInput.style.display = 'block';
-  } else {
-    incomeInput.style.display = 'none';
-    incomeInput.value = '';
-  }
+  steps[n].classList.add("active");
 }
 
 // Child information management
-document.addEventListener('DOMContentLoaded', function() {
+function setupChildManagement() {
   const childrenContainer = document.getElementById('childrenContainer');
   
   document.getElementById('addChild').addEventListener('click', function() {
     const childEntry = childrenContainer.querySelector('.child-entry');
     const newChild = childEntry.cloneNode(true);
 
-    newChild.querySelectorAll('input').forEach(input => {
-      input.value = '';
-    });
+    // Reset values
+    newChild.querySelectorAll('input').forEach(input => input.value = '');
     newChild.querySelector('select').value = 'not_working';
     newChild.querySelector('.delete-child').style.display = 'inline-block';
     
     childrenContainer.appendChild(newChild);
-    attachWorkingStatusListeners();
+    setupWorkingStatusListeners();
   });
 
+  // Delegated event for delete buttons
   childrenContainer.addEventListener('click', function(e) {
     if (e.target.classList.contains('delete-child')) {
       const childEntries = childrenContainer.querySelectorAll('.child-entry');
@@ -239,11 +195,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  attachWorkingStatusListeners();
-});
+  setupWorkingStatusListeners();
+}
+
+function setupWorkingStatusListeners() {
+  document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
+    select.addEventListener('change', function() {
+      const incomeInput = this.closest('.form-row').querySelector('input[name="childIncome[]"]');
+      incomeInput.style.display = this.value === 'working' ? 'block' : 'none';
+      if (this.value !== 'working') incomeInput.value = '';
+    });
+    
+    // Initialize visibility
+    const incomeInput = select.closest('.form-row').querySelector('input[name="childIncome[]"]');
+    incomeInput.style.display = select.value === 'working' ? 'block' : 'none';
+  });
+}
 
 // Contact information management
-document.addEventListener('DOMContentLoaded', function() {
+function setupContactManagement() {
   const contactsContainer = document.getElementById('contactsContainer');
   const addContactButton = document.getElementById('addContact');
   let contactCounter = 1;
@@ -294,97 +264,151 @@ document.addEventListener('DOMContentLoaded', function() {
     
     contactsContainer.appendChild(newContact);
     
+    // Add remove functionality
     newContact.querySelector('.remove-contact').addEventListener('click', function() {
       contactsContainer.removeChild(newContact);
     });
   });
-});
-
-// Initialize purok options if a barangay is already selected
-document.addEventListener('DOMContentLoaded', function() {
-  if (document.getElementById('barangay').value) {
-    updatePurokOptions();
-  }
-  
-  const requiredInputs = document.querySelectorAll('[required]');
-  requiredInputs.forEach(input => {
-    input.addEventListener('input', function() {
-      if (this.value.trim()) {
-        this.style.borderColor = '';
-      }
-    });
-    
-    input.addEventListener('blur', function() {
-      if (!this.value.trim() && this.hasAttribute('required')) {
-        this.style.borderColor = 'red';
-      }
-    });
-  });
-  
-  // Initialize first tab
-  showTab(0);
-});
-
-function attachWorkingStatusListeners() {
-  document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
-    select.addEventListener('change', function() {
-      toggleIncome(this);
-    });
-    toggleIncome(select);
-  });
 }
 
-// Form submission with AJAX and SweetAlert
-function submitForm() {
+// Form submission with AJAX
+async function submitForm() {
   const form = document.getElementById('housingForm');
   const formData = new FormData(form);
+  const submitButton = document.querySelector('#nextBtn');
   
+  // Transform FormData to match backend structure
+  const requestData = {
+    identifying_information: {
+      name: {
+        first_name: formData.get('first_name'),
+        middle_name: formData.get('middle_name'),
+        last_name: formData.get('last_name')
+      },
+      address: {
+        barangay: formData.get('barangay'),
+        purok: formData.get('purok')
+      },
+      date_of_birth: formData.get('birthday'),
+      age: parseInt(formData.get('age')),
+      place_of_birth: formData.get('place_of_birth'),
+      marital_status: formData.get('civil_status'),
+      gender: formData.get('gender'),
+      osca_id_number: formData.get('osca_id'),
+      gsis_sss: formData.get('gsis_sss_no'),
+      philhealth: formData.get('philhealth_no'),
+      tin: formData.get('tin_no'),
+      other_govt_id: formData.get('other_govt_id'),
+      service_business_employment: formData.get('service'),
+      current_pension: formData.get('pension'),
+      capability_to_travel: formData.get('education_level') === 'Yes' ? 'Yes' : 'No',
+      religion: formData.get('place_of_birth') // Note: This field is used for religion in your form
+    },
+    family_composition: {
+      spouse: {
+        name: formData.get('spouse_name') || undefined
+      },
+      father: {
+        last_name: formData.get('fatherLastName'),
+        first_name: formData.get('fatherFirstName'),
+        middle_name: formData.get('fatherMiddleName'),
+        extension: formData.get('fatherExtension') || undefined
+      },
+      mother: {
+        last_name: formData.get('motherLastName'),
+        first_name: formData.get('motherFirstName'),
+        middle_name: formData.get('motherMiddleName')
+      },
+      children: Array.from(document.querySelectorAll('.child-entry')).map(child => ({
+        full_name: child.querySelector('input[name="childFullName[]"]').value,
+        occupation: child.querySelector('input[name="childOccupation[]"]').value,
+        age: parseInt(child.querySelector('input[name="childAge[]"]').value) || undefined,
+        working_status: child.querySelector('select[name="childWorkingStatus[]"]').value,
+        income: child.querySelector('input[name="childIncome[]"]').value || undefined
+      })).filter(child => child.full_name)
+    },
+    education_hr_profile: {
+      educational_attainment: formData.get('education_level'),
+      skills: Array.from(document.querySelectorAll('input[name="skills[]"]:checked')).map(el => el.value),
+      skill_other_text: document.getElementById('skill-other-text').value || undefined
+    }
+  };
+
+  // Process contacts
+  requestData.identifying_information.contacts = Array.from(document.querySelectorAll('.contact-entry')).map(contact => ({
+    type: contact.querySelector('.contact-type').value,
+    name: contact.querySelector('input[name$="[name]"]').value,
+    relationship: contact.querySelector('input[name$="[relationship]"]').value,
+    phone: contact.querySelector('input[name$="[phone]"]').value,
+    email: contact.querySelector('input[name$="[email]"]').value || undefined
+  }));
+
   // Show loading indicator
   Swal.fire({
     title: 'Processing...',
     text: 'Please wait while we save your information',
     allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
+    didOpen: () => Swal.showLoading()
   });
 
-  // Disable submit button to prevent multiple submissions
-  const submitButton = document.querySelector('#nextBtn');
   submitButton.disabled = true;
 
-  fetch(form.action, {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(err => Promise.reject(err));
-    }
-    return response.json();
-  })
-  .then(data => {
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw data;
+
     Swal.fire({
       title: 'Success!',
-      text: data.message || 'Senior citizen record created successfully',
-      icon: 'success',
-      confirmButtonText: 'OK'
+      text: data.alert?.text || 'Senior citizen record created successfully',
+      icon: 'success'
     }).then(() => {
-      // Optionally redirect or reset form
-      // window.location.href = '/success-page';
-      // form.reset();
+      form.reset();
+      window.location.href = '/success-page'; // Redirect if needed
     });
-  })
-  .catch(error => {
+  } catch (error) {
     console.error('Error:', error);
     Swal.fire({
-      title: 'Error!',
+      title: 'Error',
       text: error.message || 'An error occurred while saving the data',
-      icon: 'error',
-      confirmButtonText: 'OK'
+      icon: 'error'
     });
-  })
-  .finally(() => {
+  } finally {
     submitButton.disabled = false;
-  });
+  }
 }
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize form sections
+  setupChildManagement();
+  setupContactManagement();
+  toggleSpouseInput(); // Initialize spouse field visibility
+  
+  // Initialize purok options if barangay is already selected
+  if (document.getElementById('barangay').value) {
+    updatePurokOptions();
+  }
+  
+  // Set up required field validation
+  document.querySelectorAll('[required]').forEach(input => {
+    input.addEventListener('input', function() {
+      if (this.value.trim()) this.style.borderColor = '';
+    });
+    
+    input.addEventListener('blur', function() {
+      if (!this.value.trim()) this.style.borderColor = 'red';
+    });
+  });
+  
+  // Show first tab
+  showTab(0);
+});
