@@ -38,6 +38,10 @@ router.get('/Analytics', requireAuth, (req, res) => {
     res.render('admin/admin_analytics');
 });
 
+router.get('/Dashboard', requireAuth,(req, res) => {
+    res.render('admin/dashboard');
+});
+
 // Staff routes
 router.get('/index-staff', requireAuth, (req, res) => {
     res.render('staff/staff_dashboard');
