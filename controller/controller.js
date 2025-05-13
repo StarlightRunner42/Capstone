@@ -332,5 +332,41 @@ exports.renderSeniorForm = async (req, res) => {
   }
   };
 
+  exports.renderAddSenior = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
+    if (!barangays) {
+      return res.status(404).send('No barangays found');
+    }
+  
+    // Pass the barangays data to the EJS template
+    
+    res.render('staff/staff_addSenior', {
+      barangays: barangays || {}
+    });
+  } catch (err) {
+    console.error('Error fetching barangays:', err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
+
+   exports.renderAddPWD = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
+    if (!barangays) {
+      return res.status(404).send('No barangays found');
+    }
+  
+    // Pass the barangays data to the EJS template
+   
+    res.render('staff/staff_addPwd', {
+      barangays: barangays || {}
+    });
+  } catch (err) {
+    console.error('Error fetching barangays:', err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
+
 
 
