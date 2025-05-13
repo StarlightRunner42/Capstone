@@ -32,7 +32,7 @@ router.get('/Analytics', requireAuth,(req, res) => {
 });
 
 //, requireAuth
-router.get('/Senior-form', controller.renderSeniorForm);
+router.get('/Senior-form', requireAuth, controller.renderSeniorForm);
 
 router.get('/add_senior',(req, res) => {
     res.render('staff/staff_addSenior'); 
@@ -42,9 +42,8 @@ router.get('/add_pwd',(req, res) => {
     res.render('staff/staff_addPwd'); /* add pwd-form */
 });
 
-router.get('/Pwd-form', requireAuth,(req, res) => {
-    res.render('staff/staff_pwd');
-});
+
+router.get('/Pwd-form', requireAuth, controller.renderPWDForm);
 
 router.get('/Admin', requireAuth,(req, res) => {
     res.render('admin/admin_super_admin');

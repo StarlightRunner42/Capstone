@@ -160,35 +160,23 @@
 										<div class="container">
 											<h1>Pwd Table</h1>
 											
-												<div class="filter-container">
-													<div class="filter-group">
-														<label for="barangay-filter">Barangay:</label>
-														<select id="barangay-filter">
-															<option value="1">Barangay 1</option>
-															<option value="2">Barangay 2</option>
-															<option value="3">Barangay 3</option>
-															<option value="4">Barangay 4</option>
-															<option value="5">Barangay 5</option>
-															<option value="mambulac">Barangay Mambulac</option>
-															<option value="guinhalaran">Barangay Guinhalaran</option>
-															<option value="elopez">Barangay E-Lopez</option>
-															<option value="bagtic">Barangay Bagtic</option>
-															<option value="balaring">Barangay Balaring</option>
-															<option value="hawaiian">Barangay Hawaiian</option>
-															<option value="patag">Barangay Patag</option>
-															<option value="kaptRamon">Barangay Kapt. Ramon</option>
-															<option value="guimbalaon">Barangay Guimbalaon</option>
-															<option value="rizal">Barangay Rizal</option>
-															<option value="lantad">Barangay Lantad</option>
-														</select>
-													</div>
-													<div class="filter-group">
-														<label for="purok-filter">Purok:</label>
-														<select id="purok-filter">
-															<option value="all">Puroks</option>
-														</select>
-													</div>
-												</div>
+													<div class="filter-container">
+  <div class="filter-group">
+    <label for="barangay-filter">Barangay:</label>
+    <select id="barangay-filter" class="form-control">
+      <option value="">Select Barangay</option>
+      <% Object.keys(barangays).forEach(barangay => { %>
+        <option value="<%= barangay %>"><%= barangay %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="purok-filter">Purok:</label>
+    <select id="purok-filter" class="form-control" disabled>
+      <option value="">First select a Barangay</option>
+    </select>
+  </div>
+</div>
 												<table id="example" class="display" style="width:100%">
 													<thead>
 														<tr>
@@ -315,6 +303,63 @@
 		</div>
 		</div>
 		</div>
+		<script>
+  // Convert EJS data to JavaScript object
+  const barangaysData = <%- JSON.stringify(barangays) %>;
+  
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get select elements
+    const barangaySelect = document.getElementById('barangay-filter');
+    const purokSelect = document.getElementById('purok-filter');
+    
+    // Debugging: Log the initial data
+    console.log('Barangays data loaded:', barangaysData);
+    
+    // Barangay change event handler
+    barangaySelect.addEventListener('change', function() {
+      const selectedBarangay = this.value;
+      
+      // Clear existing options
+      purokSelect.innerHTML = '';
+      
+      // Add default option
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = 'Select Purok';
+      purokSelect.appendChild(defaultOption);
+      
+      // Enable/disable based on selection
+      purokSelect.disabled = !selectedBarangay;
+      
+      // If a barangay is selected, populate puroks
+      if (selectedBarangay && barangaysData[selectedBarangay]) {
+        // Debugging: Log the selected barangay's puroks
+        console.log(`Loading puroks for ${selectedBarangay}:`, barangaysData[selectedBarangay]);
+        
+        // Add "All Puroks" option
+        const allOption = document.createElement('option');
+        allOption.value = 'all';
+        allOption.textContent = 'All Puroks';
+        purokSelect.appendChild(allOption);
+        
+        // Add each purok option
+        barangaysData[selectedBarangay].forEach(purok => {
+          const option = document.createElement('option');
+          option.value = purok;
+          option.textContent = purok;
+          purokSelect.appendChild(option);
+        });
+      }
+      
+      // Debugging: Log the current purok options
+      console.log('Current purok options:', purokSelect.innerHTML);
+    });
+    
+    // Initialize purok dropdown as disabled
+    purokSelect.disabled = true;
+  });
+</script>
 		<!-- Required Jquery -->
 		<script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
 		<script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
@@ -348,7 +393,7 @@
 		<script src="\assets\js\vartical-layout.min.js"></script>
 		<script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
 		<script type="text/javascript" src="\assets\js\script.js"></script>
-		<script type="text/javascript" src="\assets\js\senior.js"></script>
+		<!-- <script type="text/javascript" src="\assets\js\senior.js"></script> -->
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 		<script>
