@@ -441,9 +441,14 @@ function initDashboard() {
     });
     
     // Close modal when clicking X
-    document.querySelector('.close').addEventListener('click', function() {
-        document.getElementById('purokModal').style.display = 'none';
-    });
+    const closeBtn = document.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            document.getElementById('purokModal').style.display = 'none';
+        });
+    } else {
+        console.error("Close button not found!");
+    }
     
     // Close modal when clicking outside
     window.addEventListener('click', function(event) {

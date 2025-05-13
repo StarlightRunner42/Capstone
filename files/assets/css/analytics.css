@@ -1,10 +1,8 @@
 .dashboard-container {
-    background-color:#FBF8EF ;
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 8px;
     padding: 15px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
 }
 
 h1 {
@@ -71,10 +69,7 @@ h1 {
     border-radius: 4px;
 }
 
-.view-btn.active {
-    background-color: #010c13;
-    color: white;
-}
+
 
 .data-table {
     width: 100%;
@@ -135,6 +130,8 @@ h1 {
     margin-top: 40px;
     height: 400px;
     overflow-x: auto;
+    display: none;
+    
 }
 
 .purok-chart-container {
