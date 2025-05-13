@@ -43,13 +43,9 @@ router.get('/index-staff', requireAuth, (req, res) => {
     res.render('staff/staff_dashboard');
 });
 
-router.get('/add_senior', (req, res) => {
-    res.render('staff/staff_addSenior');
-});
 
-router.get('/add_pwd', (req, res) => {
-    res.render('staff/staff_addPwd');
-});
+router.get('/add_senior', requireAuth, controller.renderAddSenior);
+router.get('/add_pwd', controller.renderAddPWD);
 
 // Form routes (used by both staff and admin)
 router.get('/Senior-form', requireAuth, controller.renderSeniorForm);
