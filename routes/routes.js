@@ -31,9 +31,8 @@ router.get('/Analytics', requireAuth,(req, res) => {
     res.render('admin/admin_analytics');
 });
 
-router.get('/Senior-form', requireAuth,(req, res) => {
-    res.render('staff/staff_senior');
-});
+//, requireAuth
+router.get('/Senior-form', controller.renderSeniorForm);
 
 router.get('/add_senior',(req, res) => {
     res.render('staff/staff_addSenior'); 
@@ -64,6 +63,4 @@ router.get('/logout',controller.logout);
 //adding senior to database
 router.post('/add-data',controller.createResident);
 
-//get barangay and purok
-router.get('/get-barangay',controller.getBarangay);
 module.exports = router; 

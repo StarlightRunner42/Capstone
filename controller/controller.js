@@ -6,6 +6,9 @@ const saltrounds = 10;
 const session = require('express-session');
 const { User,SeniorCitizen,Barangay  } = require("../model/schema");
 
+
+
+
 exports.createUser = async (req, res) => {
     try {
         const { name, email, password, confirm_password, role } = req.body;
@@ -279,37 +282,38 @@ exports.logout = (req, res) => {
     }
   };
   
+// Fetch barangays and their puroks from the database
+async function fetchBarangays() {
+  const barangayList = await Barangay.find({});
 
-  exports.getBarangay = async (req, res) => {
-    try {
-      const barangayList = await Barangay.find({});
-  
-      if (!barangayList || barangayList.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: 'No barangays found'
-        });
-      }
-  
-      // Transform into desired format
-      const puroks = {};
-      barangayList.forEach(({ barangay, puroks: purokList }) => {
-        puroks[barangay] = purokList;
-      });
-  
-      return res.status(200).json({
-        success: true,
-        data: puroks
-      });
-  
-    } catch (error) {
-      console.error('Error fetching barangays:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Internal server error',
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
-      });
+  if (!barangayList || barangayList.length === 0) {
+    return null;
+  }
+
+  const puroks = {};
+  barangayList.forEach(({ barangay, puroks: purokList }) => {
+    puroks[barangay] = purokList;
+  });
+
+  return puroks;
+}
+
+exports.renderSeniorForm = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
+    if (!barangays) {
+      return res.status(404).send('No barangays found');
     }
+    console.log('Fetched barangays:', barangays);
+    // Pass the barangays data to the EJS template
+    res.render('staff/staff_senior', {
+      barangays: barangays || {}
+    });
+  } catch (err) {
+    console.error('Error fetching barangays:', err);
+    res.status(500).send('Internal Server Error');
+  }
   };
-  
+
+
 
