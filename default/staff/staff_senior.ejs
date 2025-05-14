@@ -179,19 +179,19 @@
 </div>
 		
 <table id="example" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>Barangay</th>
-            <th>Purok</th>
-            <th>Age</th>
-            <th>Marital Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
     <tbody>
+        <!-- Static header row inside tbody -->
+        <tr class="table-headers">
+            <td><strong>First Name</strong></td>
+            <td><strong>Middle Name</strong></td>
+            <td><strong>Last Name</strong></td>
+            <td><strong>Barangay</strong></td>
+            <td><strong>Purok</strong></td>
+            <td><strong>Age</strong></td>
+            <td><strong>Marital Status</strong></td>
+            <td><strong>Actions</strong></td>
+        </tr>
+
         <% if (seniorCitizens && seniorCitizens.length > 0) { %>
             <% seniorCitizens.forEach(senior => { %>
             <tr>
@@ -209,12 +209,14 @@
             </tr>
             <% }); %>
         <% } else { %>
+            <!-- Fill all 8 columns to prevent DataTables error -->
             <tr>
                 <td colspan="8" class="text-center">No senior citizen records found</td>
             </tr>
         <% } %>
     </tbody>
 </table>
+
 													
 										</div>
 										<!-- Container div -->
@@ -322,14 +324,22 @@
 			}
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
+			
 			$(document).ready(function() {
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true
-				});
-			});
+    $('#example').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthMenu: [5, 10, 25, 50, 100],
+        responsive: true,
+        rowCallback: function(row) {
+            // Skip rows with the 'dt-empty' class (e.g., "No data found" message)
+            if ($(row).hasClass('dt-empty')) {
+                $(row).hide();
+            }
+        }
+    });
+});
+
 
 			
 		</script>

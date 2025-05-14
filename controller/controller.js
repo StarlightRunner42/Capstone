@@ -420,7 +420,7 @@ exports.renderSeniorForm = async (req, res) => {
     // Pass the barangays data to the EJS template
     res.render('staff/staff_pwd', {
       barangays: barangays || {},
-      pwd: pwd || {}
+      pwds: pwd || {}
     });
   } catch (err) {
     console.error('Error fetching barangays:', err);

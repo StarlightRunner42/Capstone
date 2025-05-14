@@ -178,20 +178,20 @@
   </div>
 </div>
 											
-<table id="example" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>Age</th>
-            <th>Civil Status</th>
-            <th>Disability</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% if (pwds && pwds.length > 0) { %>
+<% if (pwds && pwds.length > 0) { %>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Civil Status</th>
+                <th>Disability</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             <% pwds.forEach(pwd => { %>
             <tr>
                 <td><%= pwd.first_name || 'N/A' %></td>
@@ -212,13 +212,14 @@
                 </td>
             </tr>
             <% }); %>
-        <% } else { %>
-            <tr>
-                <td colspan="7" class="text-center">No data found</td>
-            </tr>
-        <% } %>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+<% } else { %>
+    <div class="alert alert-info text-center">
+        No data found.
+    </div>
+<% } %>
+
 										</div>
 										<!-- Container div -->
 									</div>
@@ -325,14 +326,23 @@
 			}
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
-			$(document).ready(function() {
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true
-				});
-			});
+
+
+		$(document).ready(function() {
+    $('#example').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthMenu: [5, 10, 25, 50, 100],
+        responsive: true,
+        rowCallback: function(row) {
+            // Skip rows with the 'dt-empty' class (e.g., "No data found" message)
+            if ($(row).hasClass('dt-empty')) {
+                $(row).hide();
+            }
+        }
+    });
+});
+
 
 			
 		</script>
