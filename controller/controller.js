@@ -440,7 +440,6 @@ exports.renderSeniorForm = async (req, res) => {
     
     res.render('staff/staff_addSenior', {
       barangays: barangays || {},
-      pwd: pwd || {}
     });
   } catch (err) {
     console.error('Error fetching barangays:', err);
