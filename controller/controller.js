@@ -4,7 +4,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
-const { User,SeniorCitizen,Barangay  } = require("../model/schema");
+const { User,SeniorCitizen,Barangay ,PWD } = require("../model/schema");
 
 
 
@@ -281,6 +281,91 @@ exports.logout = (req, res) => {
       });
     }
   };
+
+
+exports.registerPwd = async (req, res) => {
+  try {
+    console.log('Raw body:', req.body);
+
+    // Transform the raw data to match your schema
+    const pwdData = {
+      first_name: req.body.first_name,
+      middle_name: req.body.middle_name,
+      last_name: req.body.last_name,
+      barangay: req.body.barangay,
+      purok: req.body.purok,
+      birthday: new Date(req.body.birthday), // Convert string to Date
+      age: parseInt(req.body.age), // Ensure age is a number
+      gender: req.body.gender,
+      place_of_birth: req.body.place_of_birth,
+      civil_status: req.body.civil_status,
+      spouse_name: req.body.spouse_name,
+      contacts: req.body.contacts,
+      fatherLastName: req.body.fatherLastName,
+      fatherFirstName: req.body.fatherFirstName,
+      fatherMiddleName: req.body.fatherMiddleName,
+      fatherExtension: req.body.fatherExtension,
+      motherLastName: req.body.motherLastName,
+      motherFirstName: req.body.motherFirstName,
+      motherMiddleName: req.body.motherMiddleName,
+      sss_id: req.body.sss_id,
+      gsis_sss_no: req.body.gsis_sss_no,
+      psn_no: req.body.psn_no,
+      philhealth_no: req.body.philhealth_no,
+      education_level: req.body.education_level,
+      employment_status: req.body.employment_status,
+      employment_category: req.body.employment_category,
+      employment_type: req.body.employment_type,
+      disability: req.body.disability,
+      disability_other_text: req.body.disability_other_text,
+      cause_disability: req.body.cause_disability,
+      cause_other_text: req.body.cause_other_text
+    };
+
+    // Create new PWD document
+    const newPwd = new PWD(pwdData);
+    
+    // Save to database
+    const savedPwd = await newPwd.save();
+
+    // Return success response
+    res.status(201).json({
+      success: true,
+      message: 'PWD registration successful',
+      data: savedPwd
+    });
+
+  } catch (err) {
+    console.error('Registration error:', err);
+
+    // Handle validation errors specifically
+    if (err.name === 'ValidationError') {
+      const errors = Object.values(err.errors).map(el => el.message);
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors
+      });
+    }
+
+    // Handle duplicate key errors (if you added unique constraints)
+    if (err.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Duplicate key error',
+        field: Object.keys(err.keyPattern)[0],
+        error: `This ${Object.keys(err.keyPattern)[0]} is already registered`
+      });
+    }
+
+    // Generic error handler
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: err.message
+    });
+  }
+};
   
 // Fetch barangays and their puroks from the database
 async function fetchBarangays() {
