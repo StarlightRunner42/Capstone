@@ -72,8 +72,6 @@ function calculateAge() {
   return true;
 }
 
-
-
 // Form validation function
 function validateCurrentStep(currentStep) {
   let isValid = true;
@@ -166,14 +164,14 @@ function showTab(n) {
     
     if (n == x.length) {
       document.getElementById("nextBtn").innerHTML = "Submit";
-      document.getElementById("nextBtn").setAttribute("type", "submit");
+      document.getElementById("nextBtn").setAttribute("type", "button");
     } else {
       document.getElementById("nextBtn").innerHTML = "Next";
       document.getElementById("nextBtn").setAttribute("type", "button");
     }
     
     fixStepIndicator(n);
-  }
+}
 
 function nextPrev(n) {
   var x = document.getElementsByTagName("fieldset");
@@ -186,13 +184,110 @@ function nextPrev(n) {
   currentTab = currentTab + n;
   
   if (currentTab >= x.length) {
-    document.getElementById("housingForm").submit();
+    // Submit the form via AJAX
+    const form = document.getElementById("housingForm");
+    const formData = new FormData(form);
+    
+    // Convert FormData to JSON
+    const jsonData = {};
+    formData.forEach((value, key) => {
+        // Handle array fields (like disability[])
+        if (key.endsWith('[]')) {
+            const cleanKey = key.replace('[]', '');
+            if (!jsonData[cleanKey]) {
+                jsonData[cleanKey] = [];
+            }
+            jsonData[cleanKey].push(value);
+        } else {
+            jsonData[key] = value;
+        }
+    });
+    
+    // Handle contacts data specially
+    const contacts = {};
+    formData.forEach((value, key) => {
+        if (key.startsWith('contacts[')) {
+            const matches = key.match(/contacts\[(\d+)\]\[(\w+)\]/);
+            if (matches) {
+                const contactId = matches[1];
+                const field = matches[2];
+                if (!contacts[contactId]) {
+                    contacts[contactId] = {};
+                }
+                contacts[contactId][field] = value;
+            }
+        }
+    });
+    
+    // Convert contacts object to array
+    jsonData.contacts = Object.values(contacts);
+    
+    // Show loading indicator
+    Swal.fire({
+        title: 'Processing...',
+        html: 'Please wait while we submit your information',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    fetch(form.action, {
+        method: form.method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
+        }
+        return response.json();
+    })
+    .then(data => {
+        Swal.fire({
+            title: "Success!",
+            text: data.message || "Your information has been successfully submitted.",
+            icon: "success",
+            confirmButtonText: "OK"
+        }).then(() => {
+            // Redirect to a success page or reset the form
+            window.location.href = "/register-pwd"; // Change to your desired redirect
+            // OR to reset the form:
+            // form.reset();
+            // currentTab = 0;
+            // showTab(currentTab);
+        });
+    })
+    .catch(error => {
+        let errorMessage = "There was a problem submitting your form. Please try again.";
+        
+        if (error.errors) {
+            // Handle validation errors
+            errorMessage = "Please correct the following errors:\n" + 
+                error.errors.join("\n");
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
+        
+        Swal.fire({
+            title: "Error!",
+            html: errorMessage.replace(/\n/g, '<br>'), // Convert newlines to <br>
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+        
+        // Scroll back to the first tab if there are errors
+        currentTab = 0;
+        showTab(currentTab);
+    });
+    
     return false;
   }
   
   showTab(currentTab);
 }
-
 
 function fixStepIndicator(n) {
   const steps = document.getElementsByClassName("step");
@@ -319,4 +414,26 @@ function attachWorkingStatusListeners() {
       // Initialize visibility
       toggleIncome(select);
   });
+}
+
+// Barangay and Purok functions
+function updatePurokOptions() {
+    const barangaySelect = document.getElementById('barangay');
+    const purokSelect = document.getElementById('purok');
+    const selectedBarangay = barangaySelect.value;
+    
+    // Clear existing options except the first one
+    while (purokSelect.options.length > 1) {
+        purokSelect.remove(1);
+    }
+    
+    // Add new options based on selected barangay
+    if (selectedBarangay && barangays[selectedBarangay]) {
+        barangays[selectedBarangay].forEach(purok => {
+            const option = document.createElement('option');
+            option.value = purok;
+            option.textContent = purok;
+            purokSelect.appendChild(option);
+        });
+    }
 }

@@ -382,25 +382,37 @@
 				</div>
 			</form>
 			<script>
-				// Embed the puroks data from backend into JavaScript
-				const puroks = <%- JSON.stringify(barangays) %>;
+  // Embed the barangays data from backend into JavaScript
+  const barangays = <%- JSON.stringify(barangays) %>;
 
-				function updatePurokOptions() {
-					const barangay = document.getElementById('barangay').value;
-					const purokSelect = document.getElementById('purok');
+  function updatePurokOptions() {
+    const barangaySelect = document.getElementById('barangay');
+    const purokSelect = document.getElementById('purok');
+    const selectedBarangay = barangaySelect.value;
 
-					purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
+    // Clear existing options except the first one
+    while (purokSelect.options.length > 1) {
+      purokSelect.remove(1);
+    }
 
-					if (puroks[barangay]) {
-					puroks[barangay].forEach(purok => {
-						const option = document.createElement('option');
-						option.value = purok;
-						option.textContent = purok;
-						purokSelect.appendChild(option);
-					});
-					}
-				}
-				</script>
+    // Add new options based on selected barangay
+    if (selectedBarangay && barangays[selectedBarangay]) {
+      barangays[selectedBarangay].forEach(purok => {
+        const option = document.createElement('option');
+        option.value = purok;
+        option.textContent = purok;
+        purokSelect.appendChild(option);
+      });
+    }
+  }
+
+  // Initialize the purok dropdown if a barangay is already selected
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('barangay').value) {
+      updatePurokOptions();
+    }
+  });
+</script>
 			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			<script type="text/javascript" src="\assets\js\pwd.js"></script>
 	</body>
