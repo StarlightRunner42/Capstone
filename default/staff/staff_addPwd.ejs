@@ -49,18 +49,24 @@
 						</div>
 					</div>
 					<div class="form-row">
+
 						<div class="form-group">
-							<label for="barangay" id="barangayLabel">Barangay:</label>
-							<select id="barangay" name="barangay" required onchange="updatePurokOptions()">
-								<option value="" disabled selected>Select Barangay</option><% Object.keys(barangays).forEach(barangay => { %> <option value="<%= barangay %>"><%= barangay %> </option><% }) %>
-							</select>
+						<label for="barangay" id="barangayLabel">Barangay:</label>
+						<select id="barangay" name="barangay" required onchange="updatePurokOptions()">
+							<option value="" disabled selected>Select Barangay</option>
+							<% Object.keys(barangays).forEach(barangay => { %>
+							<option value="<%= barangay %>"><%= barangay %></option>
+							<% }) %>
+						</select>
 						</div>
+
 						<div class="form-group">
-							<label for="purok" id="purokLabel">Purok:</label>
-							<select id="purok" name="purok" required>
-								<option value="" disabled selected>Select Purok</option>
-							</select>
+						<label for="purok" id="purokLabel">Purok:</label>
+						<select id="purok" name="purok" required>
+							<option value="" disabled selected>Select Purok</option>
+						</select>
 						</div>
+
 					</div>
 					<div class="form-row">
 						<div class="form-group">
@@ -211,6 +217,7 @@
 						</div>
 					</div>
 				</fieldset>
+
 				<fieldset id="educationalAttainment">
 					<legend>Educational Attainment</legend>
 					<div class="form-group">
@@ -227,6 +234,7 @@
 							<option value="Not Attended School">Not Attended School</option>
 						</select>
 					</div>
+
 					<div class="form-group">
 						<label for="employment_status">Status of Employment:</label>
 						<select id="employment_status" name="employment_status" required>
@@ -255,6 +263,8 @@
 						</select>
 					</div>
 				</fieldset>
+
+				
 				<fieldset id="disability">
 					<div class="form-section skills-section">
 						<h3 class="section-title">Types Of Disability</h3>
@@ -310,9 +320,11 @@
 							<input type="text" id="disability-other-text" name="disability_other_text" class="other-input">
 						</div>
 					</div>
+			
+				
+				
 					<div class="form-section skills-section">
-						<h3 class="section-title">Cause of Disability <span class="required">*</span>
-						</h3>
+						<h3 class="section-title">Cause of Disability <span class="required">*</span></h3>
 						<div class="skills-grid">
 							<div class="skills-column">
 								<div class="skill-item">
@@ -362,6 +374,8 @@
 						</div>
 					</div>
 				</fieldset>
+
+
 				<div class="navigation">
 					<button type="button" id="prevBtn" onclick="nextPrev(-1)">BACK</button>
 					<button type="button" id="nextBtn" onclick="nextPrev(1)">NEXT</button>
@@ -369,23 +383,24 @@
 			</form>
 			<script>
 				// Embed the puroks data from backend into JavaScript
-				const puroks = < % -JSON.stringify(barangays) % > ;
+				const puroks = <%- JSON.stringify(barangays) %>;
 
 				function updatePurokOptions() {
 					const barangay = document.getElementById('barangay').value;
 					const purokSelect = document.getElementById('purok');
-					purokSelect.innerHTML = ' < option value = ""
-					disabled selected > Select Purok < /option>';
+
+					purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
+
 					if (puroks[barangay]) {
-						puroks[barangay].forEach(purok => {
-							const option = document.createElement('option');
-							option.value = purok;
-							option.textContent = purok;
-							purokSelect.appendChild(option);
-						});
+					puroks[barangay].forEach(purok => {
+						const option = document.createElement('option');
+						option.value = purok;
+						option.textContent = purok;
+						purokSelect.appendChild(option);
+					});
 					}
 				}
-			</script>
+				</script>
 			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			<script type="text/javascript" src="\assets\js\pwd.js"></script>
 	</body>
