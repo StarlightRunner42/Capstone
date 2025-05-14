@@ -1,24 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Get the employment status dropdown
   const employmentStatus = document.getElementById('employment_status');
-  // Get the category and type groups
   const categoryGroup = document.getElementById('categoryGroup');
   const typeGroup = document.getElementById('typeGroup');
+  const categorySelect = document.getElementById('employment_category');
+  const typeSelect = document.getElementById('employment_type');
 
-  // Add event listener for changes in employment status
   employmentStatus.addEventListener('change', function() {
       if (this.value === 'Employee') {
-          // Show both category and type fields for employees
           categoryGroup.style.display = 'block';
           typeGroup.style.display = 'block';
+          categorySelect.required = true;
+          typeSelect.required = true;
       } else {
-          // Hide both fields for unemployed or self-employed
           categoryGroup.style.display = 'none';
           typeGroup.style.display = 'none';
+          categorySelect.required = false;
+          typeSelect.required = false;
           
-          // Optional: Clear the values when hidden
-          document.getElementById('employment_category').value = '';
-          document.getElementById('employment_type').value = '';
+          // Set to null instead of empty string
+          categorySelect.value = null;
+          typeSelect.value = null;
       }
   });
 

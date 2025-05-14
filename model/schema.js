@@ -192,7 +192,7 @@ const SeniorCitizenSchema = new mongoose.Schema({
     next();
   });
 
-  const pwdRegistrationSchema = new mongoose.Schema({
+const pwdRegistrationSchema = new mongoose.Schema({
   first_name: { type: String, required: true },
   middle_name: { type: String },
   last_name: { type: String, required: true },
@@ -208,7 +208,6 @@ const SeniorCitizenSchema = new mongoose.Schema({
   civil_status: { type: String, enum: ['Single but Head of the Family', 'Single', 'Married'], required: true },
   spouse_name: { type: String },
 
-  // 👇 Embedded contacts directly
   contacts: [
     {
       type: { type: String, enum: ['primary', 'secondary', 'emergency'], required: true },
@@ -252,20 +251,29 @@ const SeniorCitizenSchema = new mongoose.Schema({
     enum: ['Employee', 'Unemployed', 'Self-employed'],
     required: true
   },
-  employment_category: { type: String, enum: ['Government', 'Private'], default: null },
+  employment_category: { 
+    type: String, 
+    enum: ['Government', 'Private'], 
+    required: function() {
+      return this.employment_status === 'Employee';
+    },
+    default: null 
+  },
   employment_type: {
     type: String,
     enum: ['Permanent/Regular', 'Seasonal', 'Casual', 'Emergency'],
+    required: function() {
+      return this.employment_status === 'Employee';
+    },
     default: null
   },
 
- disability: [String], // e.g. ['Hearing', 'Autism']
-  disability_other_text: String, // For storing custom input if "Other" is selected
+  disability: [String],
+  disability_other_text: String,
 
-  cause_disability: [String], // e.g. ['Accident']
-  cause_other_text: String, // For storing custom input if "Other" is selected
+  cause_disability: [String],
+  cause_other_text: String,
 });
-
 
 const User = mongoose.model('User', UserSchema);
 const SeniorCitizen  = mongoose.model('SeniorCitizen', SeniorCitizenSchema);
