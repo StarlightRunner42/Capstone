@@ -191,26 +191,32 @@
         </tr>
     </thead>
     <tbody>
-        <% pwds.forEach(pwd => { %>
-        <tr>
-            <td><%= pwd.first_name || 'N/A' %></td>
-            <td><%= pwd.middle_name || 'N/A' %></td>
-            <td><%= pwd.last_name || 'N/A' %></td>
-            <td><%= pwd.age || 'N/A' %></td>
-            <td><%= pwd.civil_status || 'N/A' %></td>
-            <td>
-                <% if (pwd.disability && pwd.disability.length > 0) { %>
-                    <%= pwd.disability.join(', ') %>
-                <% } else { %>
-                    N/A
-                <% } %>
-            </td>
-            <td>
-                <button class="btn btn-success">Edit</button>
-                <button class="btn btn-primary">View</button>
-            </td>
-        </tr>
-        <% }); %>
+        <% if (pwds && pwds.length > 0) { %>
+            <% pwds.forEach(pwd => { %>
+            <tr>
+                <td><%= pwd.first_name || 'N/A' %></td>
+                <td><%= pwd.middle_name || 'N/A' %></td>
+                <td><%= pwd.last_name || 'N/A' %></td>
+                <td><%= pwd.age || 'N/A' %></td>
+                <td><%= pwd.civil_status || 'N/A' %></td>
+                <td>
+                    <% if (pwd.disability && pwd.disability.length > 0) { %>
+                        <%= pwd.disability.join(', ') %>
+                    <% } else { %>
+                        N/A
+                    <% } %>
+                </td>
+                <td>
+                    <button class="btn btn-success">Edit</button>
+                    <button class="btn btn-primary">View</button>
+                </td>
+            </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="7" class="text-center">No data found</td>
+            </tr>
+        <% } %>
     </tbody>
 </table>
 										</div>

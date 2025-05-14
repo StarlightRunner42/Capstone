@@ -184,29 +184,35 @@
             <th>First Name</th>
             <th>Middle Name</th>
             <th>Last Name</th>
-			<th>Barangay</th>
-			<th>Purok</th>
+            <th>Barangay</th>
+            <th>Purok</th>
             <th>Age</th>
             <th>Marital Status</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        <% seniorCitizens.forEach(senior => { %>
-        <tr>
-            <td><%= senior.identifying_information.name.first_name %></td>
-            <td><%= senior.identifying_information.name.middle_name %></td>
-            <td><%= senior.identifying_information.name.last_name %></td>
-			<td><%= senior.identifying_information.address.barangay %></td>
-			<td><%= senior.identifying_information.address.purok %></td>
-            <td><%= senior.identifying_information.age %></td>
-            <td><%= senior.identifying_information.marital_status %></td>
-            <td>
-                <button class="btn btn-success">Edit</button>
-                <button class="btn btn-primary">View</button>
-            </td>
-        </tr>
-        <% }); %>
+        <% if (seniorCitizens && seniorCitizens.length > 0) { %>
+            <% seniorCitizens.forEach(senior => { %>
+            <tr>
+                <td><%= senior.identifying_information?.name?.first_name || 'N/A' %></td>
+                <td><%= senior.identifying_information?.name?.middle_name || 'N/A' %></td>
+                <td><%= senior.identifying_information?.name?.last_name || 'N/A' %></td>
+                <td><%= senior.identifying_information?.address?.barangay || 'N/A' %></td>
+                <td><%= senior.identifying_information?.address?.purok || 'N/A' %></td>
+                <td><%= senior.identifying_information?.age || 'N/A' %></td>
+                <td><%= senior.identifying_information?.marital_status || 'N/A' %></td>
+                <td>
+                    <button class="btn btn-success">Edit</button>
+                    <button class="btn btn-primary">View</button>
+                </td>
+            </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="8" class="text-center">No senior citizen records found</td>
+            </tr>
+        <% } %>
     </tbody>
 </table>
 													
