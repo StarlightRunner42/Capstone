@@ -95,7 +95,7 @@
 								</li>
 								<li>
 									<a href="/add_pwd" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
-										<i class="feather icon-user-plus"></i> ADD PWD </a>
+										<i class="feather icon-user-plus"></i>ADD PDAO</a>
 								</li>
 							</ul>
 							<ul class="nav-right"></ul>
@@ -139,12 +139,12 @@
 										<ul class="pcoded-submenu">
 											<li class="active">
 												<a href="/Pwd-form">
-													<span class="">PWD FORM</span>
+													<span class="">PDAO</span>
 												</a>
 											</li>
 											<li class="">
 												<a href="/Senior-form">
-													<span class="">SENIORS FORM</span>
+													<span class="">OSCA</span>
 												</a>
 											</li>
 										</ul>
@@ -152,144 +152,144 @@
 								</ul>
 							</div>
 						</nav>
+						
 						<div class="pcoded-content">
 							<div class="pcoded-inner-content">
 								<div class="main-body">
 									<div class="page-wrapper">
-
 										<div class="container">
-											<h1>Pwd Table</h1>
-											
-													<div class="filter-container">
-													<div class="filter-group">
-														<label for="barangay-filter">Barangay:</label>
-														<select id="barangay-filter" class="form-control">
-														<option value="">Select Barangay</option>
-														<% Object.keys(barangays).forEach(barangay => { %>
-															<option value="<%= barangay %>"><%= barangay %></option>
-														<% }) %>
-														</select>
-													</div>
-													<div class="filter-group">
-														<label for="purok-filter">Purok:</label>
-														<select id="purok-filter" class="form-control" disabled>
-														<option value="">First select a Barangay</option>
-														</select>
-													</div>
-													</div>
-												<table id="example" class="display" style="width:100%">
-													<thead>
-														<tr>
-															<th>Name</th>
-															<th>Addres</th>
-															<th>purok</th>
-															<th>brgy</th>
-															<th>Needs</th>
-															<th>actions</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>Tiger Nixon</td>
-															<td>System Architect</td>
-															<td>Edinburgh</td>
-															<td>61</td>
-															<td>2011-04-25</td>
-															<td>$320,800</td>
-														</tr>
-														<tr>
-															<td>Garrett Winters</td>
-															<td>Accountant</td>
-															<td>Tokyo</td>
-															<td>63</td>
-															<td>2011-07-25</td>
-															<td>$170,750</td>
-														</tr>
-														<tr>
-															<td>Ashton Cox</td>
-															<td>Junior Technical Author</td>
-															<td>San Francisco</td>
-															<td>66</td>
-															<td>2009-01-12</td>
-															<td>$86,000</td>
-														</tr>
-														<tr>
-															<td>Tiger Nixon</td>
-															<td>System Architect</td>
-															<td>Edinburgh</td>
-															<td>61</td>
-															<td>2011-04-25</td>
-															<td>$320,800</td>
-														</tr>
-														<tr>
-															<td>Garrett Winters</td>
-															<td>Accountant</td>
-															<td>Tokyo</td>
-															<td>63</td>
-															<td>2011-07-25</td>
-															<td>$170,750</td>
-														</tr>
-														<tr>
-															<td>Ashton Cox</td>
-															<td>Junior Technical Author</td>
-															<td>San Francisco</td>
-															<td>66</td>
-															<td>2009-01-12</td>
-															<td>$86,000</td>
-														</tr>
-														<tr>
-															<td>Tiger Nixon</td>
-															<td>System Architect</td>
-															<td>Edinburgh</td>
-															<td>61</td>
-															<td>2011-04-25</td>
-															<td>$320,800</td>
-														</tr>
-														<tr>
-															<td>Garrett Winters</td>
-															<td>Accountant</td>
-															<td>Tokyo</td>
-															<td>63</td>
-															<td>2011-07-25</td>
-															<td>$170,750</td>
-														</tr>
-														<tr>
-															<td>Ashton Cox</td>
-															<td>Junior Technical Author</td>
-															<td>San Francisco</td>
-															<td>66</td>
-															<td>2009-01-12</td>
-															<td>$86,000</td>
-														</tr>
-														<tr>
-															<td>Tiger Nixon</td>
-															<td>System Architect</td>
-															<td>Edinburgh</td>
-															<td>61</td>
-															<td>2011-04-25</td>
-															<td>$320,800</td>
-														</tr>
-														<tr>
-															<td>Garrett Winters</td>
-															<td>Accountant</td>
-															<td>Tokyo</td>
-															<td>63</td>
-															<td>2011-07-25</td>
-															<td>$170,750</td>
-														</tr>
-														<tr>
-															<td>Ashton Cox</td>
-															<td>Junior Technical Author</td>
-															<td>San Francisco</td>
-															<td>66</td>
-															<td>2009-01-12</td>
-															<td>$86,000</td>
-														</tr>
-													</tbody>
-												</table>
+											<h1>PDAO TABLE</h1>
 
-										</div>  <!-- Container div -->
-                                        
+										<div class="filter-container">
+  <div class="filter-group">
+    <label for="barangay-filter">Barangay:</label>
+    <select id="barangay-filter" class="form-control">
+      <option value="">Select Barangay</option>
+      <% Object.keys(barangays).forEach(barangay => { %>
+        <option value="<%= barangay %>"><%= barangay %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="purok-filter">Purok:</label>
+    <select id="purok-filter" class="form-control" disabled>
+      <option value="">First select a Barangay</option>
+    </select>
+  </div>
+</div>
+											
+											<table id="example" class="display" style="width:100%">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Addres</th>
+														<th>purok</th>
+														<th>brgy</th>
+														<th>Needs</th>
+														<th>actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Tiger Nixon</td>
+														<td>System Architect</td>
+														<td>Edinburgh</td>
+														<td>61</td>
+														<td>2011-04-25</td>
+														<td>$320,800</td>
+													</tr>
+													<tr>
+														<td>Garrett Winters</td>
+														<td>Accountant</td>
+														<td>Tokyo</td>
+														<td>63</td>
+														<td>2011-07-25</td>
+														<td>$170,750</td>
+													</tr>
+													<tr>
+														<td>Ashton Cox</td>
+														<td>Junior Technical Author</td>
+														<td>San Francisco</td>
+														<td>66</td>
+														<td>2009-01-12</td>
+														<td>$86,000</td>
+													</tr>
+													<tr>
+														<td>Tiger Nixon</td>
+														<td>System Architect</td>
+														<td>Edinburgh</td>
+														<td>61</td>
+														<td>2011-04-25</td>
+														<td>$320,800</td>
+													</tr>
+													<tr>
+														<td>Garrett Winters</td>
+														<td>Accountant</td>
+														<td>Tokyo</td>
+														<td>63</td>
+														<td>2011-07-25</td>
+														<td>$170,750</td>
+													</tr>
+													<tr>
+														<td>Ashton Cox</td>
+														<td>Junior Technical Author</td>
+														<td>San Francisco</td>
+														<td>66</td>
+														<td>2009-01-12</td>
+														<td>$86,000</td>
+													</tr>
+													<tr>
+														<td>Tiger Nixon</td>
+														<td>System Architect</td>
+														<td>Edinburgh</td>
+														<td>61</td>
+														<td>2011-04-25</td>
+														<td>$320,800</td>
+													</tr>
+													<tr>
+														<td>Garrett Winters</td>
+														<td>Accountant</td>
+														<td>Tokyo</td>
+														<td>63</td>
+														<td>2011-07-25</td>
+														<td>$170,750</td>
+													</tr>
+													<tr>
+														<td>Ashton Cox</td>
+														<td>Junior Technical Author</td>
+														<td>San Francisco</td>
+														<td>66</td>
+														<td>2009-01-12</td>
+														<td>$86,000</td>
+													</tr>
+													<tr>
+														<td>Tiger Nixon</td>
+														<td>System Architect</td>
+														<td>Edinburgh</td>
+														<td>61</td>
+														<td>2011-04-25</td>
+														<td>$320,800</td>
+													</tr>
+													<tr>
+														<td>Garrett Winters</td>
+														<td>Accountant</td>
+														<td>Tokyo</td>
+														<td>63</td>
+														<td>2011-07-25</td>
+														<td>$170,750</td>
+													</tr>
+													<tr>
+														<td>Ashton Cox</td>
+														<td>Junior Technical Author</td>
+														<td>San Francisco</td>
+														<td>66</td>
+														<td>2009-01-12</td>
+														<td>$86,000</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!-- Container div -->
 									</div>
 								</div>
 							</div>
@@ -303,6 +303,7 @@
 		</div>
 		</div>
 		</div>
+
 		<script>
   // Convert EJS data to JavaScript object
   const barangaysData = <%- JSON.stringify(barangays) %>;
@@ -367,17 +368,6 @@
 		<script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
 		<!-- DataTables JS -->
 		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-		<!-- Initialize DataTables -->
-		<script>
-			$(document).ready(function() {
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true
-				});
-			});
-		</script>
 		<!-- Other scripts -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 		<script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
@@ -393,7 +383,7 @@
 		<script src="\assets\js\vartical-layout.min.js"></script>
 		<script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
 		<script type="text/javascript" src="\assets\js\script.js"></script>
-		<!-- <script type="text/javascript" src="\assets\js\senior.js"></script> -->
+		<script type="text/javascript" src="\assets\js\senior.js"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 		<script>
@@ -404,6 +394,16 @@
 			}
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
+			$(document).ready(function() {
+				$('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true
+				});
+			});
+
+			
 		</script>
 	</body>
 </html>

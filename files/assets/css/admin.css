@@ -15,8 +15,9 @@
 .app-continer {
     width: 100%;
     max-width: 800px;
-    background-color: var(--foreground);
-    border-radius: var(--radius);
+    background-color: #f8fafc;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     overflow: hidden;
 }

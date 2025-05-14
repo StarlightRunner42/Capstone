@@ -1,8 +1,26 @@
+:root {
+  --primary-color: #2c3e50;
+  --accent-color: #3498db;
+  --light-accent: #e0f2fe;
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --text-color: #333;
+  --text-light: #777;
+  --border-radius: 20px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
+  --border-color: #eaeaea;
+}
+
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 8px;
     padding: 15px;
+    background-color: #f8fafc;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 h1 {
@@ -19,14 +37,14 @@ h1 {
 }
 
 .stat-card {
-    background-color: #031220;
-    color: #FBF8EF;
+    background-color: #02182c;
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 6px rgb(11, 3, 56);
+    color: #e0f2fe;
     padding: 15px 30px;
-    border-radius: 8px;
     text-align: center;
     margin: 10px;
     min-width: 200px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h3 {
@@ -49,9 +67,9 @@ h1 {
 }
 
 .search-box {
-    padding: 8px 15px;
+    padding: 5px 15px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     font-size: 14px;
     min-width: 250px;
 }
@@ -78,10 +96,10 @@ h1 {
 }
 
 .data-table th {
-    background-color: #01090f;
-    color: white;
+    background-color: #02182c;
+    color: #e0f2fe;
     padding: 12px;
-    text-align: left;
+  
 }
 
 .data-table td {
@@ -98,8 +116,8 @@ h1 {
 }
 
 .expand-btn {
-    background-color: #01090e;
-    color: white;
+    background-color: #02182c;
+    color: #f1f1f1;
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
@@ -305,7 +323,7 @@ footer {
 }
 
 .modal-table thead {
-  background-color: #3498db;
+  background-color: #001a2c;
   color: #ffffff;
 }
 

@@ -40,42 +40,6 @@ function calculateAge() {
   }
 }
 
-// Purok dropdown population
-//to change number to baranggay
-// const puroks = {
-//   "Barangay 1": ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"],
-//   "Barangay 2": ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"],
-//   "3": ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"],
-//   "4": ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"],
-//   "5": ["Elina subd", "Portuna", "St francis", "Carmilla paste 3", "Villa carmen"],
-//   "6": ["Paghidaet", "Antoni Luna", "Swimming Pool", "Boulevard", "Barra"],
-//   "7": ["Katilingban", "Sawmill", "Paghidait", "Mangingisda", "Baybayon"],
-//   "8": ["Sunshine", "Sunrise", "Sunset", "Sampaguita", "Newsite"],
-//   "9": ["Proper", "New site", "Bactic uno", "Kalbaryo", "Defuigo"],
-//   "10": ["Camunsilan", "Proper", "Bungol", "Hda Balaring", "Pasil"],
-//   "11": ["Colisap", "Phison", "balas", "Lunot", "Sandiego"],
-//   "12": ["Mahigugmaon", "Malipayun", "Mainabyanon", "Marka"],
-//   "13": ["Hda.Adoracion", "Hda.Boac", "Hda.Progreso", "Hda.Banita jarra", "Hda.Violata"],
-//   "14": ["kalinti", "kadipota", "yuta"],
-//   "15": ["kalinti", "kadipota", "yuta"],
-//   "16": ["Mapisanon", "Nami nami", "Bay-bay", "Paraiso", "Mainuswagon"]
-// };
-
-// function updatePurokOptions() {
-//   const barangay = document.getElementById('barangay').value;
-//   const purokSelect = document.getElementById('purok');
-  
-//   purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
-
-//   if (puroks[barangay]) {
-//     puroks[barangay].forEach(purok => {
-//       const option = document.createElement('option');
-//       option.value = purok;
-//       option.textContent = purok;
-//       purokSelect.appendChild(option);
-//     });
-//   }
-// }
 
 // Form validation function
 function validateCurrentStep(currentStep) {
@@ -387,7 +351,7 @@ async function submitForm() {
       icon: 'success'
     }).then(() => {
       form.reset();
-      window.location.href = '/success-page'; // Redirect if needed
+      window.location.href = '/add_senior'; // Redirect if needed
     });
   } catch (error) {
     console.error('Error:', error);
