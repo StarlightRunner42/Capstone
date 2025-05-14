@@ -185,22 +185,32 @@
             <th>Middle Name</th>
             <th>Last Name</th>
             <th>Age</th>
-            <th>Marital_status</th>
-            <th>actions</th>
+            <th>Civil Status</th>
+            <th>Disability</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
+        <% pwds.forEach(pwd => { %>
         <tr>
-            <td>Joshua</td>
-            <td>Lamis</td>
-            <td>Hiponia</td>
-            <td>110</td>
-            <td>Single</td>
+            <td><%= pwd.first_name || 'N/A' %></td>
+            <td><%= pwd.middle_name || 'N/A' %></td>
+            <td><%= pwd.last_name || 'N/A' %></td>
+            <td><%= pwd.age || 'N/A' %></td>
+            <td><%= pwd.civil_status || 'N/A' %></td>
             <td>
-                <button>Edit</button>
-                <button>View</button>
+                <% if (pwd.disability && pwd.disability.length > 0) { %>
+                    <%= pwd.disability.join(', ') %>
+                <% } else { %>
+                    N/A
+                <% } %>
+            </td>
+            <td>
+                <button class="btn btn-success">Edit</button>
+                <button class="btn btn-primary">View</button>
             </td>
         </tr>
+        <% }); %>
     </tbody>
 </table>
 										</div>

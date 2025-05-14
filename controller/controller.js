@@ -386,13 +386,20 @@ async function fetchBarangays() {
 exports.renderSeniorForm = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
+    const seniorCitizens = await SeniorCitizen.find({});
+
+    if (!seniorCitizens) {
+      return res.status(404).send('No barangays found');
+    }
+
     if (!barangays) {
       return res.status(404).send('No barangays found');
     }
 
     // Pass the barangays data to the EJS template
     res.render('staff/staff_senior', {
-      barangays: barangays || {}
+      barangays: barangays || {},
+      seniorCitizens: seniorCitizens || {}
     });
   } catch (err) {
     console.error('Error fetching barangays:', err);
@@ -403,13 +410,17 @@ exports.renderSeniorForm = async (req, res) => {
   exports.renderPWDForm = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
+    const pwd = await PWD.find({});
+
+    console.log(pwd);
     if (!barangays) {
       return res.status(404).send('No barangays found');
     }
   
     // Pass the barangays data to the EJS template
     res.render('staff/staff_pwd', {
-      barangays: barangays || {}
+      barangays: barangays || {},
+      pwd: pwd || {}
     });
   } catch (err) {
     console.error('Error fetching barangays:', err);
@@ -420,6 +431,7 @@ exports.renderSeniorForm = async (req, res) => {
   exports.renderAddSenior = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
+    
     if (!barangays) {
       return res.status(404).send('No barangays found');
     }
@@ -427,7 +439,8 @@ exports.renderSeniorForm = async (req, res) => {
     // Pass the barangays data to the EJS template
     
     res.render('staff/staff_addSenior', {
-      barangays: barangays || {}
+      barangays: barangays || {},
+      pwd: pwd || {}
     });
   } catch (err) {
     console.error('Error fetching barangays:', err);

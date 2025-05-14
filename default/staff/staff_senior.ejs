@@ -184,23 +184,29 @@
             <th>First Name</th>
             <th>Middle Name</th>
             <th>Last Name</th>
+			<th>Barangay</th>
+			<th>Purok</th>
             <th>Age</th>
-            <th>Marital_status</th>
-            <th>actions</th>
+            <th>Marital Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
+        <% seniorCitizens.forEach(senior => { %>
         <tr>
-            <td>Joshua</td>
-            <td>Lamis</td>
-            <td>Hiponia</td>
-            <td>110</td>
-            <td>Single</td>
+            <td><%= senior.identifying_information.name.first_name %></td>
+            <td><%= senior.identifying_information.name.middle_name %></td>
+            <td><%= senior.identifying_information.name.last_name %></td>
+			<td><%= senior.identifying_information.address.barangay %></td>
+			<td><%= senior.identifying_information.address.purok %></td>
+            <td><%= senior.identifying_information.age %></td>
+            <td><%= senior.identifying_information.marital_status %></td>
             <td>
-                <button>Edit</button>
-                <button>View</button>
+                <button class="btn btn-success">Edit</button>
+                <button class="btn btn-primary">View</button>
             </td>
         </tr>
+        <% }); %>
     </tbody>
 </table>
 													
