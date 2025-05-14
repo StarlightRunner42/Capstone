@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>Adminty - Premium Admin Template by Colorlib </title>
@@ -27,7 +27,7 @@
 		<link rel="stylesheet" type="text/css" href="/assets/icon/feather/css/feather.css">
 		<!-- Style.css -->
 		<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-		<link rel="stylesheet" type="text/css" href="/assets/css/analytics.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/update.css">
 		<link rel="stylesheet" type="text/css" href="/assets/css/jquery.mCustomScrollbar.css">
 	</head>
 	<!-- Menu sidebar static layout -->
@@ -106,10 +106,6 @@
 										<i class="feather icon-maximize full-screen"></i>
 									</a>
 								</li>
-								<li>
-									<a href="/Map" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
-										<i class="feather icon-user-plus"></i> View Map Pwd </a>
-								</li>
 							</ul>
 							<ul class="nav-right">
 								<li class="user-profile header-notification">
@@ -131,7 +127,6 @@
 						</div>
 					</div>
 				</nav>
-				<!-- Sidebar inner chat end-->
 				<div class="pcoded-main-container">
 					<div class="pcoded-wrapper">
 						<nav class="pcoded-navbar">
@@ -139,26 +134,21 @@
 								<div class="pcoded-navigatio-lavel">Navigation</div>
 								<ul class="pcoded-item pcoded-left-item">
 									<li class="pcoded-hasmenu active pcoded-trigger">
-										<a href="/dashboard">
+										<a href="javascript:void(0)">
 											<span class="pcoded-micon">
 												<i class="feather icon-home"></i>
 											</span>
 											<span class="pcoded-mtext">Dashboard</span>
 										</a>
 										<ul class="pcoded-submenu">
-											<li class="active">
-												<a href="/Index">
-													<span class="">PWD TABLE</span>
-												</a>
-											</li>
-											<li class="">
-												<a href="/Analytics">
-													<span class="">SENIORS TABLE</span>
-												</a>
-											</li>
 											<li class="">
 												<a href="/Admin">
 													<span class="">ADMIN</span>
+												</a>
+											</li>
+											<li class="active">
+												<a href="/User">
+													<span class="">USER</span>
 												</a>
 											</li>
 										</ul>
@@ -169,150 +159,85 @@
 						<div class="pcoded-content">
 							<div class="pcoded-inner-content">
 								<div class="main-body">
-									<div class="page-wrapper">
-										<div class="dashboard-container">
-											<div class="summary-stats">
-												<div class="stat-card">
-													<h3>Total Barangays</h3>
-													<p id="total-barangays">0</p>
-												</div>
-												<div class="stat-card">
-													<h3>Total Senior Citizens</h3>
-													<p id="total-seniors">0</p>
-												</div>
-												<div class="stat-card">
-													<h3>Average per Barangay</h3>
-													<p id="avg-seniors">0</p>
-												</div>
-												<div class="stat-card">
-													<h3>Highest Count</h3>
-													<p id="highest-count">0</p>
-												</div>
+									<div class="page-wrapper"></div>
+									<div class="admin-container">
+										<header class="admin-header">
+											<h1>User Account Management</h1>
+											<div class="admin-actions">
+												<button id="refresh-btn">Refresh Users</button>
+												<input type="text" id="search-input" placeholder="Search users...">
 											</div>
-											<div class="controls">
-												<input type="text" class="search-box" id="searchInput" placeholder="Search by barangay name...">
-												<div class="view-selector">
-													<button class="view-btn active" id="barangayView"></button>
-													<button class="view-btn" id="purokView"></button>
-												</div>
-											</div>
-											<div class="table-container">
-												<table class="data-table" id="barangayTable">
-													<thead>
-														<tr>
-															<th>Barangay</th>
-															<th>Number of Puroks</th>
-															<th>Senior Citizens</th>
-															<th>Actions</th>
-														</tr>
-													</thead>
-													<tbody id="barangayTableBody"></tbody>
-												</table>
-												<div class="pagination-controls">
-													<div class="items-per-page">
-														<span>Items per page:</span>
-														<select id="itemsPerPage">
-															<option value="5">5</option>
-															<option value="10">10</option>
-															<option value="16">All</option>
+										</header>
+										<div class="user-list-container">
+											<table id="user-table">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Username</th>
+														<th>Email</th>
+														<th>Role</th>
+														<th>Status</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody id="user-list">
+													<!-- Users will be loaded here -->
+												</tbody>
+											</table>
+										</div>
+										<!-- Edit User Modal -->
+										<div id="edit-modal" class="modal">
+											<div class="modal-content">
+												<span class="close-btn">&times;</span>
+												<h2>Edit User</h2>
+												<form id="edit-user-form">
+													<input type="hidden" id="edit-user-id">
+													<div class="form-group">
+														<label for="edit-username">Username:</label>
+														<input type="text" id="edit-username" required>
+													</div>
+													<div class="form-group">
+														<label for="edit-email">Email:</label>
+														<input type="email" id="edit-email" required>
+													</div>
+													<div class="form-group">
+														<label for="edit-role">Role:</label>
+														<select id="edit-role" required>
+															<option value="editor">staff</option>
+															<option value="admin">Admin</option>
 														</select>
 													</div>
-													<div class="page-info">
-														<span id="pageInfo">Page 1 of 1</span>
+													<div class="form-group">
+														<label for="edit-status">Status:</label>
+														<select id="edit-status" required>
+															<option value="active">Active</option>
+															<option value="suspended">Suspended</option>
+															<option value="pending">Pending</option>
+														</select>
 													</div>
-													<div class="page-buttons">
-														<button id="prevPage" disabled>Previous</button>
-														<button id="nextPage" disabled>Next</button>
+													<div class="form-actions">
+														<button type="submit" class="save-btn">Save Changes</button>
+														<button type="button" class="cancel-btn">Cancel</button>
 													</div>
-												</div>
-											</div>
-											<div class="chart-container" id="barangayChartContainer"></div>
-											<!-- Modal for Purok Details -->
-											<div id="purokModal" class="modal">
-												<div class="modal-content">
-													<span class="close">&times;</span>
-													<h2 id="modalTitle">Purok Details</h2>
-													<div class="modal-body">
-														<div class="modal-table-container">
-															<table class="modal-table" id="purokTable">
-																<thead>
-																	<tr>
-																		<th>Purok Name</th>
-																		<th>Senior Citizens</th>
-																		<th>Total %</th>
-																	</tr>
-																</thead>
-																<tbody id="purokTableBody"></tbody>
-															</table>
-														</div>
-														<div class="modal-chart-container">
-															<canvas id="purokModalChart"></canvas>
-														</div>
-													</div>
-												</div>
+												</form>
 											</div>
 										</div>
 									</div>
-									<!-- latest activity end -->
 								</div>
+								<!-- latest activity end -->
 							</div>
 						</div>
-						<div id="styleSelector"></div>
 					</div>
+					<div id="styleSelector"></div>
 				</div>
 			</div>
 		</div>
 		</div>
 		</div>
 		</div>
-		<!-- Warning Section Starts -->
-		<!-- Older IE warning message -->
-		<!--[if lt IE 10]>
-																	<div class="ie-warning">
-																		<h1>Warning!!</h1>
-																		<p>You are using an outdated version of Internet Explorer, please upgrade 
-																			<br/>to any of the following web browsers to access this website.
-																		</p>
-																		<div class="iew-container">
-																			<ul class="iew-download">
-																				<li>
-																					<a href="http://www.google.com/chrome/">
-																						<img src="/assets/images/browser/chrome.png" alt="Chrome">
-																							<div>Chrome</div>
-																						</a>
-																					</li>
-																					<li>
-																						<a href="https://www.mozilla.org/en-US/firefox/new/">
-																							<img src="/assets/images/browser/firefox.png" alt="Firefox">
-																								<div>Firefox</div>
-																							</a>
-																						</li>
-																						<li>
-																							<a href="http://www.opera.com">
-																								<img src="/assets/images/browser/opera.png" alt="Opera">
-																									<div>Opera</div>
-																								</a>
-																							</li>
-																							<li>
-																								<a href="https://www.apple.com/safari/">
-																									<img src="/assets/images/browser/safari.png" alt="Safari">
-																										<div>Safari</div>
-																									</a>
-																								</li>
-																								<li>
-																									<a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-																										<img src="/assets/images/browser/ie.png" alt="">
-																											<div>IE (9 & above)</div>
-																										</a>
-																									</li>
-																								</ul>
-																							</div>
-																							<p>Sorry for the inconvenience!</p>
-																						</div>
-																						<![endif]-->
+		</div>
 		<!-- Warning Section Ends -->
 		<!-- Required Jquery -->
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script type="text/javascript" src="/bower_components/jquery/js/jquery.min.js"></script>
 		<script type="text/javascript" src="/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="/bower_components/popper.js/js/popper.min.js"></script>
@@ -341,7 +266,7 @@
 		<script src="/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 		<script type="text/javascript" src="/assets/pages/dashboard/crm-dashboard.min.js"></script>
 		<script type="text/javascript" src="/assets/js/script.js"></script>
-		<script type="text/javascript" src="/assets/js/analytics.js"></script>
+		<script type="text/javascript" src="/assets/js/update.js"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 		<script>

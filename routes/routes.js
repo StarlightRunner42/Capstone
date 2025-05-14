@@ -42,6 +42,10 @@ router.get('/Dashboard', requireAuth,(req, res) => {
     res.render('admin/dashboard');
 });
 
+router.get('/User', requireAuth, (req, res) => {
+    res.render('admin/admin_update');
+});
+
 // Staff routes
 router.get('/index-staff', requireAuth, (req, res) => {
     res.render('staff/staff_dashboard');
