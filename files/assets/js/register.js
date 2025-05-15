@@ -96,38 +96,4 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             strengthValue <= 66 ? '#ffa700' : '#00C851';
     });
 
-    // // Alert messages
-    // var alertMessage = "<?php echo $alertMessage; ?>";
-    // if (alertMessage === "password_mismatch") {
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: 'Passwords Do Not Match',
-    //         text: 'Please ensure both passwords are identical.',
-    //         confirmButtonColor: '#2962ff'
-    //     });
-    // } else if (alertMessage === "email_exists") {
-    //     Swal.fire({
-    //         icon: 'warning',
-    //         title: 'Email Already Registered',
-    //         text: 'Please use a different email address or login to your existing account.',
-    //         confirmButtonColor: '#2962ff'
-    //     });
-    // } else if (alertMessage === "registration_success") {
-    //     Swal.fire({
-    //         icon: 'success',
-    //         title: 'Welcome Aboard!',
-    //         text: 'Your account has been created successfully.',
-    //         showConfirmButton: true,
-    //         confirmButtonColor: '#2962ff'
-    //     }).then(() => {
-    //         window.location = 'page_login.php';
-    //     });
-    // } else if (alertMessage === "registration_error") {
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: 'Registration Failed',
-    //         text: 'An error occurred during registration. Please try again.',
-    //         confirmButtonColor: '#2962ff'
-    //     });
-    // }
-
+    

@@ -44,7 +44,8 @@ exports.createUser = async (req, res) => {
             name, 
             email, 
             password: hashedPassword, // Store the hashed password
-            role 
+            role,
+            status: "Active" // Default status
         });
         
         await newUser.save();
@@ -464,6 +465,47 @@ exports.renderSeniorForm = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
   };
+
+   exports.renderSuperAdminUser = async (req, res) => {
+ try {
+   const users = await User.find({});
+    if (!users) {
+      //to change
+      console.log('No users found');
+    }
+  
+    // Pass the barangays data to the EJS template
+   
+    res.render('superadmin/superadmin_users', {
+      users: users || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
+
+   exports.renderSuperAdminIndex = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
+    
+    if (!barangays) {
+      return res.status(404).send('No barangays found');
+    }
+  
+    // Pass the barangays data to the EJS template
+   
+    res.render('superadmin/admin_super_admin', {
+      barangays: barangays || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
+  
+  
+
 
 
 

@@ -34,41 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Render user list
-function renderUserList(usersToRender) {
-    userList.innerHTML = '';
-    
-    if (usersToRender.length === 0) {
-        userList.innerHTML = '<tr><td colspan="6" style="text-align: center;">No users found</td></tr>';
-        return;
-    }
-    
-    usersToRender.forEach(user => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${user.id}</td>
-            <td>${user.username}</td>
-            <td>${user.email}</td>
-            <td>${user.role}</td>
-            <td class="status-${user.status}">${user.status.charAt(0).toUpperCase() + user.status.slice(1)}</td>
-            <td>
-                <button class="action-btn edit-btn" data-id="${user.id}">Edit</button>
-                <button class="action-btn delete-btn" data-id="${user.id}">Delete</button>
-            </td>
-        `;
-        userList.appendChild(row);
-    });
-    
-    // Add event listeners to edit buttons
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', handleEdit);
-    });
-    
-    // Add event listeners to delete buttons
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', handleDelete);
-    });
-}
+
 
 // Handle edit button click
 function handleEdit(e) {
