@@ -62,8 +62,8 @@ router.get('/add_pwd', controller.renderAddPWD);
 
 
 //Super admin 
-router.get('/index-superadmin', controller.renderSuperAdminIndex);
-router.get('/superadmin-users', controller.renderSuperAdminUser);
+router.get('/index-superadmin',requireAuth ,controller.renderSuperAdminIndex);
+router.get('/superadmin-users',requireAuth ,controller.renderSuperAdminUser);
 
 
 // Form routes (used by both staff and admin)
