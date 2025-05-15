@@ -17,7 +17,6 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    border-radius: 8px;
     padding: 20px;
     background-color: #f8fafc;
     border-radius: var(--border-radius);
@@ -103,15 +102,9 @@
 
 /* Table Styles */
 #example {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: white;
+  width: 50%;
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-  table-layout: fixed;
 }
 
 #example thead th {
@@ -119,10 +112,8 @@
   color: white;
   font-weight: 600;
   text-align: left;
-  padding: 16px;
+  padding: 15px;
   font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   position: relative;
 }
 
