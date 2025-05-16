@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Adminty - Senior Citizens Table</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Favicon -->
+		<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+		<!-- CSS Frameworks -->
+		<link rel="stylesheet" href="/bower_components/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/assets/icon/feather/css/feather.css">
+		<link rel="stylesheet" href="/assets/css/style.css">
+		<link rel="stylesheet" href="/assets/css/senior.css">
+		<link rel="stylesheet" href="/assets/css/jquery.mCustomScrollbar.css">
+		<!-- DataTables CSS -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+	</head>
+	<body>
+		<!-- Pre-loader start -->
+		<div class="theme-loader">
+			<div class="ball-scale">
+				<div class='contain'>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+					<div class="ring">
+						<div class="frame"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Pre-loader end -->
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav class="navbar header-navbar pcoded-header">
+					<div class="navbar-wrapper">
+						<div class="navbar-logo">
+							<a class="mobile-menu" id="mobile-collapse" href="#!">
+								<i class="feather icon-menu"></i>
+							</a>
+							<a href="index-1.htm">
+								<img class="img-fluid" src="\assets\images\logo.png" alt="Theme-Logo">
+							</a>
+							<a class="mobile-options">
+								<i class="feather icon-more-horizontal"></i>
+							</a>
+						</div>
+						<div class="navbar-container container-fluid">
+							<ul class="nav-left">
+								<li class="header-search">
+									<div class="main-search morphsearch-search">
+										<div class="input-group">
+											<span class="input-group-addon search-close">
+												<i class="feather icon-x"></i>
+											</span>
+											<input type="text" class="form-control" placeholder="Search...">
+											<span class="input-group-addon search-btn">
+												<i class="feather icon-search"></i>
+											</span>
+										</div>
+									</div>
+								</li>
+								<li>
+									<a href="#!" onclick="javascript:toggleFullScreen()">
+										<i class="feather icon-maximize full-screen"></i>
+									</a>
+								</li>
+								<li>
+									<a href="/add_senior" class="btns btn-primary rounded" id="addSeniorBtn" target="_blank">
+										<i class="feather icon-user-plus"></i>ADD OSCA</a>
+								</li>
+							</ul>
+							<ul class="nav-right"></ul>
+							<ul class="nav-right">
+								<li class="user-profile header-notification">
+									<div class="dropdown-primary dropdown">
+										<div class="dropdown-toggle" data-toggle="dropdown">
+											<img src="\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+											<span>John Doe</span>
+											<i class="feather icon-chevron-down"></i>
+										</div>
+										<ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+											<li>
+												<a href="#!">
+													<i class="feather icon-settings"></i> Settings </a>
+											</li>
+											<li>
+												<a href="/logout">
+													<i class="feather icon-log-out"></i> Logout </a>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav class="pcoded-navbar">
+							<div class="pcoded-inner-navbar main-menu">
+								<div class="pcoded-navigatio-lavel">Navigation</div>
+								<ul class="pcoded-item pcoded-left-item">
+									<li class="pcoded-hasmenu active pcoded-trigger">
+										<a href="javascript:void(0)">
+											<span class="pcoded-micon">
+												<i class="feather icon-home"></i>
+											</span>
+											<span class="pcoded-mtext">Dashboard</span>
+										</a>
+										<ul class="pcoded-submenu">
+											<li class="">
+												<a href="/Pwd-form">
+													<span class="">PDAO</span>
+												</a>
+											</li>
+											<li class="active">
+												<a href="/Senior-form">
+													<span class="">OSCA</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</nav>
+						
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<div class="main-body">
+									<div class="page-wrapper">
+										<div class="container">
+											<h1>OSCA TABLE</h1>
+
+										<div class="filter-container">
+  <div class="filter-group">
+    <label for="barangay-filter">Barangay:</label>
+    <select id="barangay-filter" class="form-control">
+      <option value="">Select Barangay</option>
+      <% Object.keys(barangays).forEach(barangay => { %>
+        <option value="<%= barangay %>"><%= barangay %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="purok-filter">Purok:</label>
+    <select id="purok-filter" class="form-control" disabled>
+      <option value="">First select a Barangay</option>
+    </select>
+  </div>
+</div>
+		
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>Barangay</th>
+            <th>Purok</th>
+            <th>Age</th>
+            <th>Marital Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (seniorCitizens && seniorCitizens.length > 0) { %>
+            <% seniorCitizens.forEach(senior => { %>
+            <tr>
+                <td><%= senior.identifying_information?.name?.first_name || 'N/A' %></td>
+                <td><%= senior.identifying_information?.name?.middle_name || 'N/A' %></td>
+                <td><%= senior.identifying_information?.name?.last_name || 'N/A' %></td>
+                <td><%= senior.identifying_information?.address?.barangay || 'N/A' %></td>
+                <td><%= senior.identifying_information?.address?.purok || 'N/A' %></td>
+                <td><%= senior.identifying_information?.age || 'N/A' %></td>
+                <td><%= senior.identifying_information?.marital_status || 'N/A' %></td>
+                <td>
+					<div class="action-container">		
+						<button class="action action-primary" aria-label="View">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+							</svg>
+						</button>
+
+						<button class="action action-success" aria-label="Edit">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+							</svg>
+						</button>
+					</div>
+                </td>
+            </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="8" class="text-center">No senior citizen records found</td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+
+													
+										</div>
+										<!-- Container div -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="styleSelector"></div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+		<script>
+  // Convert EJS data to JavaScript object
+  const barangaysData = <%- JSON.stringify(barangays) %>;
+  
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get select elements
+    const barangaySelect = document.getElementById('barangay-filter');
+    const purokSelect = document.getElementById('purok-filter');
+    
+    // Debugging: Log the initial data
+    console.log('Barangays data loaded:', barangaysData);
+    
+    // Barangay change event handler
+    barangaySelect.addEventListener('change', function() {
+      const selectedBarangay = this.value;
+      
+      // Clear existing options
+      purokSelect.innerHTML = '';
+      
+      // Add default option
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = 'Select Purok';
+      purokSelect.appendChild(defaultOption);
+      
+      // Enable/disable based on selection
+      purokSelect.disabled = !selectedBarangay;
+      
+      // If a barangay is selected, populate puroks
+      if (selectedBarangay && barangaysData[selectedBarangay]) {
+        // Debugging: Log the selected barangay's puroks
+        console.log(`Loading puroks for ${selectedBarangay}:`, barangaysData[selectedBarangay]);
+        
+        // Add "All Puroks" option
+        const allOption = document.createElement('option');
+        allOption.value = 'all';
+        allOption.textContent = 'All Puroks';
+        purokSelect.appendChild(allOption);
+        
+        // Add each purok option
+        barangaysData[selectedBarangay].forEach(purok => {
+          const option = document.createElement('option');
+          option.value = purok;
+          option.textContent = purok;
+          purokSelect.appendChild(option);
+        });
+      }
+      
+      // Debugging: Log the current purok options
+      console.log('Current purok options:', purokSelect.innerHTML);
+    });
+    
+    // Initialize purok dropdown as disabled
+    purokSelect.disabled = true;
+  });
+</script>
+		<!-- Required Jquery -->
+		<script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
+		<script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
+		<script type="text/javascript" src="\bower_components\popper.js\js\popper.min.js"></script>
+		<script type="text/javascript" src="\bower_components\bootstrap\js\bootstrap.min.js"></script>
+		<!-- DataTables JS -->
+		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+		<!-- Other scripts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+		<script type="text/javascript" src="\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
+		<script type="text/javascript" src="\bower_components\modernizr\js\modernizr.js"></script>
+		<script type="text/javascript" src="\bower_components\modernizr\js\css-scrollbars.js"></script>
+		<script type="text/javascript" src="\bower_components\chart.js\js\Chart.js"></script>
+		<script src="\assets\pages\widget\amchart\amcharts.js"></script>
+		<script src="\assets\pages\widget\amchart\serial.js"></script>
+		<script src="\assets\pages\widget\amchart\light.js"></script>
+		<script type="text/javascript" src="\assets\js\SmoothScroll.js"></script>
+		<script src="\assets\js\pcoded.min.js"></script>
+		<script src="\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
+		<script src="\assets\js\vartical-layout.min.js"></script>
+		<script type="text/javascript" src="\assets\pages\dashboard\analytic-dashboard.min.js"></script>
+		<script type="text/javascript" src="\assets\js\script.js"></script>
+		<script type="text/javascript" src="\assets\js\senior.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-23581568-13');
+			
+			$(document).ready(function() {
+    $('#example').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthMenu: [5, 10, 25, 50, 100],
+        responsive: true
+    });
+});
+
+
+			
+		</script>
+	</body>
+</html>
