@@ -318,5 +318,57 @@
 
 
   
- 
-  
+.action-container {
+  display: flex;
+  gap: 13px;
+}
+
+.action {
+  width: 30px;
+  height: 30px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  box-shadow: 0 4px 12px rgb(2, 1, 29);
+  position: relative;
+  overflow: hidden;
+}
+
+.action:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0));
+}
+
+.action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.action:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-success {
+  background: linear-gradient(135deg, #070125, #070125);
+  color: white;
+}
+
+.action-primary {
+  background: linear-gradient(135deg, #3498db, #4e73df);
+  color: white;
+}
+
+.action svg {
+  width: 20px;
+  height: 20px;
+}
