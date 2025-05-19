@@ -276,10 +276,145 @@ const pwdRegistrationSchema = new mongoose.Schema({
   cause_other_text: String,
 });
 
+
+
+const youthSchema = new mongoose.Schema({
+  // Personal Information
+  firstName: { type: String, required: true },
+  middleName: String,
+  lastName: { type: String, required: true },
+  barangay: { type: String, required: true },
+  purok: { type: String, required: true },
+  contact: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /^\d{11}$/.test(v);
+      },
+      message: props => `${props.value} is not a valid 11-digit phone number!`
+    }
+  },
+  birthday: { type: Date, required: true },
+  age: { type: Number, required: true },
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Male', 'Female', 'Other', 'Prefer not to say']
+  },
+  placeOfBirth: { type: String, required: true },
+
+  // Educational Attainment
+  educationLevel: {
+    type: String,
+    required: true,
+    enum: [
+      'Elementary Level',
+      'Elementary Graduate',
+      'High School Graduate',
+      'College Level',
+      'College Graduate',
+      'Post Graduate',
+      'Vocational',
+      'Not Attended School'
+    ]
+  },
+  skVoter: {
+    type: String,
+    required: true,
+    enum: ['Yes', 'No']
+  },
+  votedLastSkElection: {
+    type: String,
+    required: true,
+    enum: ['Yes', 'No']
+  },
+  skVoterTimes: {
+    type: String,
+    enum: ['1-2', '3-4', '5+'],
+    required: function() {
+      return this.skVoter === 'Yes';
+    }
+  },
+  noVoteReason: {
+    type: String,
+    enum: ['No KK Assembly Meeting', 'Not interested to attend'],
+    required: function() {
+      return this.skVoter === 'No';
+    }
+  },
+
+  // Employment Information
+  employmentStatus: {
+    type: String,
+    required: true,
+    enum: ['Employee', 'Unemployed', 'Self-employed']
+  },
+  employmentCategory: {
+    type: String,
+    enum: ['Government', 'Private'],
+    required: function() {
+      return this.employmentStatus === 'Employee';
+    }
+  },
+  employmentType: {
+    type: String,
+    enum: ['Permanent/Regular', 'Seasonal', 'Casual', 'Emergency'],
+    required: function() {
+      return this.employmentStatus === 'Employee';
+    }
+  },
+
+  // Youth Classification
+  youthTypes: [{
+    type: String,
+    enum: [
+      'In School Youth',
+      'Out of School Youth',
+      'Youth w/Specific Needs',
+      'Other'
+    ]
+  }],
+  youthOtherType: String,
+
+  // Youth Age Group
+  ageGroups: [{
+    type: String,
+    enum: [
+      'Child Youth (15−17 yrs old)',
+      'Core Youth (18−24 yrs old)',
+      'Young Adult (15−30 yrs old)',
+      'Other'
+    ]
+  }],
+  ageOtherGroup: String,
+
+  // Timestamps
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+// Index for commonly queried fields
+youthSchema.index({
+  barangay: 1,
+  purok: 1,
+  gender: 1,
+  educationLevel: 1,
+  employmentStatus: 1
+});
+
+
 const User = mongoose.model('User', UserSchema);
 const SeniorCitizen  = mongoose.model('SeniorCitizen', SeniorCitizenSchema);
 const Barangay = mongoose.model('Barangay', BarangaySchema);
 const PWD = mongoose.model('PWD', pwdRegistrationSchema);
+const Youth = mongoose.model('Youth', youthSchema);
 
 
 module.exports = { User,SeniorCitizen ,Barangay,PWD };
