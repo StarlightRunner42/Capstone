@@ -9,7 +9,8 @@
 	<body>
 		<div class="container">
 			<h1 id="formTitle">LYDO FORM</h1>
-			<form id="housingForm" action="/register-pwd" method="post">
+
+			<form id="housingForm" action="/add-youth" method="post">
 				<div class="progress-bar">
 					<div class="step active">
 						<span id="step1">Personal Information</span>
@@ -41,29 +42,32 @@
 							<input type="text" id="last_name" name="last_name" required placeholder="Last Name">
 						</div>
 					</div>
+
 					<div class="form-row">
+
 						<div class="form-group">
-							<label for="barangay" id="barangayLabel">Barangay:</label>
-							<select id="barangay" name="barangay" required onchange="updatePurokOptions()">
-								<option value="" disabled selected>Select Barangay</option>
-								<option value="bagong_silang">Bagong Silang</option>
-								<option value="holy_spirit">Holy Spirit</option>
-								<option value="payatas">Payatas</option>
-								<option value="commonwealth">Commonwealth</option>
-								<option value="batasan_hills">Batasan Hills</option>
-							</select>
+						<label for="barangay" id="barangayLabel">Barangay:</label>
+						<select id="barangay" name="barangay" required onchange="updatePurokOptions()">
+							<option value="" disabled selected>Select Barangay</option>
+							<% Object.keys(barangays).forEach(barangay => { %>
+							<option value="<%= barangay %>"><%= barangay %></option>
+							<% }) %>
+						</select>
 						</div>
+
 						<div class="form-group">
-							<label for="purok" id="purokLabel">Purok:</label>
-							<select id="purok" name="purok" required disabled>
-								<option value="" disabled selected>Select Barangay first</option>
-							</select>
+						<label for="purok" id="purokLabel">Purok:</label>
+						<select id="purok" name="purok" required>
+							<option value="" disabled selected>Select Purok</option>
+						</select>
 						</div>
+
 						<div class="form-group">
 							<label for="contact" id="contactLabel">Contact</label>
 							<input type="tel" id="contact" name="contact" required placeholder="" pattern="[0-9]{11}" maxlength="11" title="Please enter exactly 11 digits (numbers only)" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
 						</div>
 					</div>
+
 					<div class="form-row">
 						<div class="form-group">
 							<label for="birthday" id="birthdayLabel">Birthday</label>
@@ -258,6 +262,30 @@
 				<button type="button" id="nextBtn" onclick="nextPrev(1)">NEXT</button>
 			</div>
 			</form>
+				<script>
+				// Embed the puroks data from backend into JavaScript
+				const puroks = <%- JSON.stringify(barangays) %>;
+
+				function updatePurokOptions() {
+    console.log("Barangay changed");  // Test
+    const barangay = document.getElementById('barangay').value;
+    const purokSelect = document.getElementById('purok');
+
+    purokSelect.innerHTML = '<option value="" disabled selected>Select Purok</option>';
+
+    if (puroks[barangay]) {
+        puroks[barangay].forEach(purok => {
+            const option = document.createElement('option');
+            option.value = purok;
+            option.textContent = purok;
+            purokSelect.appendChild(option);
+        });
+    }
+}
+
+				</script>
+
+
 			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			<script type="text/javascript" src="\assets\js\youth.js"></script>
 				

@@ -81,7 +81,14 @@ router.get('/Senior-form', requireAuth, controller.renderSeniorForm);
 
 router.get('/Pwd-form', requireAuth, controller.renderPWDForm);
 
+//Youth routes
+router.get('/index-youth', requireAuth, (req, res) => {
+    res.render('youth/staff_youth');
+});
 
+router.get('/youth-form', controller.renderYouthForm);
+
+router.post('/add-youth', requireAuth,controller.createYouth);
 
 
 // Data operations

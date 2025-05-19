@@ -111,6 +111,8 @@ exports.login = async (req, res) => {
         return res.redirect("/Pwd-form");
     }else if (user.role === "Super Admin") {
         return res.redirect("/index-superadmin");
+    }else if (user.role === "Youth") {
+        return res.redirect("/index-youth");
     }else {
         return res.redirect("/index"); // Default redirection
     }
@@ -503,9 +505,36 @@ exports.renderSeniorForm = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
   };
+
+    exports.renderYouthForm = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
+    
+    if (!barangays) {
+      return res.status(404).send('No barangays found');
+    }
+  
+    // Pass the barangays data to the EJS template
+   
+    res.render('youth/staff_youth_add', {
+      barangays: barangays || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
   
   
 
+exports.createYouth = (req, res) => {
+    try{
+        console.log('Raw body:', req.body);
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+};
 
 
 
