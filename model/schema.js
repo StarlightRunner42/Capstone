@@ -14,181 +14,104 @@ const BarangaySchema = new mongoose.Schema({
 });
 
 const SeniorCitizenSchema = new mongoose.Schema({
-    reference_code: { type: String },
-  
-    identifying_information: {
-      name: {
-        last_name: { type: String, required: true },
-        first_name: { type: String, required: true },
-        middle_name: { type: String },
-        extension: { type: String }
-      },
-      address: {
-        barangay: { 
-          type: String, 
-          required: true,
-          enum: [
-            'Barangay 1', 
-            'Barangay 2', 
-            'Barangay 3', 
-            'Barangay 4', 
-            'Barangay 5', 
-            'Barangay Mambulac', 
-            'Barangay Guinhalaran', 
-            'Barangay E-Lopez',
-            'Barangay Bagtic', 
-            'Barangay Balaring', 
-            'Barangay Hawaiian',
-            'Barangay Patag', 
-            'Barangay Kapt.ramon', 
-            'Barangay Guimbalaon',
-            'Barangay Rizal', 
-            'Barangay Lantad'
-          ]
-        },
-        purok: { type: String, required: true }
-      },
-      date_of_birth: { type: Date }, // Will be populated from birthday field
-      age: { type: Number, required: true },
-      place_of_birth: { type: [String] }, // Array to match form field
-      marital_status: { 
-        type: String, 
-        required: true,
-        enum: [
-          'Single but Head of the Family',
-          'Single',
-          'Married',
-          'Widowed',
-          'Separated',
-          'Divorced'
-        ]
-      },
-      gender: { 
-        type: String, 
-        required: true,
-        enum: ['Male', 'Female', 'Other', 'Prefer not to say'] 
-      },
-      contacts: [{
-        type: { 
-          type: String, 
-          enum: ['primary', 'secondary', 'emergency'],
-          required: true
-        },
-        name: { type: String, required: true },
-        relationship: { type: String, required: true },
-        phone: { type: String, required: true },
-        email: { type: String }
-      }],
-      osca_id_number: { type: String }, // Matches osca_id
-      gsis_sss: { type: String },      // Matches gsis_sss_no
-      philhealth: { type: String },    // Matches philhealth_no
-      sc_association_org_id_no: { type: String }, // Matches sc_association_id
-      tin: { type: String },           // Matches tin_no
-      other_govt_id: { type: String },
-      service_business_employment: { type: String }, // Matches service
-      current_pension: { type: String },  // Matches pension
-      capability_to_travel: { // Added to match your form
-        type: String,
-        enum: ['Yes', 'No']
-      }
+  reference_code: { type: String },
+
+  identifying_information: {
+    name: {
+      last_name: { type: String, required: true },
+      first_name: { type: String, required: true },
+      middle_name: { type: String },
+      extension: { type: String }
     },
-  
-    family_composition: {
-      spouse: {
-        name: { type: String }  // Matches spouse_name
-      },
-      father: {
-        last_name: { type: String },
-        first_name: { type: String },
-        middle_name: { type: String },
-        extension: { type: String }
-      },
-      mother: {
-        last_name: { type: String },
-        first_name: { type: String },
-        middle_name: { type: String }
-      },
-      children: [{
-        full_name: { type: String },
-        occupation: { type: String },
-        income: { type: String },  // String to handle empty values
-        age: { type: Number },
-        working_status: { 
-          type: String,
-          enum: ['working', 'not_working', 'studying'] 
-        }
-      }]
+    address: {
+      barangay: { type: String, required: true },
+      purok: { type: String, required: true }
     },
-  
-    education_hr_profile: {
-      educational_attainment: {
-        type: [String],
-        enum: [
-  'Yes', 
-  'No',
-  'Elementary Level', 
-  'Elementary Graduate',
-  'High School Graduate',
-  'College Level', 
-  'College Graduate',
-  'Post Graduate', 
-  'Vocational', 
-  'Not Attended School'
-]
-      },
-      skills: [{
-        type: String,
-        enum: [
-  'Medical',
-  'Dental',
-  'Fishing',
-  'Engineering',
-  'Barber',
-  'Evangelization',
-  'Millwright',
-  'Teaching',
-  'Counseling',
-  'Cooking',
-  'Carpenter',
-  'Mason',
-  'Tailor',
-  'Legal Services',
-  'Farming',
-  'Arts',
-  'Plumber',
-  'Sapatero',
-  'Chef/Cook'
-]
-      }],
-      skill_other_text: { type: String }  // For "Others, specify" field
-    }
-  }, { timestamps: true });
-  
-  // Middleware to clean data before saving
-  SeniorCitizenSchema.pre('save', function(next) {
-    // Clean education_level array
-    if (this.education_hr_profile?.educational_attainment) {
-      this.education_hr_profile.educational_attainment = 
-        this.education_hr_profile.educational_attainment
-          .filter(val => val !== 'Yes' && val !== 'No');
-    }
-    
-    // Handle "Other" skills
-    if (this.education_hr_profile?.skills?.includes('Other') && 
-        this.education_hr_profile?.skill_other_text) {
-      this.education_hr_profile.skills = this.education_hr_profile.skills
-        .filter(skill => skill !== 'Other');
-      this.education_hr_profile.skills.push(this.education_hr_profile.skill_other_text);
-    }
-    
-    // Convert birthday string to Date if needed
-    if (this.identifying_information?.date_of_birth && 
-        typeof this.identifying_information.date_of_birth === 'string') {
-      this.identifying_information.date_of_birth = new Date(this.identifying_information.date_of_birth);
-    }
-    
-    next();
-  });
+    date_of_birth: { type: Date },
+    age: { type: Number, required: true },
+    place_of_birth: { type: [String] },
+    marital_status: { type: String, required: true },
+    gender: { type: String, required: true },
+    contacts: [{
+      type: { type: String, required: true },
+      name: { type: String, required: true },
+      relationship: { type: String, required: true },
+      phone: { type: String, required: true },
+      email: { type: String }
+    }],
+    osca_id_number: { type: String },
+    gsis_sss: { type: String },
+    philhealth: { type: String },
+    sc_association_org_id_no: { type: String },
+    tin: { type: String },
+    other_govt_id: { type: String },
+    service_business_employment: { type: String },
+    current_pension: { type: String },
+    capability_to_travel: { type: String }
+  },
+
+  family_composition: {
+    spouse: {
+      name: { type: String }
+    },
+    father: {
+      last_name: { type: String },
+      first_name: { type: String },
+      middle_name: { type: String },
+      extension: { type: String }
+    },
+    mother: {
+      last_name: { type: String },
+      first_name: { type: String },
+      middle_name: { type: String }
+    },
+    children: [{
+      full_name: { type: String },
+      occupation: { type: String },
+      income: { type: String },
+      age: { type: Number },
+      working_status: { type: String }
+    }]
+  },
+
+  education_hr_profile: {
+    educational_attainment: { type: [String] },
+    skills: [{ type: String }],
+    skill_other_text: { type: String }
+  },
+
+  community_service: { type: [String] },
+  community_service_other_text: { type: String }
+
+}, { timestamps: true });
+
+// Middleware to clean data before saving
+SeniorCitizenSchema.pre('save', function (next) {
+  // Clean education_level array
+  if (this.education_hr_profile?.educational_attainment) {
+    this.education_hr_profile.educational_attainment =
+      this.education_hr_profile.educational_attainment
+        .filter(val => val !== 'Yes' && val !== 'No');
+  }
+
+  // Handle "Other" skills
+  if (this.education_hr_profile?.skills?.includes('Other') &&
+    this.education_hr_profile?.skill_other_text) {
+    this.education_hr_profile.skills = this.education_hr_profile.skills
+      .filter(skill => skill !== 'Other');
+    this.education_hr_profile.skills.push(this.education_hr_profile.skill_other_text);
+  }
+
+  // Convert birthday string to Date if needed
+  if (this.identifying_information?.date_of_birth &&
+    typeof this.identifying_information.date_of_birth === 'string') {
+    this.identifying_information.date_of_birth = new Date(this.identifying_information.date_of_birth);
+  }
+
+  next();
+});
+
+
 
 const pwdRegistrationSchema = new mongoose.Schema({
   first_name: { type: String, required: true },
