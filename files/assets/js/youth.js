@@ -191,6 +191,7 @@ function showCheckmark(groupId) {
       showTab(currentTab);
   }
   
+  
   function fixStepIndicator(n) {
       const steps = document.getElementsByClassName("step");
       for (let i = 0; i < steps.length; i++) {

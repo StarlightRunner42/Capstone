@@ -152,8 +152,51 @@
 							<div class="pcoded-inner-content">
 								<div class="main-body">
 									<div class="page-wrapper">
+
 										<div class="container">
 											<h1>LYDO TABLE</h1>
+										
+											<div class="filter-container">
+												<div class="filter-group">
+													<label for="barangay-filter">Barangay:</label>
+													<select id="barangay-filter" class="form-control">
+														<option value="">Select Barangay</option>
+														<!-- Populate options with JavaScript -->
+													</select>
+												</div>
+												<div class="filter-group">
+													<label for="purok-filter">Purok:</label>
+													<select id="purok-filter" class="form-control" disabled>
+														<option value="">First select a Barangay</option>
+													</select>
+												</div>
+											</div>
+										
+											<div id="data-table-container">
+												<!-- Table will be shown if there is data -->
+												<table id="example" class="display" style="width:100%; display: none;">
+													<thead>
+														<tr>
+															<th>First Name</th>
+															<th>Middle Name</th>
+															<th>Last Name</th>
+															<th>Age</th>
+															<th>Civil Status</th>
+															<th>Disability</th>
+															<th>Actions</th>
+														</tr>
+													</thead>
+													<tbody id="pwd-table-body">
+														<!-- Rows inserted via JavaScript -->
+													</tbody>
+												</table>
+										
+												<div id="no-data-alert" class="alert alert-info text-center" style="display: none;">
+													No data found.
+												</div>
+											</div>
+										</div>
+										
 										</div>
 										<!-- Container div -->
 									</div>
