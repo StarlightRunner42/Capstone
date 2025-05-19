@@ -165,7 +165,7 @@
       <option value="Emergency">Emergency</option>
     </select>
   </div> 
-     
+
   <div class="form-group">
     <label for="Assembly">Attended a KK Assembly before?</label>
     <select id="Assembly" name="Assembly" required onchange="toggleSkFields()">
@@ -203,54 +203,54 @@
 
 
 					<div class="form-section skills-section">
-						<h3 class="section-title">Youth Classification</h3>
-						<div class="skills-grid">
-							<div class="skills-column">
-								<div class="skill-item">
-									<input type="checkbox" id="disability-deaf" name="disability[]" value="Deaf or Hard of Hearing">
-									<label for="disability-deaf">In School Youth</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="disability-intellectual" name="disability[]" value="Intellectual Disability">
-									<label for="disability-intellectual">Out of School Youth</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="disability-learning" name="disability[]" value="Learning Disability">
-									<label for="disability-learning">Youth w/Specific Needs</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="disability-other" name="disability[]" value="Other">
-									<label for="disability-other">Others, specify:</label>
-									<input type="text" id="disability-other-text" name="disability_other_text" class="other-input">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-section skills-section">
-						<h3 class="section-title">Youth Age Group <span class="required">*</span>
-						</h3>
-						<div class="skills-grid">
-							<div class="skills-column">
-								<div class="skill-item">
-									<input type="checkbox" id="cause-congenital" name="cause_disability[]" value="Congenital / Inborn">
-									<label for="cause-congenital">Child Youth (15−17 yrs old)</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="cause-autism" name="cause_disability[]" value="Autism">
-									<label for="cause-autism">Core Youth (18−24 yrs old)</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="cause-adhd" name="cause_disability[]" value="ADHD">
-									<label for="cause-adhd">Young Adult (15−30 yrs old)</label>
-								</div>
-								<div class="skill-item">
-									<input type="checkbox" id="cause-other" name="cause_disability[]" value="Other">
-									<label for="cause-other">Others, specify:</label>
-									<input type="text" id="cause-other-text" name="cause_other_text" class="other-input">
-								</div>
-							</div>
-						</div>
-					</div>
+  <h3 class="section-title">Youth Classification</h3>
+  <div class="skills-grid">
+    <div class="skills-column">
+      <div class="skill-item">
+        <input type="checkbox" id="youth-in-school" name="youth_classification[]" value="In School Youth">
+        <label for="youth-in-school">In School Youth</label>
+      </div>
+      <div class="skill-item">
+        <input type="checkbox" id="youth-out-school" name="youth_classification[]" value="Out of School Youth">
+        <label for="youth-out-school">Out of School Youth</label>
+      </div>
+      <div class="skill-item">
+        <input type="checkbox" id="youth-specific-needs" name="youth_classification[]" value="Youth w/Specific Needs">
+        <label for="youth-specific-needs">Youth w/Specific Needs</label>
+      </div>
+      <div class="skill-item">
+        <input type="checkbox" id="youth-other" name="youth_classification[]" value="Other">
+        <label for="youth-other">Others, specify:</label>
+        <input type="text" id="youth-other-text" name="youth_other_text" class="other-input">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-section skills-section">
+  <h3 class="section-title">Youth Age Group <span class="required">*</span></h3>
+  <div class="skills-grid">
+    <div class="skills-column">
+      <div class="skill-item">
+        <input type="checkbox" id="age-child" name="youth_age_group[]" value="Child Youth (15−17 yrs old)">
+        <label for="age-child">Child Youth (15−17 yrs old)</label>
+      </div>
+      <div class="skill-item">
+        <input type="checkbox" id="age-core" name="youth_age_group[]" value="Core Youth (18−24 yrs old)">
+        <label for="age-core">Core Youth (18−24 yrs old)</label>
+      </div>
+      <div class="skill-item">
+        <input type="checkbox" id="age-young-adult" name="youth_age_group[]" value="Young Adult (15−30 yrs old)">
+        <label for="age-young-adult">Young Adult (15−30 yrs old)</label>
+      </div>
+      <div class="skill-item">
+        <input type="checkbox" id="age-other" name="youth_age_group[]" value="Other">
+        <label for="age-other">Others, specify:</label>
+        <input type="text" id="age-other-text" name="age_other_text" class="other-input">
+      </div>
+    </div>
+  </div>
+</div>
 					
 				</fieldset>
 		
