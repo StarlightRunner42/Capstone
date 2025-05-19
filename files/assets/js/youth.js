@@ -136,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
     return re.test(email);
   }
   
-  function showCheckmark(groupId) {
+function showCheckmark(groupId) {
     document.querySelector(`#${groupId} .checkmark`).style.display = "inline";
-  }
+}
   
   function toggleSpouseInput() {
     const civilStatus = document.getElementById("civil_status").value;

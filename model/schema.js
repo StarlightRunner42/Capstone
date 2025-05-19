@@ -280,11 +280,28 @@ const pwdRegistrationSchema = new mongoose.Schema({
 
 const youthSchema = new mongoose.Schema({
   // Personal Information
-  firstName: { type: String, required: true },
-  middleName: String,
-  lastName: { type: String, required: true },
-  barangay: { type: String, required: true },
-  purok: { type: String, required: true },
+  first_name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  middle_name: {
+    type: String,
+    trim: true
+  },
+  last_name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  barangay: {
+    type: String,
+    required: true
+  },
+  purok: {
+    type: String,
+    required: true
+  },
   contact: {
     type: String,
     required: true,
@@ -292,20 +309,30 @@ const youthSchema = new mongoose.Schema({
       validator: function(v) {
         return /^\d{11}$/.test(v);
       },
-      message: props => `${props.value} is not a valid 11-digit phone number!`
+      message: props => `${props.value} is not a valid phone number!`
     }
   },
-  birthday: { type: Date, required: true },
-  age: { type: Number, required: true },
+  birthday: {
+    type: Date,
+    required: true
+  },
+  age: {
+    type: Number,
+    required: true
+  },
   gender: {
     type: String,
     required: true,
     enum: ['Male', 'Female', 'Other', 'Prefer not to say']
   },
-  placeOfBirth: { type: String, required: true },
+  place_of_birth: {
+    type: String,
+    required: true,
+    trim: true
+  },
 
   // Educational Attainment
-  educationLevel: {
+  education_level: {
     type: String,
     required: true,
     enum: [
@@ -319,75 +346,85 @@ const youthSchema = new mongoose.Schema({
       'Not Attended School'
     ]
   },
-  skVoter: {
+  registered_sk: {
     type: String,
     required: true,
     enum: ['Yes', 'No']
   },
-  votedLastSkElection: {
+  voted_sk: {
     type: String,
     required: true,
     enum: ['Yes', 'No']
   },
-  skVoterTimes: {
+  registered_national: {
     type: String,
-    enum: ['1-2', '3-4', '5+'],
-    required: function() {
-      return this.skVoter === 'Yes';
-    }
-  },
-  noVoteReason: {
-    type: String,
-    enum: ['No KK Assembly Meeting', 'Not interested to attend'],
-    required: function() {
-      return this.skVoter === 'No';
-    }
+    required: true,
+    enum: ['Yes', 'No']
   },
 
   // Employment Information
-  employmentStatus: {
+  employment_status: {
     type: String,
     required: true,
     enum: ['Employee', 'Unemployed', 'Self-employed']
   },
-  employmentCategory: {
+  employment_category: {
     type: String,
-    enum: ['Government', 'Private'],
-    required: function() {
-      return this.employmentStatus === 'Employee';
-    }
+    enum: ['Government', 'Private', null],
+    default: null
   },
-  employmentType: {
+  employment_type: {
     type: String,
-    enum: ['Permanent/Regular', 'Seasonal', 'Casual', 'Emergency'],
-    required: function() {
-      return this.employmentStatus === 'Employee';
-    }
+    enum: ['Permanent/Regular', 'Seasonal', 'Casual', 'Emergency', null],
+    default: null
   },
 
-  // Youth Classification
-  youthTypes: [{
+  // KK Assembly Information
+  Assembly: {
     type: String,
+    required: true,
+    enum: ['Yes', 'No']
+  },
+  sk_times: {
+    type: String,
+    enum: ['1-2', '3-4', '5+', null],
+    default: null
+  },
+  reason: {
+    type: String,
+    enum: ['No KK Assembly Meeting', 'Not interested to attend', null],
+    default: null
+  },
+
+  // Youth Classification (using arrays for multiple selections)
+  youth_classification: {
+    type: [String],
     enum: [
       'In School Youth',
       'Out of School Youth',
       'Youth w/Specific Needs',
       'Other'
     ]
-  }],
-  youthOtherType: String,
-
-  // Youth Age Group
-  ageGroups: [{
+  },
+  youth_classification_other: {
     type: String,
+    trim: true
+  },
+
+  // Youth Age Group (using arrays for multiple selections)
+  youth_age_group: {
+    type: [String],
     enum: [
       'Child Youth (15−17 yrs old)',
       'Core Youth (18−24 yrs old)',
       'Young Adult (15−30 yrs old)',
       'Other'
     ]
-  }],
-  ageOtherGroup: String,
+  },
+  youth_age_group_other: {
+    type: String,
+    trim: true
+  },
 
   // Timestamps
   createdAt: {
@@ -400,15 +437,11 @@ const youthSchema = new mongoose.Schema({
   }
 });
 
-// Index for commonly queried fields
-youthSchema.index({
-  barangay: 1,
-  purok: 1,
-  gender: 1,
-  educationLevel: 1,
-  employmentStatus: 1
+// Update the updatedAt field before saving
+youthSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
 });
-
 
 const User = mongoose.model('User', UserSchema);
 const SeniorCitizen  = mongoose.model('SeniorCitizen', SeniorCitizenSchema);

@@ -54,6 +54,8 @@ router.get('/add_youth', requireAuth,(req, res) => {
     res.render('youth/staff_youth_add');
 });
 
+router.post('/create-youth', requireAuth, controller.createYouth);
+
 
 // Staff routes
 router.get('/index-staff', requireAuth, (req, res) => {
