@@ -391,3 +391,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Show first tab
   showTab(0);
 });
+
+
+document.querySelectorAll('#requiredDocuments input').forEach(input => {
+  input.addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, '');
+      if (this.value.length > 11) {
+          this.value = this.value.slice(0, 11);
+      }
+  });
+});

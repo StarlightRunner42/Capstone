@@ -114,29 +114,32 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="sk">Registered SK Voters</label>
-						<select id="sk" name="sk" required>
+						<label for="registered_sk">Registered SK Voters</label>
+						<select id="registered_sk" name="registered_sk" required>
 							<option value="">-- Select One --</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
 						</select>
 					</div>
+					
 					<div class="form-group">
-						<label for="sk">Voted last SK election?</label>
-						<select id="sk" name="sk" required>
+						<label for="voted_sk">Voted last SK election?</label>
+						<select id="voted_sk" name="voted_sk" required>
 							<option value="">-- Select One --</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
 						</select>
 					</div>
+					
 					<div class="form-group">
-						<label for="sk">Registered SK Voters</label>
-						<select id="sk" name="sk" required>
+						<label for="registered_national">Registered National Voters</label>
+						<select id="registered_national" name="registered_national" required>
 							<option value="">-- Select One --</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
 						</select>
 					</div>
+					
 					
 				</div>
 
@@ -169,8 +172,8 @@
     </select>
   </div>    
   <div class="form-group">
-    <label for="sk">Registered SK Voters</label>
-    <select id="sk" name="sk" required onchange="toggleSkFields()">
+    <label for="Assembly">Attended a KK Assembly before?</label>
+    <select id="Assembly" name="Assembly" required onchange="toggleSkFields()">
       <option value="">-- Select One --</option>
       <option value="Yes">Yes</option>
       <option value="No">No</option>
@@ -189,7 +192,6 @@
 		</select>
 		</div>
 	</div>
-  
   
   <!-- Fields to show when "No" is selected -->
   <div id="sk-no-fields" style="display: none;">
