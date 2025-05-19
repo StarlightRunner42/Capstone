@@ -124,44 +124,41 @@ const SeniorCitizenSchema = new mongoose.Schema({
       educational_attainment: {
         type: [String],
         enum: [
-          'Yes', // To handle your form's initial value
-          'No',
-          'Elementary Level', 
-          'Elementary Graduate',
-          'High School Level', 
-          'High School Graduate',
-          'College Level', 
-          'College Graduate',
-          'Post Graduate', 
-          'Vocational', 
-          'Not Attended School'
-        ]
+  'Yes', 
+  'No',
+  'Elementary Level', 
+  'Elementary Graduate',
+  'High School Graduate',
+  'College Level', 
+  'College Graduate',
+  'Post Graduate', 
+  'Vocational', 
+  'Not Attended School'
+]
       },
       skills: [{
         type: String,
         enum: [
-          'Medical',
-          'Teaching',
-          'Legal Services',
-          'Dental',
-          'Counseling',
-          'Farming',
-          'Fishing',
-          'Cooking',
-          'Arts',
-          'Engineering',
-          'Carpenter',
-          'Plumber',
-          'Barber',
-          'Mason',
-          'Sewing',
-          'Evangelization',
-          'Tailor',
-          'Chef/Cook',
-          'Millwright',
-          'Sapatero', // Added to match your form
-          'Other' // For the "Others" checkbox
-        ]
+  'Medical',
+  'Dental',
+  'Fishing',
+  'Engineering',
+  'Barber',
+  'Evangelization',
+  'Millwright',
+  'Teaching',
+  'Counseling',
+  'Cooking',
+  'Carpenter',
+  'Mason',
+  'Tailor',
+  'Legal Services',
+  'Farming',
+  'Arts',
+  'Plumber',
+  'Sapatero',
+  'Chef/Cook'
+]
       }],
       skill_other_text: { type: String }  // For "Others, specify" field
     }
