@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
               confirmButtonText: "OK"
           }).then(() => {
               // Redirect to a success page or reset the form
-              window.location.href = "/add_pwd"; // Change to your desired redirect
+              window.location.href = "/register-pwd"; // Change to your desired redirect
               // OR to reset the form:
               // form.reset();
               // currentTab = 0;
@@ -304,23 +304,26 @@ document.addEventListener('DOMContentLoaded', function() {
     if (selectElement.value !== 'working') incomeInput.value = '';
   }
   
-  document.addEventListener('DOMContentLoaded', function () {
-    // CHILD INFORMATION MANAGEMENT
+  // Child information management
+  document.addEventListener('DOMContentLoaded', function() {
     const childrenContainer = document.getElementById('childrenContainer');
-    document.getElementById('addChild').addEventListener('click', function () {
+    
+    // Add child entry
+    document.getElementById('addChild').addEventListener('click', function() {
         const childEntry = childrenContainer.querySelector('.child-entry');
         const newChild = childEntry.cloneNode(true);
-
+  
         // Clear values
         newChild.querySelectorAll('input').forEach(input => input.value = '');
         newChild.querySelector('select').value = 'not_working';
         newChild.querySelector('.delete-child').style.display = 'inline-block';
-
+        
         childrenContainer.appendChild(newChild);
         attachWorkingStatusListeners();
     });
-
-    childrenContainer.addEventListener('click', function (e) {
+  
+    // Delete child entry (event delegation)
+    childrenContainer.addEventListener('click', function(e) {
         if (e.target.classList.contains('delete-child')) {
             const childEntries = childrenContainer.querySelectorAll('.child-entry');
             if (childEntries.length > 1) {
@@ -328,9 +331,80 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-      
-});
-
+  
+    // Contact information management
+    const contactsContainer = document.getElementById('contactsContainer');
+    let contactCounter = document.querySelectorAll('.contact-entry').length;
+  
+    // Add contact entry
+    document.getElementById('addContact').addEventListener('click', function() {
+        contactCounter++;
+        const newContact = document.createElement('div');
+        newContact.className = 'contact-entry';
+        newContact.dataset.contactId = contactCounter;
+        
+        newContact.innerHTML = `
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Contact Type</label>
+                    <select class="contact-type" name="contacts[${contactCounter}][type]" required>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="emergency">Emergency</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="contacts[${contactCounter}][name]" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Relationship</label>
+                    <input type="text" name="contacts[${contactCounter}][relationship]" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="contacts[${contactCounter}][phone]" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="contacts[${contactCounter}][email]">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="remove-contact">Remove</button>
+                </div>
+            </div>
+        `;
+        
+        contactsContainer.appendChild(newContact);
+    });
+  
+    // Remove contact entry (event delegation)
+    contactsContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-contact')) {
+            const contactEntries = contactsContainer.querySelectorAll('.contact-entry');
+            if (contactEntries.length > 1) {
+                e.target.closest('.contact-entry').remove();
+            }
+        }
+    });
+  
+    // Initialize purok options if a barangay is already selected
+    if (document.getElementById('barangay').value) {
+        updatePurokOptions();
+    }
+    
+    // Initialize working status listeners
+    attachWorkingStatusListeners();
+    
+    // Initialize first tab
+    showTab(0);
+  });
   
   function attachWorkingStatusListeners() {
     document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
