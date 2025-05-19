@@ -94,8 +94,8 @@
 									</a>
 								</li>
 								<li>
-									<a href="/add_senior" class="btns btn-primary rounded" id="addSeniorBtn" target="_blank">
-										<i class="feather icon-user-plus"></i>ADD OSCA</a>
+									<a href="/add_youth" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
+										<i class="feather icon-user-plus"></i>ADD LYDO</a>
 								</li>
 							</ul>
 							<ul class="nav-right"></ul>
@@ -137,14 +137,9 @@
 											<span class="pcoded-mtext">Dashboard</span>
 										</a>
 										<ul class="pcoded-submenu">
-											<li class="">
-												<a href="/Pwd-form">
-													<span class="">PDAO</span>
-												</a>
-											</li>
 											<li class="active">
-												<a href="/Senior-form">
-													<span class="">OSCA</span>
+												<a href="/youth">
+													<span class="">LYDO</span>
 												</a>
 											</li>
 										</ul>
@@ -158,78 +153,7 @@
 								<div class="main-body">
 									<div class="page-wrapper">
 										<div class="container">
-											<h1>OSCA TABLE</h1>
-
-										<div class="filter-container">
-  <div class="filter-group">
-    <label for="barangay-filter">Barangay:</label>
-    <select id="barangay-filter" class="form-control">
-      <option value="">Select Barangay</option>
-      <% Object.keys(barangays).forEach(barangay => { %>
-        <option value="<%= barangay %>"><%= barangay %></option>
-      <% }) %>
-    </select>
-  </div>
-  <div class="filter-group">
-    <label for="purok-filter">Purok:</label>
-    <select id="purok-filter" class="form-control" disabled>
-      <option value="">First select a Barangay</option>
-    </select>
-  </div>
-</div>
-		
-<table id="example" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>Barangay</th>
-            <th>Purok</th>
-            <th>Age</th>
-            <th>Marital Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% if (seniorCitizens && seniorCitizens.length > 0) { %>
-            <% seniorCitizens.forEach(senior => { %>
-            <tr>
-                <td><%= senior.identifying_information?.name?.first_name || 'N/A' %></td>
-                <td><%= senior.identifying_information?.name?.middle_name || 'N/A' %></td>
-                <td><%= senior.identifying_information?.name?.last_name || 'N/A' %></td>
-                <td><%= senior.identifying_information?.address?.barangay || 'N/A' %></td>
-                <td><%= senior.identifying_information?.address?.purok || 'N/A' %></td>
-                <td><%= senior.identifying_information?.age || 'N/A' %></td>
-                <td><%= senior.identifying_information?.marital_status || 'N/A' %></td>
-                <td>
-					<div class="action-container">		
-						<button class="action action-primary" aria-label="View">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-							</svg>
-						</button>
-
-						<button class="action action-success" aria-label="Edit">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-							</svg>
-						</button>
-					</div>
-                </td>
-            </tr>
-            <% }); %>
-        <% } else { %>
-            <tr>
-                <td colspan="8" class="text-center">No senior citizen records found</td>
-            </tr>
-        <% } %>
-    </tbody>
-</table>
-
-
-													
+											<h1>LYDO TABLE</h1>
 										</div>
 										<!-- Container div -->
 									</div>
@@ -241,68 +165,7 @@
 				</div>
 			</div>
 		</div>
-		</div>
-		</div>
-		</div>
-		</div>
 
-		<script>
-  // Convert EJS data to JavaScript object
-  const barangaysData = <%- JSON.stringify(barangays) %>;
-  
-  // Wait for DOM to be fully loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    // Get select elements
-    const barangaySelect = document.getElementById('barangay-filter');
-    const purokSelect = document.getElementById('purok-filter');
-    
-    // Debugging: Log the initial data
-    console.log('Barangays data loaded:', barangaysData);
-    
-    // Barangay change event handler
-    barangaySelect.addEventListener('change', function() {
-      const selectedBarangay = this.value;
-      
-      // Clear existing options
-      purokSelect.innerHTML = '';
-      
-      // Add default option
-      const defaultOption = document.createElement('option');
-      defaultOption.value = '';
-      defaultOption.textContent = 'Select Purok';
-      purokSelect.appendChild(defaultOption);
-      
-      // Enable/disable based on selection
-      purokSelect.disabled = !selectedBarangay;
-      
-      // If a barangay is selected, populate puroks
-      if (selectedBarangay && barangaysData[selectedBarangay]) {
-        // Debugging: Log the selected barangay's puroks
-        console.log(`Loading puroks for ${selectedBarangay}:`, barangaysData[selectedBarangay]);
-        
-        // Add "All Puroks" option
-        const allOption = document.createElement('option');
-        allOption.value = 'all';
-        allOption.textContent = 'All Puroks';
-        purokSelect.appendChild(allOption);
-        
-        // Add each purok option
-        barangaysData[selectedBarangay].forEach(purok => {
-          const option = document.createElement('option');
-          option.value = purok;
-          option.textContent = purok;
-          purokSelect.appendChild(option);
-        });
-      }
-      
-      // Debugging: Log the current purok options
-      console.log('Current purok options:', purokSelect.innerHTML);
-    });
-    
-    // Initialize purok dropdown as disabled
-    purokSelect.disabled = true;
-  });
-</script>
 		<!-- Required Jquery -->
 		<script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
 		<script type="text/javascript" src="\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
@@ -336,18 +199,20 @@
 			}
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
-			
+
 			$(document).ready(function() {
-    $('#example').DataTable({
-        paging: true,
-        pageLength: 10,
-        lengthMenu: [5, 10, 25, 50, 100],
-        responsive: true
-    });
-});
-
-
-			
+				$('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true,
+					rowCallback: function(row) {
+						if ($(row).hasClass('dt-empty')) {
+							$(row).hide();
+						}
+					}
+				});
+			});
 		</script>
 	</body>
 </html>

@@ -47,7 +47,11 @@ router.get('/User', requireAuth, (req, res) => {
 });
 
 router.get('/youth', requireAuth,(req, res) => {
-    res.render('admin/admin_youth');
+    res.render('youth/staff_youth');
+});
+
+router.get('/add_youth', requireAuth,(req, res) => {
+    res.render('youth/staff_youth_add');
 });
 
 
@@ -76,6 +80,9 @@ router.get('/superadmin-users',requireAuth ,controller.renderSuperAdminUser);
 router.get('/Senior-form', requireAuth, controller.renderSeniorForm);
 
 router.get('/Pwd-form', requireAuth, controller.renderPWDForm);
+
+
+
 
 // Data operations
 router.post('/add-data', controller.createResident);

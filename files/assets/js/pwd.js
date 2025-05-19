@@ -437,3 +437,54 @@ function updatePurokOptions() {
         });
     }
 }
+
+function updatePurokOptions() {
+    const barangay = document.getElementById("barangay").value;
+    const purokDropdown = document.getElementById("purok");
+    
+    // Reset purok dropdown
+    purokDropdown.innerHTML = '<option value="" disabled selected>Select Purok</option>';
+    purokDropdown.disabled = !barangay;
+  
+    // Add purok options based on selected barangay
+    if (barangay) {
+      const puroks = getPuroksForBarangay(barangay);
+      puroks.forEach(purok => {
+        const option = document.createElement("option");
+        option.value = purok.toLowerCase().replace(/\s+/g, '_');
+        option.textContent = purok;
+        purokDropdown.appendChild(option);
+      });
+    }
+  }
+  
+  // Sample data: Barangay -> Puroks mapping
+  function getPuroksForBarangay(barangay) {
+    const purokData = {
+      bagong_silang: ["Purok 1", "Purok 2", "Purok 3", "Purok 4"],
+      holy_spirit: ["Purok 1", "Purok 2", "Purok 3"],
+      payatas: ["Purok 5", "Purok 6", "Purok 7"],
+      commonwealth: ["Purok 8", "Purok 9"],
+      batasan_hills: ["Purok 10", "Purok 11"]
+    };
+    return purokData[barangay] || [];
+  }
+
+  function toggleKKAssemblyOptions() {
+    const selection = document.getElementById('sk').value;
+    const yesOptions = document.getElementById('yesOptions');
+    const noOptions = document.getElementById('noOptions');
+    
+    yesOptions.style.display = (selection === 'Yes') ? 'block' : 'none';
+    noOptions.style.display = (selection === 'No') ? 'block' : 'none';
+    
+    // Clear selections when switching options
+    if (selection !== 'Yes') {
+      document.querySelectorAll('input[name="times_attended"]').forEach(el => el.checked = false);
+    }
+    if (selection !== 'No') {
+      document.querySelectorAll('input[name="not_attended_reason"]').forEach(el => el.checked = false);
+    }
+  }
+
+  
