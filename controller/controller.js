@@ -4,7 +4,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
-const { User,SeniorCitizen,Barangay ,PWD } = require("../model/schema");
+const { User,SeniorCitizen,Barangay ,PWD,Youth } = require("../model/schema");
 
 
 
@@ -525,16 +525,129 @@ exports.renderSeniorForm = async (req, res) => {
   }
   };
   
-  
-
-exports.createYouth = (req, res) => {
-    try{
-        console.log('Raw body:', req.body);
-    }catch(err){
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
+exports.renderSuperAdminIndex = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
     
+    if (!barangays) {
+      return res.status(404).send('No barangays found');
+    }
+  
+    // Pass the barangays data to the EJS template
+   
+    res.render('superadmin/admin_super_admin', {
+      barangays: barangays || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
+
+exports.renderYouth = async (req, res) => {
+ try {
+    const barangays = await fetchBarangays();
+    const youthData = await Youth.find({});
+
+    console.log(youthData);
+    // if (!barangays) {
+    //   return res.status(404).send('No barangays found');
+    // }
+  
+    // Pass the barangays data to the EJS template
+   
+    res.render('youth/staff_youth', {
+      barangays: barangays || {},
+      youths: youthData || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+  };
+
+
+
+exports.createYouth = async (req, res) => {
+  try {
+    console.log('Raw body:', req.body);
+
+    // Destructure req.body
+    const {
+      first_name,
+      middle_name,
+      last_name,
+      barangay,
+      purok,
+      contact,
+      birthday,
+      age,
+      gender,
+      place_of_birth,
+      education_level,
+      registered_sk,
+      voted_sk,
+      registered_national,
+      employment_status,
+      employment_category,
+      employment_type,
+      Assembly,
+      sk_times,
+      reason,
+      youth_classification,
+      youth_other_text,
+      youth_age_group,
+      age_other_text
+    } = req.body;
+
+    // Create new Youth document
+    const newYouth = new Youth({
+      first_name,
+      middle_name,
+      last_name,
+      barangay,
+      purok,
+      contact,
+      birthday: new Date(birthday), // ensure Date type
+      age: parseInt(age, 10), // ensure Number type
+      gender,
+      place_of_birth,
+      education_level,
+      registered_sk,
+      voted_sk,
+      registered_national,
+      employment_status,
+      employment_category: employment_category || null,
+      employment_type: employment_type || null,
+      Assembly,
+      sk_times: sk_times || null,
+      reason: reason || null,
+      youth_classification,
+      youth_classification_other: youth_other_text || null,
+      youth_age_group,
+      youth_age_group_other: age_other_text || null,
+    });
+
+    // Save to database
+    const savedYouth = await newYouth.save();
+
+    res.status(201).json({
+      message: 'Youth record created successfully',
+      data: savedYouth
+    });
+  } catch (err) {
+    console.error(err);
+
+    // Handle validation errors
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({
+        message: 'Validation Error',
+        errors: err.errors
+      });
+    }
+
+    res.status(500).send('Internal Server Error');
+  }
 };
 
 

@@ -46,15 +46,14 @@ router.get('/User', requireAuth, (req, res) => {
     res.render('admin/admin_update');
 });
 
-router.get('/youth', requireAuth,(req, res) => {
-    res.render('youth/staff_youth');
-});
+
+router.get('/index-youth', requireAuth,controller.renderYouth);
 
 router.get('/add_youth', requireAuth,(req, res) => {
     res.render('youth/staff_youth_add');
 });
 
-router.post('/create-youth', requireAuth, controller.createYouth);
+router.post('/create-youth', controller.createYouth);
 
 
 // Staff routes
@@ -84,8 +83,8 @@ router.get('/Senior-form', requireAuth, controller.renderSeniorForm);
 router.get('/Pwd-form', requireAuth, controller.renderPWDForm);
 
 //Youth routes
-router.get('/index-youth', requireAuth, (req, res) => {
-    res.render('youth/staff_youth');
+router.get('', requireAuth, (req, res) => {
+    res.render(youth/staff_youth);
 });
 
 router.get('/youth-form', controller.renderYouthForm);

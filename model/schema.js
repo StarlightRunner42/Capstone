@@ -225,12 +225,7 @@ const youthSchema = new mongoose.Schema({
   contact: {
     type: String,
     required: true,
-    validate: {
-      validator: function(v) {
-        return /^\d{11}$/.test(v);
-      },
-      message: props => `${props.value} is not a valid phone number!`
-    }
+
   },
   birthday: {
     type: Date,
@@ -370,4 +365,4 @@ const PWD = mongoose.model('PWD', pwdRegistrationSchema);
 const Youth = mongoose.model('Youth', youthSchema);
 
 
-module.exports = { User,SeniorCitizen ,Barangay,PWD };
+module.exports = { User,SeniorCitizen ,Barangay,PWD,Youth };
