@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
               confirmButtonText: "OK"
           }).then(() => {
               // Redirect to a success page or reset the form
-              window.location.href = "/register-pwd"; // Change to your desired redirect
+              window.location.href = "/add_pwd"; // Change to your desired redirect
               // OR to reset the form:
               // form.reset();
               // currentTab = 0;
