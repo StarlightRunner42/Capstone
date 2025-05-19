@@ -147,31 +147,60 @@ function showCheckmark(groupId) {
   }
   
   let currentTab = 0;
-  
+
   function showTab(n) {
       var x = document.getElementsByTagName("fieldset");
       for (var i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
+          x[i].style.display = "none";
       }
       
       x[n].style.display = "block";
       
       if (n == 0) {
-        document.getElementById("prevBtn").style.display = "none";
+          document.getElementById("prevBtn").style.display = "none";
       } else {
-        document.getElementById("prevBtn").style.display = "inline";
+          document.getElementById("prevBtn").style.display = "inline";
       }
       
-      if (n == x.length) {
-        document.getElementById("nextBtn").innerHTML = "Submit";
-        document.getElementById("nextBtn").setAttribute("type", "button");
+      if (n == (x.length - 1)) {
+          document.getElementById("nextBtn").innerHTML = "Submit";
+          document.getElementById("nextBtn").setAttribute("type", "submit");
       } else {
-        document.getElementById("nextBtn").innerHTML = "Next";
-        document.getElementById("nextBtn").setAttribute("type", "button");
+          document.getElementById("nextBtn").innerHTML = "Next";
+          document.getElementById("nextBtn").setAttribute("type", "button");
       }
       
       fixStepIndicator(n);
   }
+  
+  function nextPrev(n) {
+      var x = document.getElementsByTagName("fieldset");
+      
+      if (n > 0 && !validateCurrentStep(currentTab)) {
+          return false;
+      }
+      
+      x[currentTab].style.display = "none";
+      currentTab = currentTab + n;
+      
+      if (currentTab >= x.length) {
+          document.getElementById("housingForm").submit();
+          return false;
+      }
+      
+      showTab(currentTab);
+  }
+  
+  function fixStepIndicator(n) {
+      const steps = document.getElementsByClassName("step");
+      for (let i = 0; i < steps.length; i++) {
+          steps[i].classList.remove("active");
+      }
+      steps[n].classList.add("active");
+  }
+  
+  // Initialize first tab
+  showTab(0);
   
   function nextPrev(n) {
     var x = document.getElementsByTagName("fieldset");
@@ -418,7 +447,6 @@ function showCheckmark(groupId) {
   
 
 
-    
 
   
     function toggleKKAssemblyOptions() {
