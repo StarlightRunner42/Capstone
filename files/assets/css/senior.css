@@ -374,6 +374,126 @@
 }
 
 
-.hidden {
-  display: none;
+/* Clean Modal CSS */
+
+/* Modal Base Styles */
+.modal-content {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Make modal wider */
+.modal-dialog {
+  max-width: 700px;
+  width: 90%;
+}
+
+.modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 1.25rem 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-title {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.25rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  border-top: 1px solid #f0f0f0;
+  padding: 1.25rem 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Close Button */
+.close {
+  font-size: 1.5rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.close:hover {
+  opacity: 0.75;
+}
+
+/* Fieldset Styling */
+fieldset {
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-start; /* Align items to the left */
+  text-align: left; /* Align text to the left */
+}
+
+
+legend {
+  width: auto;
+  padding: 0 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+/* Text Styling */
+.modal-body p {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+}
+
+.modal-body strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Contact Entry Styling */
+.contact-entry {
+  margin-bottom: 1rem;
+}
+
+.contact-entry p:first-of-type {
+  margin-top: 0;
+  color: #495057;
+  font-weight: 500;
+}
+
+/* Button Styling */
+.btn {
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+}
+
+.btn-secondary {
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  color: #495057;
+}
+
+.btn-secondary:hover {
+  background-color: #dee2e6;
+  border-color: #dee2e6;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
 }
