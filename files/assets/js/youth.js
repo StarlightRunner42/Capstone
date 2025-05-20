@@ -87,7 +87,7 @@ function showTab(n) {
     const nextBtn = document.getElementById("nextBtn");
     if (n === (x.length - 1)) {
         nextBtn.innerHTML = "Submit";
-        nextBtn.setAttribute("type", "submit");
+        nextBtn.setAttribute("type", "button");
     } else {
         nextBtn.innerHTML = "Next";
         nextBtn.setAttribute("type", "button");
@@ -107,7 +107,82 @@ function nextPrev(n) {
     currentTab = currentTab + n;
     
     if (currentTab >= x.length) {
-        document.getElementById("housingForm").submit();
+        // Submit the form via AJAX
+        const form = document.getElementById("housingForm");
+        const formData = new FormData(form);
+        
+        // Convert FormData to JSON
+        const jsonData = {};
+        formData.forEach((value, key) => {
+            // Handle array fields
+            if (key.endsWith('[]')) {
+                const cleanKey = key.replace('[]', '');
+                if (!jsonData[cleanKey]) {
+                    jsonData[cleanKey] = [];
+                }
+                jsonData[cleanKey].push(value);
+            } else {
+                jsonData[key] = value;
+            }
+        });
+        
+        // Show loading indicator
+        Swal.fire({
+            title: 'Processing...',
+            html: 'Please wait while we submit your information',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        fetch(form.action, {
+            method: form.method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire({
+                title: "Success!",
+                text: data.message || "Your information has been successfully submitted.",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                // Redirect to a success page or reset the form
+                window.location.href = "/youth-form"; // Change to your desired redirect
+            });
+        })
+        .catch(error => {
+            let errorMessage = "There was a problem submitting your form. Please try again.";
+            
+            if (error.errors) {
+                // Handle validation errors
+                errorMessage = "Please correct the following errors:\n" + 
+                    error.errors.join("\n");
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+            
+            Swal.fire({
+                title: "Error!",
+                html: errorMessage.replace(/\n/g, '<br>'),
+                icon: "error",
+                confirmButtonText: "OK"
+            });
+            
+            // Scroll back to the first tab if there are errors
+            currentTab = 0;
+            showTab(currentTab);
+        });
+        
         return false;
     }
     

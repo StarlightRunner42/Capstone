@@ -415,11 +415,7 @@ exports.renderSeniorForm = async (req, res) => {
     const barangays = await fetchBarangays();
     const pwd = await PWD.find({});
 
-    console.log(pwd);
-    if (!barangays) {
-      return res.status(404).send('No barangays found');
-    }
-  
+ 
     // Pass the barangays data to the EJS template
     res.render('staff/staff_pwd', {
       barangays: barangays || {},
@@ -453,9 +449,9 @@ exports.renderSeniorForm = async (req, res) => {
    exports.renderAddPWD = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
-    if (!barangays) {
-      return res.status(404).send('No barangays found');
-    }
+    // if (!barangays) {
+    //   return res.status(404).send('No barangays found');
+    // }
   
     // Pass the barangays data to the EJS template
    
@@ -491,9 +487,9 @@ exports.renderSeniorForm = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
     
-    if (!barangays) {
-      return res.status(404).send('No barangays found');
-    }
+    // if (!barangays) {
+    //   return res.status(404).send('No barangays found');
+    // }
   
     // Pass the barangays data to the EJS template
    
@@ -510,9 +506,9 @@ exports.renderSeniorForm = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
     
-    if (!barangays) {
-      return res.status(404).send('No barangays found');
-    }
+    // if (!barangays) {
+    //   return res.status(404).send('No barangays found');
+    // }
   
     // Pass the barangays data to the EJS template
    
