@@ -401,3 +401,26 @@ document.querySelectorAll('#requiredDocuments input').forEach(input => {
       }
   });
 });
+
+
+// Function to convert input to uppercase
+function convertToUppercase(inputElement) {
+  inputElement.value = inputElement.value.toUpperCase();
+}
+
+// Apply uppercase conversion to all relevant input fields
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all text input fields (including text, email, tel, etc.)
+  const inputFields = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea');
+  
+  // Apply to each field
+  inputFields.forEach(input => {
+      // Convert existing value
+      input.value = input.value.toUpperCase();
+      
+      // Add event listener for new input
+      input.addEventListener('input', function() {
+          convertToUppercase(this);
+      });
+  });
+});

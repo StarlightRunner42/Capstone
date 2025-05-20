@@ -158,92 +158,108 @@ const core = {
         });
     },
 
-    createPurokModalChart: (barangayId) => {
-        const data = barangayData[barangayId];
-        const purokData = utils.calculatePurokSeniorCounts(barangayId);
-        const labels = purokData.map(p => p.name);
-        const counts = purokData.map(p => p.count);
-        
-        if (state.purokModalChart) {
-            state.purokModalChart.destroy();
-        }
-        
-        // Premium styling
-        const primaryColor = 'rgb(255, 0, 0)';
-        const gradient = elements.purokModalChart.getContext('2d').createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgb(255, 0, 0)');
-        gradient.addColorStop(1, 'rgb(0, 72, 255)');
-        
-        state.purokModalChart = new Chart(elements.purokModalChart, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Senior Citizens',
-                    data: counts,
-                    backgroundColor: gradient,
-                    borderColor: primaryColor,
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointBackgroundColor: '#FFFFFF',
-                    pointBorderColor: primaryColor,
-                    pointBorderWidth: 2,
-                    pointHoverRadius: 8,
-                    pointHoverBackgroundColor: '#FFFFFF',
-                    pointHoverBorderColor: 'rgb(255, 0, 0)',
-                    pointHoverBorderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    title: {
-                        display: true,
-                        text: `Senior Citizens Distribution in ${data.name}`,
-                        font: { size: 20, weight: 'bold' },
-                        padding: { top: 10, bottom: 30 },
-                        color: '#333333'
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgb(255, 0, 0)',
-                        titleColor: '#333333',
-                        bodyColor: '#333333',
-                        padding: 15,
-                        borderColor: 'rgba(0, 0, 0, 0.1)',
-                        borderWidth: 1,
-                        cornerRadius: 6,
-                        displayColors: false,
-                        callbacks: {
-                            title: context => context[0].label,
-                            label: context => {
-                                const value = context.raw;
-                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                const percentage = ((value / total) * 100).toFixed(1);
-                                return `Senior Citizens: ${value} (${percentage}%)`;
-                            }
+  createPurokModalChart: (barangayId, chartType = 'line') => {
+    const data = barangayData[barangayId];
+    const purokData = utils.calculatePurokSeniorCounts(barangayId);
+    const labels = purokData.map(p => p.name);
+    const counts = purokData.map(p => p.count);
+    
+    if (state.purokModalChart) {
+        state.purokModalChart.destroy();
+    }
+    
+    // Premium styling
+    const primaryColor = 'rgb(255, 0, 0)';
+    const gradient = elements.purokModalChart.getContext('2d').createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgb(255, 0, 0)');
+    gradient.addColorStop(1, 'rgb(0, 72, 255)');
+    
+    // Common dataset configuration
+    const datasetConfig = {
+        label: 'Senior Citizens',
+        data: counts,
+        borderColor: primaryColor,
+        borderWidth: 3,
+        tension: 0.4,
+        pointRadius: 6,
+        pointBackgroundColor: '#FFFFFF',
+        pointBorderColor: primaryColor,
+        pointBorderWidth: 2,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: '#FFFFFF',
+        pointHoverBorderColor: 'rgb(255, 0, 0)',
+        pointHoverBorderWidth: 3
+    };
+
+    // Type-specific configurations
+    if (chartType === 'bar') {
+        datasetConfig.backgroundColor = gradient;
+        datasetConfig.borderRadius = 4;
+        datasetConfig.borderSkipped = false;
+    } else { // line chart
+        datasetConfig.backgroundColor = gradient;
+        datasetConfig.fill = true;
+    }
+
+    state.purokModalChart = new Chart(elements.purokModalChart, {
+        type: chartType,
+        data: {
+            labels: labels,
+            datasets: [datasetConfig]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: `Senior Citizens Distribution in ${data.name}`,
+                    font: { size: 20, weight: 'bold' },
+                    padding: { top: 10, bottom: 30 },
+                    color: '#333333'
+                },
+                tooltip: {
+                    backgroundColor: 'rgb(255, 0, 0)',
+                    titleColor: '#333333',
+                    bodyColor: '#333333',
+                    padding: 15,
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 1,
+                    cornerRadius: 6,
+                    displayColors: false,
+                    callbacks: {
+                        title: context => context[0].label,
+                        label: context => {
+                            const value = context.raw;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `Senior Citizens: ${value} (${percentage}%)`;
                         }
                     }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false, drawBorder: false },
+                    ticks: { color: '#666666', padding: 10 }
                 },
-                scales: {
-                    x: {
-                        grid: { display: false, drawBorder: false },
-                        ticks: { color: '#666666', padding: 10 }
+                y: {
+                    beginAtZero: true,
+                    grid: { 
+                        color: 'rgba(200, 200, 200, 0.15)', 
+                        drawBorder: false 
                     },
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(200, 200, 200, 0.15)', drawBorder: false },
-                        ticks: { color: '#666666', padding: 10 }
-                    }
-                },
-                animation: { duration: 1000, easing: 'easeOutQuart' }
+                    ticks: { color: '#666666', padding: 10 }
+                }
+            },
+            animation: { 
+                duration: 1000, 
+                easing: chartType === 'bar' ? 'easeOutBounce' : 'easeOutQuart' 
             }
-        });
-    },
-
+        }
+    });
+},
     createBarangayChart: () => {
         elements.barangayChartContainer.innerHTML = '';
         const ctx = document.createElement('canvas');
