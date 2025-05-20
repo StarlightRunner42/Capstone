@@ -259,13 +259,23 @@
                                 Barangay <%= senior.identifying_information.address.barangay || 'N/A' %>, 
                                 Purok <%= senior.identifying_information.address.purok || 'N/A' %>
                             </p>
-                            <p><strong>Birthday:</strong> 
-                                <% if (senior.identifying_information.date_of_birth) { %>
-                                    <%= new Date(senior.identifying_information.date_of_birth.$date).toLocaleDateString() %>
-                                <% } else { %>
-                                    N/A
-                                <% } %>
-                            </p>
+
+                         <p><strong>Birthday:</strong> 
+    <% if (senior.identifying_information.date_of_birth) { %>
+        <% if (senior.identifying_information.date_of_birth.$date && senior.identifying_information.date_of_birth.$date.$numberLong) { %>
+            <%= new Date(parseInt(senior.identifying_information.date_of_birth.$date.$numberLong)).toLocaleDateString() %>
+        <% } else if (senior.identifying_information.date_of_birth instanceof Date) { %>
+            <%= senior.identifying_information.date_of_birth.toLocaleDateString() %>
+        <% } else if (typeof senior.identifying_information.date_of_birth === 'string') { %>
+            <%= new Date(senior.identifying_information.date_of_birth).toLocaleDateString() %>
+        <% } else { %>
+            N/A (Invalid date format)
+        <% } %>
+    <% } else { %>
+        N/A
+    <% } %>
+</p>
+
                             <p><strong>Age:</strong> <%= senior.identifying_information.age || 'N/A' %></p>
                             <p><strong>Place of Birth:</strong> <%= senior.identifying_information.place_of_birth.join(', ') || 'N/A' %></p>
                             <p><strong>Gender:</strong> <%= senior.identifying_information.gender || 'N/A' %></p>
