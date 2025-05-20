@@ -182,7 +182,7 @@
     <thead>
         <tr>
             <th>Full Name</th>
-			 <th>Age</th>
+            <th>Age</th>
             <th>Barangay</th>
             <th>Purok</th>
             <th>Marital Status</th>
@@ -191,108 +191,186 @@
     </thead>
     <tbody>
         <% if (seniorCitizens && seniorCitizens.length > 0) { %>
-            <% seniorCitizens.forEach(senior => { %>
+            <% seniorCitizens.forEach((senior, index) => { %>
             <tr>
-                <td><%= senior.identifying_information?.name?.first_name || 'N/A' %> <%= senior.identifying_information?.name?.middle_name || 'N/A' %> <%= senior.identifying_information?.name?.last_name || 'N/A' %></td>
-                <td><%= senior.identifying_information?.address?.barangay || 'N/A' %></td>
-                <td><%= senior.identifying_information?.address?.purok || 'N/A' %></td>
-                <td><%= senior.identifying_information?.age || 'N/A' %></td>
-                <td><%= senior.identifying_information?.marital_status || 'N/A' %></td>
                 <td>
-					<div class="action-container">		
-						<button class="action action-primary" aria-label="View" data-toggle="modal" data-target="#exampleModalCenter">
-						  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-						  </svg>
-						</button>
-					  
-						<button class="action action-success" aria-label="Edit">
-						  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-						  </svg>
-						</button>
-					  </div>
-					  
-					  <!-- Modal -->
-					  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalCenterTitle">Juan Dela Cruz</h5>
-							  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </button>
-							</div>
-							<div class="modal-body">
-								<!-- Top Row: Personal Info + Contact Info -->
-								<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-									<!-- Left - Personal Information -->
-									<fieldset style="flex: 1; margin-right: 10px;">
-										<legend>PERSONAL INFORMATION</legend>
-										<p><strong>Full Name:</strong> Juan Dela Cruz</p>
-										<p><strong>Address:</strong> Barangay Uno, Purok Dos</p>
-										<p><strong>Birthday:</strong> January 1, 1990</p>
-										<p><strong>Contact:</strong> 09123456789</p>
-										<p><strong>Civil Status:</strong> Single</p>
-									</fieldset>
-							
-									<!-- Right - Contact Information -->
-									<fieldset style="flex: 1; margin-left: 10px;">
-										<legend>CONTACT INFORMATION</legend>
-										<div class="contact-entry">
-											<p><strong>Primary Contact:</strong></p>
-											<p><strong>Name:</strong> Maria Dela Cruz (Spouse)</p>
-											<p><strong>Phone:</strong> 09123456780</p>
-											<p><strong>Email:</strong> maria@example.com</p>
-											
-											<p><strong>Emergency Contact:</strong></p>
-											<p><strong>Name:</strong> Pedro Dela Cruz (Brother)</p>
-											<p><strong>Phone:</strong> 09123456781</p>
-										</div>
-									</fieldset>
-								</div>
-							
-								<!-- Bottom Row: ID Information + Education -->
-								<div style="display: flex; justify-content: space-between;">
-									<!-- Left - ID Information -->
-									<fieldset style="flex: 1; margin-right: 10px;">
-										<legend>ID INFORMATION</legend>
-										<p><strong>OSCA ID No:</strong> 123456789</p>
-										<p><strong>GSIS/SSS No:</strong> 987654321</p>
-										<p><strong>TIN No:</strong> 456123789</p>
-										<p><strong>Philhealth No:</strong> 789123456</p>
-										<p><strong>SC Association ID:</strong> SC-2023-001</p>
-										<p><strong>Other Gov't ID:</strong> UMID-789456123</p>
-									</fieldset>
-							
-									<!-- Right - Education Information -->
-									<fieldset style="flex: 1; margin-left: 10px;">
-										<legend>EDUCATIONAL ATTAINMENT</legend>
-										<p><strong>Education Level:</strong> College Graduate</p>
-									</fieldset>
-								</div>
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							  <button type="button" class="btn btn-primary">Add ASS</button>
-							</div>
-						  </div>
-						</div>
-					  </div>
-					
-					
+                    <%= senior.identifying_information.name.first_name || 'N/A' %>
+                    <%= senior.identifying_information.name.middle_name || '' %>
+                    <%= senior.identifying_information.name.last_name || '' %>
+                </td>
+                <td><%= senior.identifying_information.age || 'N/A' %></td>
+                <td><%= senior.identifying_information.address.barangay || 'N/A' %></td>
+                <td><%= senior.identifying_information.address.purok || 'N/A' %></td>
+                <td><%= senior.identifying_information.marital_status || 'N/A' %></td>
+                <td>
+                    <div class="action-container">        
+                        <button class="action action-primary" aria-label="View" data-toggle="modal" data-target="#seniorModal<%= index %>">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          </svg>
+                        </button>
+                      
+                        <button class="action action-success" aria-label="Edit">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        </button>
+                    </div>
                 </td>
             </tr>
             <% }); %>
         <% } else { %>
             <tr>
-                <td colspan="8" class="text-center">No senior citizen records found</td>
+                <td colspan="6" class="text-center">No senior citizen records found</td>
             </tr>
         <% } %>
     </tbody>
 </table>
 
+<!-- Modals for each senior citizen -->
+<% if (seniorCitizens && seniorCitizens.length > 0) { %>
+    <% seniorCitizens.forEach((senior, index) => { %>
+    <div class="modal fade" id="seniorModal<%= index %>" tabindex="-1" role="dialog" aria-labelledby="seniorModalLabel<%= index %>" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seniorModalLabel<%= index %>">
+                        <%= senior.identifying_information.name.first_name || 'N/A' %>
+                        <%= senior.identifying_information.name.middle_name || '' %>
+                        <%= senior.identifying_information.name.last_name || '' %>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Top Row: Personal Info + Contact Info -->
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <!-- Left - Personal Information -->
+                        <fieldset style="flex: 1; margin-right: 10px;">
+                            <legend>PERSONAL INFORMATION</legend>
+                            <p><strong>Full Name:</strong> 
+                                <%= senior.identifying_information.name.first_name || 'N/A' %>
+                                <%= senior.identifying_information.name.middle_name || '' %>
+                                <%= senior.identifying_information.name.last_name || '' %>
+                            </p>
+                            <p><strong>Address:</strong> 
+                                Barangay <%= senior.identifying_information.address.barangay || 'N/A' %>, 
+                                Purok <%= senior.identifying_information.address.purok || 'N/A' %>
+                            </p>
+                            <p><strong>Birthday:</strong> 
+                                <% if (senior.identifying_information.date_of_birth) { %>
+                                    <%= new Date(senior.identifying_information.date_of_birth.$date).toLocaleDateString() %>
+                                <% } else { %>
+                                    N/A
+                                <% } %>
+                            </p>
+                            <p><strong>Age:</strong> <%= senior.identifying_information.age || 'N/A' %></p>
+                            <p><strong>Place of Birth:</strong> <%= senior.identifying_information.place_of_birth.join(', ') || 'N/A' %></p>
+                            <p><strong>Gender:</strong> <%= senior.identifying_information.gender || 'N/A' %></p>
+                            <p><strong>Marital Status:</strong> <%= senior.identifying_information.marital_status || 'N/A' %></p>
+                            <p><strong>Service/Business/Employment:</strong> <%= senior.identifying_information.service_business_employment || 'N/A' %></p>
+                            <p><strong>Current Pension:</strong> <%= senior.identifying_information.current_pension || 'N/A' %></p>
+                            <p><strong>Capability to Travel:</strong> <%= senior.identifying_information.capability_to_travel || 'N/A' %></p>
+                        </fieldset>
+                
+                        <!-- Right - Contact and ID Information -->
+                        <fieldset style="flex: 1; margin-left: 10px;">
+                            <legend>CONTACT & ID INFORMATION</legend>
+                            <% if (senior.identifying_information.contacts && senior.identifying_information.contacts.length > 0) { %>
+                                <% senior.identifying_information.contacts.forEach(contact => { %>
+                                    <p><strong><%= contact.type === 'primary' ? 'Primary Contact' : 'Emergency Contact' %>:</strong></p>
+                                    <p><strong>Name:</strong> <%= contact.name || 'N/A' %></p>
+                                    <p><strong>Relationship:</strong> <%= contact.relationship || 'N/A' %></p>
+                                    <p><strong>Phone:</strong> <%= contact.phone || 'N/A' %></p>
+                                    <p><strong>Email:</strong> <%= contact.email || 'N/A' %></p>
+                                    <hr>
+                                <% }); %>
+                            <% } %>
+                            
+                            <p><strong>OSCA ID No:</strong> <%= senior.identifying_information.osca_id_number || 'N/A' %></p>
+                            <p><strong>GSIS/SSS No:</strong> <%= senior.identifying_information.gsis_sss || 'N/A' %></p>
+                            <p><strong>TIN No:</strong> <%= senior.identifying_information.tin || 'N/A' %></p>
+                            <p><strong>Philhealth No:</strong> <%= senior.identifying_information.philhealth || 'N/A' %></p>
+                            <p><strong>Other Gov't ID:</strong> <%= senior.identifying_information.other_govt_id || 'N/A' %></p>
+                        </fieldset>
+                    </div>
+                
+                    <!-- Bottom Row: Family + Education -->
+                    <div style="display: flex; justify-content: space-between;">
+                        <!-- Left - Family Composition -->
+                        <fieldset style="flex: 1; margin-right: 10px;">
+                            <legend>FAMILY COMPOSITION</legend>
+                            <% if (senior.family_composition) { %>
+                                <p><strong>Father:</strong> 
+                                    <%= senior.family_composition.father.first_name || 'N/A' %>
+                                    <%= senior.family_composition.father.middle_name || '' %>
+                                    <%= senior.family_composition.father.last_name || '' %>
+                                    <%= senior.family_composition.father.extension || '' %>
+                                </p>
+                                <p><strong>Mother:</strong> 
+                                    <%= senior.family_composition.mother.first_name || 'N/A' %>
+                                    <%= senior.family_composition.mother.middle_name || '' %>
+                                    <%= senior.family_composition.mother.last_name || '' %>
+                                </p>
+                                
+                                <% if (senior.family_composition.children && senior.family_composition.children.length > 0) { %>
+                                    <p><strong>Children:</strong></p>
+                                    <ul>
+                                        <% senior.family_composition.children.forEach(child => { %>
+                                            <li>
+                                                <%= child.full_name || 'N/A' %> - 
+                                                Age: <%= child.age || 'N/A' %>, 
+                                                Occupation: <%= child.occupation || 'N/A' %>, 
+                                                Status: <%= child.working_status === 'working' ? 'Working' : 'Not Working' %>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                <% } %>
+                            <% } %>
+                        </fieldset>
+                
+                        <!-- Right - Education and Skills -->
+                        <fieldset style="flex: 1; margin-left: 10px;">
+                            <legend>EDUCATION & SKILLS</legend>
+                            <% if (senior.education_hr_profile) { %>
+                                <p><strong>Educational Attainment:</strong> 
+                                    <% if (senior.education_hr_profile.educational_attainment && senior.education_hr_profile.educational_attainment.length > 0) { %>
+                                        <%= senior.education_hr_profile.educational_attainment.join(', ') %>
+                                    <% } else { %>
+                                        N/A
+                                    <% } %>
+                                </p>
+                                <p><strong>Skills:</strong> 
+                                    <% if (senior.education_hr_profile.skills && senior.education_hr_profile.skills.length > 0) { %>
+                                        <%= senior.education_hr_profile.skills.join(', ') %>
+                                    <% } else { %>
+                                        N/A
+                                    <% } %>
+                                </p>
+                            <% } %>
+                            
+                            <% if (senior.community_service && senior.community_service.length > 0) { %>
+                                <p><strong>Community Service:</strong></p>
+                                <ul>
+                                    <% senior.community_service.forEach(service => { %>
+                                        <li><%= service %></li>
+                                    <% }); %>
+                                </ul>
+                            <% } %>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add ASS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }); %>
+<% } %>
 
 													
 										</div>
