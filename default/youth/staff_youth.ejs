@@ -155,65 +155,146 @@
 
 										<div class="container">
 											<h1>LYDO TABLE</h1>
-										
+											
 											<div class="filter-container">
-												<div class="filter-group">
-													<label for="barangay-filter">Barangay:</label>
-													<select id="barangay-filter" class="form-control">
-														<option value="">Select Barangay</option>
-														<!-- Populate options with JavaScript -->
-													</select>
-												</div>
-												<div class="filter-group">
-													<label for="purok-filter">Purok:</label>
-													<select id="purok-filter" class="form-control" disabled>
-														<option value="">First select a Barangay</option>
-													</select>
-												</div>
+											  <div class="filter-group">
+												<label for="barangay-filter">Barangay:</label>
+												<select id="barangay-filter" class="form-control">
+												  <option value="">Select Barangay</option>
+												  <!-- Populate options with JavaScript -->
+												</select>
+											  </div>
+											  <div class="filter-group">
+												<label for="purok-filter">Purok:</label>
+												<select id="purok-filter" class="form-control" disabled>
+												  <option value="">First select a Barangay</option>
+												</select>
+											  </div>
 											</div>
-										
+										  
 											<div id="data-table-container">
-												<!-- Table will be shown if there is data -->
-
-												<table id="example" class="display" style="width:100%;">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Barangay</th>
-      <th>Purok</th>
-   
-    </tr>
-  </thead>
-  <tbody id="pwd-table-body">
-    <% if (youths && youths.length > 0) { %>
-      <% youths.forEach(youth => { %>
-        <tr>
-          <td>
-            <%= youth.first_name %> <%= youth.middle_name %> <%= youth.last_name %>
-          </td>
-          <td><%= youth.age %></td>
-          <td><%= youth.barangay %></td>
-          <td><%= youth.purok %></td>
-         
-        </tr>
-      <% }) %>
-    <% } else { %>
-      <tr>
-        <td colspan="5">No youth data found.</td>
-      </tr>
-    <% } %>
-  </tbody>
-</table>
-
-										
-												<div id="no-data-alert" class="alert alert-info text-center" style="display: none;">
-													No data found.
-												</div>
+											  <!-- Table will be shown if there is data -->
+											  <table id="example" class="display" style="width:100%;">
+												<thead>
+												  <tr>
+													<th>Name</th>
+													<th>Age</th>
+													<th>Barangay</th>
+													<th>Purok</th>
+													<th>Actions</th>
+												  </tr>
+												</thead>
+												<tbody id="pwd-table-body">
+												  <% if (youths && youths.length > 0) { %>
+													<% youths.forEach((youth, index) => { %>
+													  <tr>
+														<td>
+														  <%= youth.first_name %> <%= youth.middle_name %> <%= youth.last_name %>
+														</td>
+														<td><%= youth.age %></td>
+														<td><%= youth.barangay %></td>
+														<td><%= youth.purok %></td>
+														<td>
+															<div class="action-container">		
+																<button class="action action-primary" aria-label="View" data-toggle="modal" data-target="#exampleModalCenter">
+																  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+																  </svg>
+																</button>
+															  
+																<button class="action action-success" aria-label="Edit">
+																  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+																  </svg>
+																</button>
+															  </div>
+															  
+															  <!-- Modal -->
+															  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+																<div class="modal-dialog modal-dialog-centered" role="document">
+																  <div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="exampleModalCenterTitle">Juan Dela Cruz</h5>
+																	  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																		
+																	  </button>
+																	</div>
+																	<div class="modal-body">
+																		<!-- Top Row: Personal Info + Contact Info -->
+																		<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+																			<!-- Left - Personal Information -->
+																			<fieldset style="flex: 1; margin-right: 10px;">
+																				<legend>PERSONAL INFORMATION</legend>
+																				<p><strong>Name:</strong> <span id="displayName">Juan Dela Cruz</span></p>
+																				<p><strong>Address:</strong> <span id="displayBarangay">Barangay Uno</span>, <span id="displayPurok">Purok Dos</span></p>
+																				<p><strong>Birthday:</strong> <span id="displayBirthday">January 1, 1990</span> (<span id="displayAge">34</span> years old)</p>
+																				<p><strong>Gender:</strong> <span id="displayGender">Male</span></p>
+																				<p><strong>Place of Birth:</strong> <span id="displayPlaceOfBirth">City Hospital</span></p>
+																				<p><strong>Civil Status:</strong> <span id="displayCivilStatus">Single</span></p>
+																				<p id="displaySpouse" style="display: none;"><strong>Spouse Name:</strong> <span id="displaySpouseName">Maria Dela Cruz</span></p>
+																			</fieldset>
+																	
+																			<!-- Right - Contact Information -->
+																			<fieldset style="flex: 1; margin-left: 10px;">
+																				<legend>CONTACT INFORMATION</legend>
+																				<div class="contact-entry">
+																					<p><strong>Primary Contact:</strong></p>
+																					<p><strong>Name:</strong> Maria Dela Cruz (Spouse)</p>
+																					<p><strong>Phone:</strong> 09123456780</p>
+																					<p><strong>Email:</strong> maria@example.com</p>
+																					
+																					<p><strong>Emergency Contact:</strong></p>
+																					<p><strong>Name:</strong> Pedro Dela Cruz (Brother)</p>
+																					<p><strong>Phone:</strong> 09123456781</p>
+																				</div>
+																			</fieldset>
+																		</div>
+																	
+																		<!-- Bottom Row: ID Information + Education -->
+																		<div style="display: flex; justify-content: space-between;">
+																			<!-- Left - ID Information -->
+																			<fieldset style="flex: 1; margin-right: 10px;">
+																				<legend>ID INFORMATION</legend>
+																				<p><strong>SSS No:</strong> 987654321</p>
+																				<p><strong>GSIS No:</strong> 987654321</p>
+																				<p><strong>TIN No:</strong> 456123789</p>
+																				<p><strong>Philhealth No:</strong> 789123456</p>
+																				<p><strong>PSN No:</strong> SC-2023-001</p>
+																				<p><strong>Other Gov't ID:</strong> UMID-789456123</p>
+																			</fieldset>
+																	
+																			<!-- Right - Education Information -->
+																			<fieldset style="flex: 1; margin-left: 10px;">
+																				<legend>EDUCATIONAL ATTAINMENT</legend>
+																				<p><strong>Education Level:</strong> College Graduate</p>
+																			</fieldset>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																	  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																	  <button type="button" class="btn btn-primary">Add ASS</button>
+																	</div>
+																  </div>
+																</div>
+															  </div>
+														</td>
+													  </tr>
+													<% }) %>
+												  <% } else { %>
+													<tr>
+													  <td colspan="5">No youth data found.</td>
+													</tr>
+												  <% } %>
+												</tbody>
+											  </table>
+											  
+											  <div id="no-data-alert" class="alert alert-info text-center" style="display: none;">
+												No data found.
+											  </div>
 											</div>
-										</div>
-										
-										</div>
+										  </div>
 										<!-- Container div -->
 									</div>
 								</div>
