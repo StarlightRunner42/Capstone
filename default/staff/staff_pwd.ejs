@@ -203,118 +203,148 @@
 																</button>
 															</div>
 															<!-- View Modal -->
-															<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
-																<div class="modal-dialog modal-dialog-centered" role="document">
-																	<div class="modal-content">
-																		<div class="modal-header">
-																			<h5 class="modal-title" id="viewModalTitle">Juan Dela Cruz</h5>
-																			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																				<span aria-hidden="true">&times;</span>
-																			</button>
-																		</div>
-																		<div class="modal-body">
-																			<!-- Top Row: Personal Info + Contact Info -->
-																			<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-																				<!-- Left - Personal Information -->
-																				<fieldset style="flex: 1; margin-right: 10px;">
-																					<legend>PERSONAL INFORMATION</legend>
-																					<p>
-																						<strong>Name:</strong>
-																						<span id="displayName">Juan Dela Cruz</span>
-																					</p>
-																					<p>
-																						<strong>Address:</strong>
-																						<span id="displayBarangay">Barangay Uno</span>, <span id="displayPurok">Purok Dos</span>
-																					</p>
-																					<p>
-																						<strong>Birthday:</strong>
-																						<span id="displayBirthday">January 1, 1990</span> ( <span id="displayAge">34</span> years old)
-																					</p>
-																					<p>
-																						<strong>Gender:</strong>
-																						<span id="displayGender">Male</span>
-																					</p>
-																					<p>
-																						<strong>Place of Birth:</strong>
-																						<span id="displayPlaceOfBirth">City Hospital</span>
-																					</p>
-																					<p>
-																						<strong>Civil Status:</strong>
-																						<span id="displayCivilStatus">Single</span>
-																					</p>
-																					<p id="displaySpouse" style="display: none;">
-																						<strong>Spouse Name:</strong>
-																						<span id="displaySpouseName">Maria Dela Cruz</span>
-																					</p>
-																				</fieldset>
-																				<!-- Right - Contact Information -->
-																				<fieldset style="flex: 1; margin-left: 10px;">
-																					<legend>CONTACT INFORMATION</legend>
-																					<div class="contact-entry">
-																						<p>
-																							<strong>Primary Contact:</strong>
-																						</p>
-																						<p>
-																							<strong>Name:</strong> Maria Dela Cruz (Spouse)
-																						</p>
-																						<p>
-																							<strong>Phone:</strong> 09123456780
-																						</p>
-																						<p>
-																							<strong>Email:</strong> maria@example.com
-																						</p>
-																						<p>
-																							<strong>Emergency Contact:</strong>
-																						</p>
-																						<p>
-																							<strong>Name:</strong> Pedro Dela Cruz (Brother)
-																						</p>
-																						<p>
-																							<strong>Phone:</strong> 09123456781
-																						</p>
-																					</div>
-																				</fieldset>
-																			</div>
-																			<!-- Bottom Row: ID Information + Education -->
-																			<div style="display: flex; justify-content: space-between;">
-																				<!-- Left - ID Information -->
-																				<fieldset style="flex: 1; margin-right: 10px;">
-																					<legend>ID INFORMATION</legend>
-																					<p>
-																						<strong>SSS No:</strong> 987654321
-																					</p>
-																					<p>
-																						<strong>GSIS No:</strong> 987654321
-																					</p>
-																					<p>
-																						<strong>TIN No:</strong> 456123789
-																					</p>
-																					<p>
-																						<strong>Philhealth No:</strong> 789123456
-																					</p>
-																					<p>
-																						<strong>PSN No:</strong> SC-2023-001
-																					</p>
-																					<p>
-																						<strong>Other Gov't ID:</strong> UMID-789456123
-																					</p>
-																				</fieldset>
-																				<!-- Right - Education Information -->
-																				<fieldset style="flex: 1; margin-left: 10px;">
-																					<legend>EDUCATIONAL ATTAINMENT</legend>
-																					<p>
-																						<strong>Education Level:</strong> College Graduate
-																					</p>
-																				</fieldset>
-																			</div>
-																		</div>
-																		<div class="modal-footer">
-																			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-																			<button type="button" class="btn btn-primary">Add ASS</button>
-																		</div>
-																	</div>
-																</div>
-															</div>
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalTitle">
+                    <span id="displayFirstName"></span> 
+                    <span id="displayMiddleName"></span> 
+                    <span id="displayLastName"></span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Top Row: Personal Info + Contact Info -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <!-- Left - Personal Information -->
+                    <fieldset style="flex: 1; margin-right: 10px;">
+                        <legend>PERSONAL INFORMATION</legend>
+                        <p>
+                            <strong>Address:</strong>
+                            <span id="displayBarangay"></span>, <span id="displayPurok"></span>
+                        </p>
+                        <p>
+                            <strong>Birthday:</strong>
+                            <span id="displayBirthday"></span> (<span id="displayAge"></span> years old)
+                        </p>
+                        <p>
+                            <strong>Gender:</strong>
+                            <span id="displayGender"></span>
+                        </p>
+                        <p>
+                            <strong>Place of Birth:</strong>
+                            <span id="displayPlaceOfBirth"></span>
+                        </p>
+                        <p id="displaySpouse" style="display: none;">
+                            <strong>Spouse Name:</strong>
+                            <span id="displaySpouseName"></span>
+                        </p>
+                        <p>
+                            <strong>Father's Name:</strong>
+                            <span id="displayFatherName"></span>
+                        </p>
+                        <p>
+                            <strong>Mother's Name:</strong>
+                            <span id="displayMotherName"></span>
+                        </p>
+                    </fieldset>
+                    
+                    <!-- Right - Contact Information -->
+                    <fieldset style="flex: 1; margin-left: 10px;">
+                        <legend>CONTACT INFORMATION</legend>
+                        <div id="displayContacts">
+                            <!-- Contacts will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
+                </div>
+                
+                <!-- Middle Row: ID Information + Education -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <!-- Left - ID Information -->
+                    <fieldset style="flex: 1; margin-right: 10px;">
+                        <legend>ID INFORMATION</legend>
+                        <p>
+                            <strong>SSS No:</strong>
+                            <span id="displaySSS"></span>
+                        </p>
+                        <p>
+                            <strong>GSIS No:</strong>
+                            <span id="displayGSIS"></span>
+                        </p>
+                        <p>
+                            <strong>TIN No:</strong>
+                            <span id="displayTIN"></span>
+                        </p>
+                        <p>
+                            <strong>Philhealth No:</strong>
+                            <span id="displayPhilhealth"></span>
+                        </p>
+                        <p>
+                            <strong>PSN No:</strong>
+                            <span id="displayPSN"></span>
+                        </p>
+                        <p>
+                            <strong>Other Gov't ID:</strong>
+                            <span id="displayOtherID"></span>
+                        </p>
+                    </fieldset>
+                    
+                    <!-- Right - Education Information -->
+                    <fieldset style="flex: 1; margin-left: 10px;">
+                        <legend>EDUCATION & EMPLOYMENT</legend>
+                        <p>
+                            <strong>Education Level:</strong>
+                            <span id="displayEducationLevel"></span>
+                        </p>
+                        <p>
+                            <strong>Employment Status:</strong>
+                            <span id="displayEmploymentStatus"></span>
+                        </p>
+                        <p id="displayEmploymentCategory" style="display: none;">
+                            <strong>Employment Category:</strong>
+                            <span id="displayEmpCategory"></span>
+                        </p>
+                        <p id="displayEmploymentType" style="display: none;">
+                            <strong>Employment Type:</strong>
+                            <span id="displayEmpType"></span>
+                        </p>
+                    </fieldset>
+                </div>
+                
+                <!-- Bottom Row: Disability Information -->
+                <fieldset>
+                    <legend>DISABILITY INFORMATION</legend>
+                    <div style="display: flex; justify-content: space-between;">
+                        <!-- Left - Types of Disability -->
+                        <div style="flex: 1; margin-right: 10px;">
+                            <h5>Types of Disability</h5>
+                            <div id="displayDisabilityTypes">
+                                <!-- Disability types will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Right - Causes of Disability -->
+                        <div style="flex: 1; margin-left: 10px;">
+                            <h5>Causes of Disability</h5>
+                            <div id="displayDisabilityCauses">
+                                <!-- Disability causes will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add ASS</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 															<!-- Edit Modal -->
 															<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
 																<div class="modal-dialog modal-dialog-centered" role="document">
@@ -531,6 +561,8 @@
 				// Initialize purok dropdown as disabled
 				purokSelect.disabled = true;
 			});
+
+			
 		</script>
 		<!-- Required Jquery -->
 		<script type="text/javascript" src="\bower_components\jquery\js\jquery.min.js"></script>
