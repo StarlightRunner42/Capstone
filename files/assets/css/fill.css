@@ -63,6 +63,7 @@ body {
   .form-group {
     flex: 1;
     min-width: 180px;
+    margin-bottom: 2em;
   }
   
   label {
