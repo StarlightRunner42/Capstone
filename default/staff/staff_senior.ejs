@@ -184,11 +184,11 @@
 													</tr>
 												</thead>
 												<tbody><% if (seniorCitizens && seniorCitizens.length > 0) { %><% seniorCitizens.forEach((senior, index) => { %> <tr>
-														<td><%= senior.identifying_information.name.first_name || 'N/A' %><%= senior.identifying_information.name.middle_name || '' %><%= senior.identifying_information.name.last_name || '' %> </td>
-														<td><%= senior.identifying_information.age || 'N/A' %> </td>
-														<td><%= senior.identifying_information.address.barangay || 'N/A' %> </td>
-														<td><%= senior.identifying_information.address.purok || 'N/A' %> </td>
-														<td><%= senior.identifying_information.marital_status || 'N/A' %> </td>
+														<td><%= senior.identifying_information.name.first_name || 'N/A' %> <%= senior.identifying_information.name.middle_name || '' %> <%= senior.identifying_information.name.last_name || '' %></td>
+														<td><%= senior.identifying_information.age || 'N/A' %></td>
+														<td><%= senior.identifying_information.address.barangay || 'N/A' %></td>
+														<td><%= senior.identifying_information.address.purok || 'N/A' %></td>
+														<td><%= senior.identifying_information.marital_status || 'N/A' %></td>
 														<td>
 															<div class="action-container">
 																<button class="action action-primary" aria-label="View" data-toggle="modal" data-target="#seniorModal<%= index %>">
@@ -208,14 +208,233 @@
 														<td colspan="6" class="text-center">No senior citizen records found</td>
 													</tr><% } %> </tbody>
 											</table>
-											<!-- View Modals for each senior citizen --><% if (seniorCitizens && seniorCitizens.length > 0) { %><% seniorCitizens.forEach((senior, index) => { %> <div class="modal fade" id="seniorModal<%= index %>" tabindex="-1" role="dialog" aria-labelledby="seniorModalLabel<%= index %>" aria-hidden="true">
-												<!-- ... (keep the existing view modal content) ... -->
-											</div><% }); %><% } %>
+											<!-- View Modals for each senior citizen -->
+<% if (seniorCitizens && seniorCitizens.length > 0) { %>
+	<% seniorCitizens.forEach((senior, index) => { %>
+	<div class="modal fade" id="seniorModal<%= index %>" tabindex="-1" role="dialog" aria-labelledby="seniorModalLabel<%= index %>" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="seniorModalLabel<%= index %>">
+						Senior Citizen: <%= senior.identifying_information.name.first_name || 'N/A' %> <%= senior.identifying_information.name.middle_name || '' %> <%= senior.identifying_information.name.last_name || '' %>
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Personal Information Section -->
+					<div class="info-section">
+						<h6>PERSONAL INFORMATION</h6>
+						<div class="row">
+							<div class="col-md-4">
+								<p><strong>Birth Date:</strong> 
+									<% if (senior.identifying_information.date_of_birth) { %>
+										<%= new Date(senior.identifying_information.date_of_birth.$date ? parseInt(senior.identifying_information.date_of_birth.$date.$numberLong) : senior.identifying_information.date_of_birth).toLocaleDateString() %>
+									<% } else { %>
+										N/A
+									<% } %>
+								</p>
+							</div>
+							<div class="col-md-4">
+								<p><strong>Gender:</strong> <%= senior.identifying_information.gender || 'N/A' %></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<p><strong>Religion:</strong> <%= senior.identifying_information.religion || 'N/A' %></p>
+							</div>
+							<div class="col-md-4">
+								<p><strong>Place of Birth:</strong> <%= senior.identifying_information.place_of_birth || 'N/A' %></p>
+							</div>
+							<div class="col-md-4">
+								<p><strong>Civil Status:</strong> <%= senior.identifying_information.marital_status || 'N/A' %></p>
+							</div>
+						</div>
+						<% if (senior.identifying_information.marital_status === 'Married') { %>
+						<div class="row">
+							<div class="col-md-12">
+								<p><strong>Spouse Name:</strong> <%= senior.identifying_information.spouse_name || 'N/A' %></p>
+							</div>
+						</div>
+						<% } %>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Current Pension:</strong> <%= senior.identifying_information.current_pension || 'N/A' %></p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>Service/Business/Employment:</strong> <%= senior.identifying_information.service_business || 'N/A' %></p>
+							</div>
+						</div>
+					</div>
+	
+					<!-- Family Information Section -->
+					<div class="info-section">
+						<h6>FAMILY INFORMATION</h6>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Father's Name:</strong> 
+									<%= senior.family_information?.father_first_name || 'N/A' %> 
+									<%= senior.family_information?.father_middle_name || '' %> 
+									<%= senior.family_information?.father_last_name || '' %>
+									<%= senior.family_information?.father_extension ? ', ' + senior.family_information.father_extension : '' %>
+								</p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>Mother's Name:</strong> 
+									<%= senior.family_information?.mother_first_name || 'N/A' %> 
+									<%= senior.family_information?.mother_middle_name || '' %> 
+									<%= senior.family_information?.mother_last_name || '' %>
+								</p>
+							</div>
+						</div>
+						
+						<% if (senior.family_information?.children && senior.family_information.children.length > 0) { %>
+						<h6>CHILDREN</h6>
+						<% senior.family_information.children.forEach(child => { %>
+						<div class="row child-info">
+							<div class="col-md-3">
+								<p><strong>Name:</strong> <%= child.name || 'N/A' %></p>
+							</div>
+							<div class="col-md-3">
+								<p><strong>Occupation:</strong> <%= child.occupation || 'N/A' %></p>
+							</div>
+							<div class="col-md-2">
+								<p><strong>Age:</strong> <%= child.age || 'N/A' %></p>
+							</div>
+							<div class="col-md-2">
+								<p><strong>Status:</strong> <%= child.working_status || 'N/A' %></p>
+							</div>
+							<div class="col-md-2">
+								<p><strong>Income:</strong> <%= child.income || 'N/A' %></p>
+							</div>
+						</div>
+						<% }); %>
+						<% } %>
+					</div>
+	
+					<!-- Contact Information Section -->
+					<div class="info-section">
+						<h6>CONTACT INFORMATION</h6>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>OSCA ID Number:</strong> <%= senior.identifying_information.osca_id_number || 'N/A' %></p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>Phone Number:</strong> 
+									<% if (senior.identifying_information.contacts && senior.identifying_information.contacts[0]) { %>
+										<%= senior.identifying_information.contacts[0].phone || 'N/A' %>
+									<% } else { %>
+										N/A
+									<% } %>
+								</p>
+							</div>
+						</div>
+						
+						<% if (senior.identifying_information.contacts && senior.identifying_information.contacts.length > 0) { %>
+						<h6>ADDITIONAL CONTACTS</h6>
+						<% senior.identifying_information.contacts.forEach((contact, i) => { %>
+						<% if (i > 0) { %>
+						<div class="row contact-info">
+							<div class="col-md-3">
+								<p><strong>Type:</strong> <%= contact.type || 'N/A' %></p>
+							</div>
+							<div class="col-md-3">
+								<p><strong>Name:</strong> <%= contact.name || 'N/A' %></p>
+							</div>
+							<div class="col-md-3">
+								<p><strong>Relationship:</strong> <%= contact.relationship || 'N/A' %></p>
+							</div>
+							<div class="col-md-3">
+								<p><strong>Phone:</strong> <%= contact.phone || 'N/A' %></p>
+							</div>
+						</div>
+						<% } %>
+						<% }); %>
+						<% } %>
+					</div>
+	
+					<!-- ID Information Section -->
+					<div class="info-section">
+						<h6>IDENTIFICATION NUMBERS</h6>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>GSIS/SSS No:</strong> <%= senior.identifying_information.gsis_sss_number || 'N/A' %></p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>TIN No:</strong> <%= senior.identifying_information.tin_number || 'N/A' %></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Philhealth No:</strong> <%= senior.identifying_information.philhealth_number || 'N/A' %></p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>SC Association ID:</strong> <%= senior.identifying_information.sc_association_id || 'N/A' %></p>
+							</div>
+						</div>
+					</div>
+	
+					<!-- Education and Skills Section -->
+					<div class="info-section">
+						<h6>EDUCATION AND SKILLS</h6>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Education Level:</strong> <%= senior.education_information?.education_level || 'N/A' %></p>
+							</div>
+						</div>
+						
+						<% if (senior.skills_information?.skills && senior.skills_information.skills.length > 0) { %>
+						<div class="row">
+							<div class="col-md-12">
+								<p><strong>Skills/Specializations:</strong> 
+									<%= senior.skills_information.skills.join(', ') %>
+									<% if (senior.skills_information.other_skill) { %>
+										, <%= senior.skills_information.other_skill %>
+									<% } %>
+								</p>
+							</div>
+						</div>
+						<% } %>
+						
+						<% if (senior.community_service_information?.services && senior.community_service_information.services.length > 0) { %>
+						<div class="row">
+							<div class="col-md-12">
+								<p><strong>Community Services:</strong> 
+									<%= senior.community_service_information.services.join(', ') %>
+									<% if (senior.community_service_information.other_service) { %>
+										, <%= senior.community_service_information.other_service %>
+									<% } %>
+								</p>
+							</div>
+						</div>
+						<% } %>
+					</div>
+	
+					<!-- Additional Information Section -->
+					<div class="info-section">
+						<h6>ADDITIONAL INFORMATION</h6>
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Capability to Travel:</strong> <%= senior.identifying_information.capability_to_travel || 'N/A' %></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% }); %>
+	<% } %>
+
 											<!-- Edit Modals for each senior citizen --><% if (seniorCitizens && seniorCitizens.length > 0) { %><% seniorCitizens.forEach((senior, index) => { %> <div class="modal fade" id="editSeniorModal<%= index %>" tabindex="-1" role="dialog" aria-labelledby="editSeniorModalLabel<%= index %>" aria-hidden="true">
 												<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 													<div class="modal-content">
 														<div class="modal-header">
-															<h5 class="modal-title" id="editSeniorModalLabel<%= index %>"> Edit Senior Citizen: <%= senior.identifying_information.name.first_name || 'N/A' %><%= senior.identifying_information.name.middle_name || '' %><%= senior.identifying_information.name.last_name || '' %> </h5>
+															<h5 class="modal-title" id="editSeniorModalLabel<%= index %>"> Edit Senior Citizen: <%= senior.identifying_information.name.first_name || 'N/A' %> <%= senior.identifying_information.name.middle_name || '' %> <%= senior.identifying_information.name.last_name || '' %> </h5>
 															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																<span aria-hidden="true">&times;</span>
 															</button>
@@ -353,13 +572,9 @@
 				</div>
 			</div>
 		</div>
-		</div>
-		</div>
-		</div>
-		</div>
 		<script>
 			// Convert EJS data to JavaScript object
-			const barangaysData = < % -JSON.stringify(barangays) % > ;
+			const barangaysData = <%- JSON.stringify(barangays) %>;
 			// Wait for DOM to be fully loaded
 			document.addEventListener('DOMContentLoaded', function() {
 				// Get select elements
