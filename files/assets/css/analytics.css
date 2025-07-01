@@ -37,14 +37,31 @@ h1 {
 }
 
 .stat-card {
-    background-color: #02182c;
-    border-radius: var(--border-radius);
-    box-shadow: 0 3px 6px rgb(11, 3, 56);
-    color: #e0f2fe;
-    padding: 15px 30px;
-    text-align: center;
-    margin: 10px;
-    min-width: 200px;
+  background-color: #F0F0F3;
+  border-radius: 15px;
+  color: #02182c;
+  padding: 15px 30px;
+  text-align: center;
+  margin: 10px;
+  min-width: 200px;
+  box-shadow: 
+      -10px -10px 30px 0 #FFFFFF,
+      10px 10px 30px 0 #AEAEC0 40%;
+  position: relative;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  pointer-events: none;
+  box-shadow: 
+      -10px -10px 10px 0 rgba(174, 174, 192, 0.25) inset,
+      10px 10px 10px 0 #FFFFFF inset;
 }
 
 .stat-card h3 {
