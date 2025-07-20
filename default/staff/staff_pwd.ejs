@@ -171,7 +171,9 @@
 														<option value="">First select a Barangay</option>
 													</select>
 												</div>
-											</div><% if (pwds && pwds.length > 0) { %> <table id="example" class="display" style="width:100%">
+											</div>
+											<% if (pwds && pwds.length > 0) { %>
+											 <table id="example" class="display" style="width:100%">
 												<thead>
 													<tr>
 														<th>Full Name</th>
@@ -190,12 +192,13 @@
 														<td><%= pwd.civil_status %> </td>
 														<td>
 															<div class="action-container">
-																<button class="action action-primary" aria-label="View" data-toggle="modal" data-target="#viewModal">
-																	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-																	</svg>
-																</button>
+															<button class="action action-primary view-btn" aria-label="View" data-toggle="modal" data-target="#viewModal" 
+        data-pwd='<%= JSON.stringify(pwd).replace(/'/g, "&apos;") %>'>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+    </svg>
+</button>
 																<button class="action action-success" aria-label="Edit" data-toggle="modal" data-target="#editModal">
 																	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -204,140 +207,136 @@
 															</div>
 															<!-- View Modal -->
 															<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
-																<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-																	<div class="modal-content">
-																		<div class="modal-header">
-																			<h5 class="modal-title" id="viewModalTitle">
-																				<span id="displayFirstName"></span>
-																				<span id="displayMiddleName"></span>
-																				<span id="displayLastName"></span>
-																			</h5>
-																			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																				<span aria-hidden="true">&times;</span>
-																			</button>
-																		</div>
-																		<div class="modal-body">
-																			<!-- Top Row: Personal Info + Contact Info -->
-																			<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-																				<!-- Left - Personal Information -->
-																				<fieldset style="flex: 1; margin-right: 10px;">
-																					<legend>PERSONAL INFORMATION</legend>
-																					<p>
-																						<strong>Address:</strong>
-																						<span id="displayBarangay"></span>, <span id="displayPurok"></span>
-																					</p>
-																					<p>
-																						<strong>Birthday:</strong>
-																						<span id="displayBirthday"></span> ( <span id="displayAge"></span> years old)
-																					</p>
-																					<p>
-																						<strong>Gender:</strong>
-																						<span id="displayGender"></span>
-																					</p>
-																					<p>
-																						<strong>Place of Birth:</strong>
-																						<span id="displayPlaceOfBirth"></span>
-																					</p>
-																					<p id="displaySpouse" style="display: none;">
-																						<strong>Spouse Name:</strong>
-																						<span id="displaySpouseName"></span>
-																					</p>
-																					<p>
-																						<strong>Father's Name:</strong>
-																						<span id="displayFatherName"></span>
-																					</p>
-																					<p>
-																						<strong>Mother's Name:</strong>
-																						<span id="displayMotherName"></span>
-																					</p>
-																				</fieldset>
-																				<!-- Right - Contact Information -->
-																				<fieldset style="flex: 1; margin-left: 10px;">
-																					<legend>CONTACT INFORMATION</legend>
-																					<div id="displayContacts">
-																						<!-- Contacts will be dynamically inserted here -->
-																					</div>
-																				</fieldset>
-																			</div>
-																			<!-- Middle Row: ID Information + Education -->
-																			<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-																				<!-- Left - ID Information -->
-																				<fieldset style="flex: 1; margin-right: 10px;">
-																					<legend>ID INFORMATION</legend>
-																					<p>
-																						<strong>SSS No:</strong>
-																						<span id="displaySSS"></span>
-																					</p>
-																					<p>
-																						<strong>GSIS No:</strong>
-																						<span id="displayGSIS"></span>
-																					</p>
-																					<p>
-																						<strong>TIN No:</strong>
-																						<span id="displayTIN"></span>
-																					</p>
-																					<p>
-																						<strong>Philhealth No:</strong>
-																						<span id="displayPhilhealth"></span>
-																					</p>
-																					<p>
-																						<strong>PSN No:</strong>
-																						<span id="displayPSN"></span>
-																					</p>
-																					<p>
-																						<strong>Other Gov't ID:</strong>
-																						<span id="displayOtherID"></span>
-																					</p>
-																				</fieldset>
-																				<!-- Right - Education Information -->
-																				<fieldset style="flex: 1; margin-left: 10px;">
-																					<legend>EDUCATION & EMPLOYMENT</legend>
-																					<p>
-																						<strong>Education Level:</strong>
-																						<span id="displayEducationLevel"></span>
-																					</p>
-																					<p>
-																						<strong>Employment Status:</strong>
-																						<span id="displayEmploymentStatus"></span>
-																					</p>
-																					<p id="displayEmploymentCategory" style="display: none;">
-																						<strong>Employment Category:</strong>
-																						<span id="displayEmpCategory"></span>
-																					</p>
-																					<p id="displayEmploymentType" style="display: none;">
-																						<strong>Employment Type:</strong>
-																						<span id="displayEmpType"></span>
-																					</p>
-																				</fieldset>
-																			</div>
-																			<!-- Bottom Row: Disability Information -->
-																			<fieldset>
-																				<legend>DISABILITY INFORMATION</legend>
-																				<div style="display: flex; justify-content: space-between;">
-																					<!-- Left - Types of Disability -->
-																					<div style="flex: 1; margin-right: 10px;">
-																						<h5>Types of Disability</h5>
-																						<div id="displayDisabilityTypes">
-																							<!-- Disability types will be dynamically inserted here -->
-																						</div>
-																					</div>
-																					<!-- Right - Causes of Disability -->
-																					<div style="flex: 1; margin-left: 10px;">
-																						<h5>Causes of Disability</h5>
-																						<div id="displayDisabilityCauses">
-																							<!-- Disability causes will be dynamically inserted here -->
-																						</div>
-																					</div>
-																				</div>
-																			</fieldset>
-																		</div>
-																		<div class="modal-footer">
-																			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-																			<button type="button" class="btn btn-primary">Add ASS</button>
-																		</div>
-																	</div>
-																</div>
-															</div>
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalTitle">
+                    <span id="displayFirstName"></span>
+                    <span id="displayMiddleName"></span>
+                    <span id="displayLastName"></span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Top Row: Personal Info + Contact Info -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <!-- Left - Personal Information -->
+                    <fieldset style="flex: 1; margin-right: 10px;">
+                        <legend>PERSONAL INFORMATION</legend>
+                        <p>
+                            <strong>Address:</strong>
+                            <span id="displayBarangay"></span>, <span id="displayPurok"></span>
+                        </p>
+                        <p>
+                            <strong>Birthday:</strong>
+                            <span id="displayBirthday"></span> (<span id="displayAge"></span> years old)
+                        </p>
+                        <p>
+                            <strong>Gender:</strong>
+                            <span id="displayGender"></span>
+                        </p>
+                        <p>
+                            <strong>Civil Status:</strong>
+                            <span id="displayCivilStatus"></span>
+                        </p>
+                        <p>
+                            <strong>Place of Birth:</strong>
+                            <span id="displayPlaceOfBirth"></span>
+                        </p>
+                        <p id="displaySpouse" style="display: none;">
+                            <strong>Spouse Name:</strong>
+                            <span id="displaySpouseName"></span>
+                        </p>
+                        <p>
+                            <strong>Father's Name:</strong>
+                            <span id="displayFatherName"></span>
+                        </p>
+                        <p>
+                            <strong>Mother's Name:</strong>
+                            <span id="displayMotherName"></span>
+                        </p>
+                    </fieldset>
+                    <!-- Right - Contact Information -->
+                    <fieldset style="flex: 1; margin-left: 10px;">
+                        <legend>CONTACT INFORMATION</legend>
+                        <div id="displayContacts">
+                            <!-- Contacts will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Middle Row: ID Information + Education -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <!-- Left - ID Information -->
+                    <fieldset style="flex: 1; margin-right: 10px;">
+                        <legend>ID INFORMATION</legend>
+                        <p>
+                            <strong>SSS No:</strong>
+                            <span id="displaySSS"></span>
+                        </p>
+                        <p>
+                            <strong>GSIS No:</strong>
+                            <span id="displayGSIS"></span>
+                        </p>
+                        <p>
+                            <strong>PSN No:</strong>
+                            <span id="displayPSN"></span>
+                        </p>
+                        <p>
+                            <strong>Philhealth No:</strong>
+                            <span id="displayPhilhealth"></span>
+                        </p>
+                    </fieldset>
+                    <!-- Right - Education Information -->
+                    <fieldset style="flex: 1; margin-left: 10px;">
+                        <legend>EDUCATION & EMPLOYMENT</legend>
+                        <p>
+                            <strong>Education Level:</strong>
+                            <span id="displayEducationLevel"></span>
+                        </p>
+                        <p>
+                            <strong>Employment Status:</strong>
+                            <span id="displayEmploymentStatus"></span>
+                        </p>
+                        <p id="displayEmploymentCategory" style="display: none;">
+                            <strong>Employment Category:</strong>
+                            <span id="displayEmpCategory"></span>
+                        </p>
+                        <p id="displayEmploymentType" style="display: none;">
+                            <strong>Employment Type:</strong>
+                            <span id="displayEmpType"></span>
+                        </p>
+                    </fieldset>
+                </div>
+                <!-- Bottom Row: Disability Information -->
+                <fieldset>
+                    <legend>DISABILITY INFORMATION</legend>
+                    <div style="display: flex; justify-content: space-between;">
+                        <!-- Left - Types of Disability -->
+                        <div style="flex: 1; margin-right: 10px;">
+                            <h5>Types of Disability</h5>
+                            <div id="displayDisabilityTypes">
+                                <!-- Disability types will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        <!-- Right - Causes of Disability -->
+                        <div style="flex: 1; margin-left: 10px;">
+                            <h5>Causes of Disability</h5>
+                            <div id="displayDisabilityCauses">
+                                <!-- Disability causes will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add ASS</button>
+            </div>
+        </div>
+    </div>
+</div>
 															<!-- Edit Modal -->
 															<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
 																<div class="modal-dialog modal-dialog-centered" role="document">
@@ -511,36 +510,35 @@
 		</div>
 		<script>
 			// Convert EJS data to JavaScript object
-			const barangaysData = < % -JSON.stringify(barangays) % > ;
+			const barangaysData = <%- JSON.stringify(barangays) %>;
+			
 			// Wait for DOM to be fully loaded
 			document.addEventListener('DOMContentLoaded', function() {
 				// Get select elements
 				const barangaySelect = document.getElementById('barangay-filter');
 				const purokSelect = document.getElementById('purok-filter');
-				// Debugging: Log the initial data
-				console.log('Barangays data loaded:', barangaysData);
+				
+				// Initialize purok dropdown as disabled
+				purokSelect.disabled = true;
+
 				// Barangay change event handler
 				barangaySelect.addEventListener('change', function() {
 					const selectedBarangay = this.value;
-					// Clear existing options
 					purokSelect.innerHTML = '';
-					// Add default option
+					
 					const defaultOption = document.createElement('option');
 					defaultOption.value = '';
 					defaultOption.textContent = 'Select Purok';
 					purokSelect.appendChild(defaultOption);
-					// Enable/disable based on selection
+					
 					purokSelect.disabled = !selectedBarangay;
-					// If a barangay is selected, populate puroks
+					
 					if (selectedBarangay && barangaysData[selectedBarangay]) {
-						// Debugging: Log the selected barangay's puroks
-						console.log(`Loading puroks for ${selectedBarangay}:`, barangaysData[selectedBarangay]);
-						// Add "All Puroks" option
 						const allOption = document.createElement('option');
 						allOption.value = 'all';
 						allOption.textContent = 'All Puroks';
 						purokSelect.appendChild(allOption);
-						// Add each purok option
+						
 						barangaysData[selectedBarangay].forEach(purok => {
 							const option = document.createElement('option');
 							option.value = purok;
@@ -548,11 +546,141 @@
 							purokSelect.appendChild(option);
 						});
 					}
-					// Debugging: Log the current purok options
-					console.log('Current purok options:', purokSelect.innerHTML);
 				});
-				// Initialize purok dropdown as disabled
-				purokSelect.disabled = true;
+
+				// View modal code
+				const viewButtons = document.querySelectorAll('.view-btn');
+				
+				viewButtons.forEach(button => {
+					button.addEventListener('click', function() {
+						try {
+							const pwdData = JSON.parse(this.getAttribute('data-pwd'));
+							console.log('PWD Data:', pwdData);
+							
+							// Basic Information
+							document.getElementById('displayFirstName').textContent = pwdData.first_name || 'N/A';
+							document.getElementById('displayMiddleName').textContent = pwdData.middle_name || '';
+							document.getElementById('displayLastName').textContent = pwdData.last_name || 'N/A';
+							
+							// Address Information
+							document.getElementById('displayBarangay').textContent = pwdData.barangay || 'N/A';
+							document.getElementById('displayPurok').textContent = pwdData.purok || 'N/A';
+							
+							// Personal Information
+							document.getElementById('displayBirthday').textContent = pwdData.birthday ? new Date(pwdData.birthday).toLocaleDateString() : 'N/A';
+							document.getElementById('displayAge').textContent = pwdData.age || 'N/A';
+							document.getElementById('displayGender').textContent = pwdData.gender || 'N/A';
+							document.getElementById('displayCivilStatus').textContent = pwdData.civil_status || 'N/A';
+							document.getElementById('displayPlaceOfBirth').textContent = pwdData.place_of_birth || 'N/A';
+							
+							// Spouse Information
+							if (pwdData.civil_status === 'Married' && pwdData.spouse_name) {
+								document.getElementById('displaySpouse').style.display = 'block';
+								document.getElementById('displaySpouseName').textContent = pwdData.spouse_name;
+							} else {
+								document.getElementById('displaySpouse').style.display = 'none';
+							}
+							
+							// Parent Information
+							const fatherName = `${pwdData.fatherFirstName || ''} ${pwdData.fatherMiddleName || ''} ${pwdData.fatherLastName || ''} ${pwdData.fatherExtension || ''}`.trim();
+							const motherName = `${pwdData.motherFirstName || ''} ${pwdData.motherMiddleName || ''} ${pwdData.motherLastName || ''}`.trim();
+							
+							document.getElementById('displayFatherName').textContent = fatherName || 'N/A';
+							document.getElementById('displayMotherName').textContent = motherName || 'N/A';
+							
+							// Contact Information
+							const contactsContainer = document.getElementById('displayContacts');
+							contactsContainer.innerHTML = '';
+							
+							if (pwdData.contacts && pwdData.contacts.length > 0) {
+								pwdData.contacts.forEach(contact => {
+									const contactElement = document.createElement('div');
+									contactElement.className = 'contact-item';
+									contactElement.innerHTML = `
+										<p><strong>${contact.type ? contact.type.toUpperCase() : 'CONTACT'}:</strong></p>
+										<p>Name: ${contact.name || 'N/A'}</p>
+										<p>Relationship: ${contact.relationship || 'N/A'}</p>
+										<p>Phone: ${contact.phone || 'N/A'}</p>
+										${contact.email ? `<p>Email: ${contact.email}</p>` : ''}
+										<hr>
+									`;
+									contactsContainer.appendChild(contactElement);
+								});
+							} else {
+								contactsContainer.innerHTML = '<p>No contact information available</p>';
+							}
+							
+							// ID Information
+							document.getElementById('displaySSS').textContent = pwdData.sss_id || 'N/A';
+							document.getElementById('displayGSIS').textContent = pwdData.gsis_sss_no || 'N/A';
+							document.getElementById('displayPSN').textContent = pwdData.psn_no || 'N/A';
+							document.getElementById('displayPhilhealth').textContent = pwdData.philhealth_no || 'N/A';
+							
+							// Education and Employment
+							document.getElementById('displayEducationLevel').textContent = pwdData.education_level || 'N/A';
+							document.getElementById('displayEmploymentStatus').textContent = pwdData.employment_status || 'N/A';
+							
+							if (pwdData.employment_status === 'Employee') {
+								document.getElementById('displayEmploymentCategory').style.display = 'block';
+								document.getElementById('displayEmploymentType').style.display = 'block';
+								document.getElementById('displayEmpCategory').textContent = pwdData.employment_category || 'N/A';
+								document.getElementById('displayEmpType').textContent = pwdData.employment_type || 'N/A';
+							} else {
+								document.getElementById('displayEmploymentCategory').style.display = 'none';
+								document.getElementById('displayEmploymentType').style.display = 'none';
+							}
+							
+							// Disability Information
+							const disabilityTypesContainer = document.getElementById('displayDisabilityTypes');
+							disabilityTypesContainer.innerHTML = '';
+							
+							if (pwdData.disability && pwdData.disability.length > 0) {
+								pwdData.disability.forEach(type => {
+									const typeElement = document.createElement('p');
+									typeElement.textContent = type || 'N/A';
+									if (type === 'Other' && pwdData.disability_other_text) {
+										typeElement.textContent += ` (${pwdData.disability_other_text})`;
+									}
+									disabilityTypesContainer.appendChild(typeElement);
+								});
+							} else {
+								disabilityTypesContainer.innerHTML = '<p>No disability types specified</p>';
+							}
+							
+							// Causes of Disability
+							const disabilityCausesContainer = document.getElementById('displayDisabilityCauses');
+							disabilityCausesContainer.innerHTML = '';
+							
+							if (pwdData.cause_disability && pwdData.cause_disability.length > 0) {
+								pwdData.cause_disability.forEach(cause => {
+									const causeElement = document.createElement('p');
+									causeElement.textContent = cause || 'N/A';
+									if (cause === 'Other' && pwdData.cause_other_text) {
+										causeElement.textContent += ` (${pwdData.cause_other_text})`;
+									}
+									disabilityCausesContainer.appendChild(causeElement);
+								});
+							} else {
+								disabilityCausesContainer.innerHTML = '<p>No causes specified</p>';
+							}
+						} catch (e) {
+							console.error('Error parsing PWD data:', e);
+						}
+					});
+				});
+
+				// Initialize DataTable
+				$('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true,
+					rowCallback: function(row) {
+						if ($(row).hasClass('dt-empty')) {
+							$(row).hide();
+						}
+					}
+				});
 			});
 		</script>
 		<!-- Required Jquery -->
@@ -588,20 +716,6 @@
 			}
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
-			$(document).ready(function() {
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true,
-					rowCallback: function(row) {
-						// Skip rows with the 'dt-empty' class (e.g., "No data found" message)
-						if ($(row).hasClass('dt-empty')) {
-							$(row).hide();
-						}
-					}
-				});
-			});
 		</script>
 	</body>
 </html>
