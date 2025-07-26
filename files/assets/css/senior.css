@@ -101,13 +101,13 @@
 }
 
 /* Table Styles */
-#example {
+#seniorTable {
   width: 50%;
   border-radius: var(--border-radius);
   overflow: hidden;
 }
 
-#example thead th {
+#seniorTable thead th {
   background-color: var(--primary-color);
   color: white;
   font-weight: 600;
@@ -117,7 +117,7 @@
   position: relative;
 }
 
-#example thead th:after {
+#seniorTable thead th:after {
   content: '';
   position: absolute;
   right: 0;
@@ -127,23 +127,23 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-#example thead th:last-child:after {
+#seniorTable thead th:last-child:after {
   display: none;
 }
 
-#example tbody tr {
+#seniorTable tbody tr {
   transition: var(--transition);
 }
 
-#example tbody tr:nth-child(odd) {
+#seniorTable tbody tr:nth-child(odd) {
   background-color: #f8fafc;
 }
 
-#example tbody tr:hover {
+#seniorTable tbody tr:hover {
   background-color: var(--light-accent);
 }
 
-#example td {
+#seniorTable td {
   padding: 14px 16px;
   border-bottom: 1px solid var(--border-color);
   font-size: 14px;
@@ -151,12 +151,12 @@
   vertical-align: middle;
 }
 
-#example tbody tr:last-child td {
+#seniorTable tbody tr:last-child td {
   border-bottom: none;
 }
 
 /* Actions Column Styling */
-#example td:last-child {
+#seniorTable td:last-child {
   text-align: center;
   white-space: nowrap;
 }
@@ -168,28 +168,28 @@
     gap: 15px;
   }
   
-  #example {
+  #seniorTable {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
   }
   
-  #example thead, #example tbody, #example tr, #example td, #example th {
+  #seniorTable thead, #example tbody, #example tr, #example td, #example th {
     display: block;
   }
   
-  #example thead tr {
+  #seniorTable thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
   
-  #example tr {
+  #seniorTable tr {
     border: 1px solid var(--border-color);
     margin-bottom: 10px;
   }
   
-  #example td {
+  #seniorTable td {
     border: none;
     border-bottom: 1px solid var(--border-color);
     position: relative;
@@ -197,7 +197,7 @@
     text-align: left;
   }
   
-  #example td:before {
+  #seniorTable td:before {
     position: absolute;
     left: 6px;
     width: 45%;
@@ -208,7 +208,7 @@
     color: var(--primary-color);
   }
   
-  #example td:last-child {
+  #seniorTable td:last-child {
     border-bottom: 0;
   }
 }
@@ -385,8 +385,8 @@
 
 /* Make modal wider */
 .modal-dialog {
-  max-width: 700px;
-  width: 90%;
+  max-width: 900px;
+  width: 100%;
 }
 
 .modal-header {
