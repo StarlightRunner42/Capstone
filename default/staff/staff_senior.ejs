@@ -137,12 +137,12 @@
                                         <span class="pcoded-mtext">Dashboard</span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class="active">
+                                        <li class="">
                                             <a href="/Pwd-form">
                                                 <span class="">PDAO</span>
                                             </a>
                                         </li>
-                                        <li class="">
+                                        <li class="active">
                                             <a href="/Senior-form">
                                                 <span class="">OSCA</span>
                                             </a>
@@ -191,7 +191,7 @@
                                                     <% seniorCitizens.forEach(senior => { %>
                                                         <tr>
                                                             <td>
-                                                                <%= senior.identifying_information.name.last_name %>, 
+                                                                <%= senior.identifying_information.name.last_name %>
                                                                 <%= senior.identifying_information.name.first_name %> 
                                                                 <%= senior.identifying_information.name.middle_name || '' %>
                                                             </td>

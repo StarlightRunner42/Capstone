@@ -374,7 +374,6 @@
   }
   
   
-  /* Clean Modal CSS */
   
   /* Modal Base Styles */
   .modal-content {
@@ -385,8 +384,8 @@
   
   /* Make modal wider */
   .modal-dialog {
-    max-width: 700px;
-    width: 90%;
+    max-width: 900px;
+    width: 100%;
   }
   
   .modal-header {
