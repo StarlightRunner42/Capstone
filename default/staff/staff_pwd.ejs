@@ -185,53 +185,55 @@
 													</tr>
 												</thead>
 												<tbody><% pwds.forEach(pwd => { %> <tr>
-														<td><%= pwd.first_name  %><%= pwd.middle_name %><%= pwd.last_name %> </td>
+														<td><%= pwd.first_name  %>  <%= pwd.middle_name %>  <%= pwd.last_name %> </td>
 														<td><%= pwd.age  %> </td>
 														<td><%= pwd.barangay %> </td>
 														<td><%= pwd.purok %> </td>
 														<td><%= pwd.civil_status %> </td>
 														<td>
 															<div class="action-container">
-															<button class="action action-primary view-btn" aria-label="View" data-toggle="modal" data-target="#viewModal" 
-        data-pwd='<%= JSON.stringify(pwd).replace(/'/g, "&apos;") %>'>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-    </svg>
-</button>
+																<button class="action action-primary view-btn" aria-label="View" data-toggle="modal" data-target="#viewModal" 
+																	data-pwd='<%= JSON.stringify(pwd).replace(/'/g, "&apos;") %>'>
+																	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+																	</svg>
+																</button>
 																<button class="action action-success" aria-label="Edit" data-toggle="modal" data-target="#editModal">
 																	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
 																	</svg>
 																</button>
 															</div>
+
+															
 															<!-- View Modal -->
-															<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewModalTitle">
-                    <span id="displayFirstName"></span>
-                    <span id="displayMiddleName"></span>
-                    <span id="displayLastName"></span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Top Row: Personal Info + Contact Info -->
-                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                    <!-- Left - Personal Information -->
-                    <fieldset style="flex: 1; margin-right: 10px;">
+															<<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+																<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<h5 class="modal-title" id="viewModalTitle">
+																				<span id="displayLastName"></span>
+																				<span id="displayFirstName"></span> 
+																				<span id="displayMiddleName"></span>
+																			</h5>
+																			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																				<span aria-hidden="true">&times;</span>
+																			</button>
+																		</div>
+																		<div class="modal-body">
+																			<!-- Personal Information -->
+																			<fieldset>
                         <legend>PERSONAL INFORMATION</legend>
                         <p>
                             <strong>Address:</strong>
-                            <span id="displayBarangay"></span>, <span id="displayPurok"></span>
+                            <span id="displayBarangay"></span> 
+							<span id="displayPurok"></span>
                         </p>
                         <p>
                             <strong>Birthday:</strong>
-                            <span id="displayBirthday"></span> (<span id="displayAge"></span> years old)
+                            <span id="displayBirthday"></span> 
+							<span id="displayAge"></span> years old)
                         </p>
                         <p>
                             <strong>Gender:</strong>
@@ -329,10 +331,10 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Add ASS</button>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Add ASS</button>
+				</div>
             </div>
         </div>
     </div>
