@@ -5,8 +5,9 @@ const bcrypt = require('bcrypt');
 const saltrounds = 10;
 const session = require('express-session');
 const { User,SeniorCitizen,Barangay ,PWD,Youth } = require("../model/schema");
-
-
+const axios = require('axios');
+const path = require("path");
+const fs = require("fs");
 
 
 exports.createUser = async (req, res) => {
@@ -644,6 +645,59 @@ exports.createYouth = async (req, res) => {
 
     res.status(500).send('Internal Server Error');
   }
+};
+
+
+exports.getSilayBoundary = (req, res) => {
+  try {
+    const filePath = path.join(__dirname, "..", "files", "assets", "data", "Silay City.geojson");
+    const geojson = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    res.json(geojson);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load Silay City boundary");
+  }
+};
+
+exports.getVillages = (req, res) => {
+  const villages = [
+    { name: "Alegre", lat: 10.783000, lon: 123.054700 },
+    { name: "Bagacay", lat: 10.761700, lon: 122.996600 },
+    { name: "Bagtig", lat: 10.768600, lon: 123.040900 },
+    { name: "Balaring", lat: 10.822500, lon: 122.960100 },
+    { name: "Binonga", lat: 10.771900, lon: 122.981700 },
+    { name: "Capitan Ramon", lat: 10.760200, lon: 123.114800 },
+    { name: "Dalinzon", lat: 10.800000, lon: 123.100000 },
+    { name: "Eustaquio Lopez", lat: 10.819500, lon: 123.041200 },
+    { name: "Guimbalaon", lat: 10.755000, lon: 123.085400 },
+    { name: "Guinhalaran", lat: 10.781100, lon: 122.966600 },
+    { name: "Hacienda Cubay", lat: 10.788500, lon: 123.120800 },
+    { name: "Hacienda Hinacayan", lat: 10.808600, lon: 123.074700 },
+    { name: "Hacienda Kabungahan", lat: 10.803100, lon: 123.072200 },
+    { name: "Hacienda Malisbog", lat: 10.807200, lon: 123.013900 },
+    { name: "Hacienda Mansiquinon", lat: 10.746400, lon: 123.092100 },
+    { name: "Hacienda Pula", lat: 10.803800, lon: 123.093600 },
+    { name: "Imbang", lat: 10.796700, lon: 123.021300 },
+    { name: "Kabankalan", lat: 10.819400, lon: 123.029100 },
+    { name: "Lantad", lat: 10.815300, lon: 122.969900 },
+    { name: "Macanig", lat: 10.781200, lon: 123.045400 },
+    { name: "Macanig", lat: 10.798900, lon: 123.039800 },
+    { name: "Magcorco", lat: 10.724150, lon: 123.174000 },
+    { name: "Malinao", lat: 10.774300, lon: 123.105100 },
+    { name: "Malisbog", lat: 10.829400, lon: 123.003200 },
+    { name: "Mambulac", lat: 10.797500, lon: 122.967800 },
+    { name: "Naga", lat: 10.778900, lon: 123.019600 },
+    { name: "Napilas", lat: 10.768800, lon: 123.121400 },
+    { name: "Navales", lat: 10.761950, lon: 123.152100 },
+    { name: "Panaogao", lat: 10.792100, lon: 122.983400 },
+    { name: "Quinilata", lat: 10.739800, lon: 123.111600 },
+    { name: "Rizal", lat: 10.821200, lon: 122.978000 },
+    { name: "San Juan", lat: 10.724300, lon: 123.135700 },
+    { name: "Sangay", lat: 10.739700, lon: 123.102400 },
+    { name: "Silay City", lat: 10.800300, lon: 122.976300 }
+  ];
+
+  res.json(villages);
 };
 
 

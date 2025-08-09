@@ -30,8 +30,8 @@ router.get('/Admin', requireAuth, (req, res) => {
     res.render('admin/admin_super_admin');
 });
 
-router.get('/Map', requireAuth, (req, res) => {
-    res.render('admin/admin_map');
+router.get('/Map', (req, res) => {
+    res.render('admin/arcgis_map');
 });
 
 router.get('/Analytics', requireAuth, (req, res) => {
@@ -94,5 +94,10 @@ router.post('/add-youth', requireAuth,controller.createYouth);
 
 // Data operations
 router.post('/add-data', controller.createResident);
+
+
+//ArcGIS routes
+router.get("/silay-boundary", controller.getSilayBoundary);
+router.get("/villages", controller.getVillages);
 
 module.exports = router;
