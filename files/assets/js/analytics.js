@@ -1,6 +1,6 @@
 // Data structure with senior citizens count
 const barangayData = {
-    1: { name: "Barangay 1", puroks: ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"], seniorCount: 156 },
+    1: { name: "Barangay 1", barangay: ["Kamagong", "Narra", "Ipil-Ipil", "Akasya", "Flying-E"], seniorCount: 156 },
     2: { name: "Barangay 2", puroks: ["Gomez", "Katipunan", "Kahilwayan", "Sool Uno", "Sool Dos"], seniorCount: 124 },
     3: { name: "Barangay 3", puroks: ["Paghida.et A", "Paghida.et B", "Ilimnan", "Guintipunan", "Mahigugmaon"], seniorCount: 98 },
     4: { name: "Barangay 4", puroks: ["Antilla Subd", "Gomez Extension", "Bonifacio Extension", "Mckinley Bukid", "Zulueta Bukid"], seniorCount: 167 },
@@ -119,7 +119,7 @@ const core = {
                 <td>${data.name}</td>
                 <td>${data.puroks.length}</td>
                 <td>${data.seniorCount}</td>
-                <td><button class="expand-btn" data-id="${id}">View Puroks</button></td>
+                <td><button class="expand-btn" data-id="${id}">View Chart</button></td>
             `;
             elements.barangayTableBody.appendChild(row);
         });
