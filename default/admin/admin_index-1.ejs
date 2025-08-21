@@ -165,87 +165,99 @@
 							<div class="pcoded-inner-content">
 								<div class="main-body">
 									<div class="page-wrapper">
-										<div class="dashboard-container">
-											<div class="summary-stats">
+
+										<div class="container">
+											<div class="stats-overview">
 												<div class="stat-card">
-													<h3>TOTAL BARANGAYS</h3>
-													<p id="total-barangays">0</p>
+													<div class="stat-number" id="totalBarangays">16</div>
+													<div class="stat-label">Total Barangays</div>
 												</div>
 												<div class="stat-card">
-													<h3>TOTAL PDAO</h3>
-													<p id="total-seniors">0</p>
+													<div class="stat-number" id="totalPDAO">2,198</div>
+													<div class="stat-label">Total PDOA Count</div>
 												</div>
 												<div class="stat-card">
-													<h3>AVERAGE PER BARANGAYS</h3>
-													<p id="avg-seniors">0</p>
-												</div>
-												<div class="stat-card">
-													<h3>HIGHEST COUNT</h3>
-													<p id="highest-count">0</p>
+													<div class="stat-number" id="averagePDAO">137</div>
+													<div class="stat-label">Average per Barangay</div>
 												</div>
 											</div>
-											<div class="controls">
-												<input type="text" class="search-box" id="searchInput" placeholder="Search by barangay name...">
-												<div class="view-selector">
-													<button class="view-btn active" id="barangayView"></button>
-													<button class="view-btn" id="purokView"></button>
-												</div>
-											</div>
+
 											<div class="table-container">
-												<table class="data-table" id="barangayTable">
+												<div class="table-header">
+													<h2 class="table-title">Barangay PDAO Data</h2>
+													<div class="search-container">
+														<input type="text" class="search-input" id="searchInput" placeholder="🔍 Search barangays...">
+													</div>
+												</div>
+
+												<table class="data-table" id="dataTable">
 													<thead>
 														<tr>
-															<th>Barangay</th>
-															<th>Number of Puroks</th>
-															<th>PDAO</th>
-															<th>Actions</th>
+															<th>Barangay Name</th>
+															<th>PDAO Count</th>
+															<th>Action</th>
 														</tr>
 													</thead>
-													<tbody id="barangayTableBody"></tbody>
+													<tbody id="tableBody">
+														<!-- Table rows will be generated here -->
+													</tbody>
 												</table>
-												<div class="pagination-controls">
-													<div class="items-per-page">
-														<span>Items per page:</span>
-														<select id="itemsPerPage">
-															<option value="5">5</option>
-															<option value="10">10</option>
-															<option value="16">All</option>
-														</select>
+
+												<div id="noResults" class="no-results" style="display: none;">
+													<h3>🔍 No results found</h3>
+													<p>Try adjusting your search terms</p>
+												</div>
+									
+												<div class="pagination" id="pagination">
+													<div class="pagination-info" id="paginationInfo">
+														Showing 1-5 of 16 entries
 													</div>
-													<div class="page-info">
-														<span id="pageInfo">Page 1 of 1</span>
-													</div>
-													<div class="page-buttons">
-														<button id="prevPage" disabled>Previous</button>
-														<button id="nextPage" disabled>Next</button>
+													<div class="pagination-controls" id="paginationControls">
+														<!-- Pagination buttons will be generated here -->
 													</div>
 												</div>
 											</div>
-											<div class="chart-container" id="barangayChartContainer"></div>
-											<!-- Modal for Purok Details with Premium Design -->
-<div id="purokModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modalTitle">Barangay</h2>
-        <div class="modal-body">
-            <div class="modal-chart-container">
-                <canvas id="purokModalChart"></canvas>
-            </div>
-            <div class="modal-table-container">
-                <table class="modal-table" id="purokTable">
-                    <thead>
-                        <tr>
-                            <th>Barangay Name</th>
-                            <th>PDAO</th>
-                            <th>Total %</th>
-                        </tr>
-                    </thead>
-                    <tbody id="purokTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+										</div>
+
+										<!-- Enhanced Modal -->
+										<div id="chartModal" class="modal">
+											<div class="modal-content">
+												<div class="modal-header">
+													<span class="close">&times;</span>
+													<h2 id="modalTitle">Barangay</h2>
+												</div>
+												
+												<div class="chart-controls">
+													<button class="chart-type-btn active" onclick="switchChartType('doughnut')">Donut Chart</button>
+													<button class="chart-type-btn" onclick="switchChartType('table')">Table View</button>
+												</div>
+									
+												<div id="chartContainer" class="chart-container">
+													<canvas id="pieChart"></canvas>
+												</div>
+									
+												<div id="tableContainer" class="table-view" style="display: none;">
+													<table class="chart-table">
+														<thead>
+															<tr>
+																<th>Category</th>
+																<th>Percentage</th>
+															</tr>
+														</thead>
+														<tbody id="chartTableBody">
+															<!-- Table rows will be generated here -->
+														</tbody>
+													</table>
+												</div>
+									
+												<div class="chart-info" id="chartInfo">
+													<!-- Chart percentage info will be displayed here -->
+												</div>
+											</div>
+										</div>
+									
+
+										
 									<!-- latest activity end -->
 								</div>
 							</div>
