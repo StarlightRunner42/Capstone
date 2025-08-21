@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/bower_components/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/icon/feather/css/feather.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/senior.css">
+    <link rel="stylesheet" href="/assets/css/pwd.css">
     <link rel="stylesheet" href="/assets/css/jquery.mCustomScrollbar.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -156,6 +156,7 @@
                         <div class="pcoded-inner-content">
                             <div class="main-body">
                                 <div class="page-wrapper">
+
                                     <div class="container">
                                         <h1>SENIOR CITIZENS</h1>
                                         <div class="filter-container">
@@ -179,7 +180,7 @@
                             
                                         
                                         <% if (seniorCitizens && seniorCitizens.length > 0) { %>
-                                            <table id="seniorTable" class="display" style="width:100%">
+                                            <table id="example" class="display" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Full Name</th>
@@ -230,109 +231,140 @@
                                         <% } %>
                                     </div>
                                     
-                                    <!-- View Modal -->
-                                    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="viewModalTitle">
-                                                        <span id="displayLastName"></span>, 
-                                                        <span id="displayFirstName"></span> 
-                                                        <span id="displayMiddleName"></span>
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <!-- Personal Information -->
-                                                    <fieldset>
-                                                        <legend>PERSONAL INFORMATION</legend>
-                                                        <p><strong>Address:</strong> 
-                                                            <span id="displayBarangay"></span>, 
-                                                            <span id="displayPurok"></span>
-                                                        </p>
-                                                        <p><strong>Birthday:</strong> 
-                                                            <span id="displayBirthday"></span> 
-                                                            (<span id="displayAge"></span> years old)
-                                                        </p>
-                                                        <p><strong>Gender:</strong> 
-                                                            <span id="displayGender"></span>
-                                                        </p>
-                                                        <p><strong>Marital Status:</strong> 
-                                                            <span id="displayCivilStatus"></span>
-                                                        </p>
-                                                        <p><strong>Place of Birth:</strong> 
-                                                            <span id="displayPlaceOfBirth"></span>
-                                                        </p>
-                                                        <p id="displaySpouse" style="display:none;">
-                                                            <strong>Spouse:</strong> 
-                                                            <span id="displaySpouseName"></span>
-                                                        </p>
-                                                        <p><strong>Father:</strong> 
-                                                            <span id="displayFatherName"></span>
-                                                        </p>
-                                                        <p><strong>Mother:</strong> 
-                                                            <span id="displayMotherName"></span>
-                                                        </p>
-                                                    </fieldset>
+                                   <!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalTitle">
+                    <span id="displayLastName"></span>, 
+                    <span id="displayFirstName"></span> 
+                    <span id="displayMiddleName"></span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Top Row: Personal Information + Contact Information -->
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <!-- Left - Personal Information -->
+                    <fieldset class="compact-spacing">
+                        <legend>PERSONAL INFORMATION</legend>
+                        <p class="compact-spacing">
+                            <strong>Address:</strong> 
+                            <span id="displayBarangay"></span>, 
+                            <span id="displayPurok"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Birthday:</strong> 
+                            <span id="displayBirthday"></span> 
+                            (<span id="displayAge"></span> years old)
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Gender:</strong> 
+                            <span id="displayGender"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Marital Status:</strong> 
+                            <span id="displayCivilStatus"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Place of Birth:</strong> 
+                            <span id="displayPlaceOfBirth"></span>
+                        </p>
+                        <p id="displaySpouse" class="compact-spacing" style="display:none;">
+                            <strong>Spouse:</strong> 
+                            <span id="displaySpouseName"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Father:</strong> 
+                            <span id="displayFatherName"></span>
+                        </p>
+                        <p class="no-bottom-margin">
+                            <strong>Mother:</strong> 
+                            <span id="displayMotherName"></span>
+                        </p>
+                    </fieldset>
+                    
+                    <!-- Right - Contact Information -->
+                    <fieldset class="compact-spacing">
+                        <legend>CONTACT INFORMATION</legend>
+                        <div id="displayContacts">
+                            <!-- Contact information will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
+                </div>
 
-                                                    <!-- Contact Information -->
-                                                    <fieldset>
-                                                        <legend>CONTACT INFORMATION</legend>
-                                                        <div id="displayContacts"></div>
-                                                    </fieldset>
+                <!-- Middle Row: ID Information + Education & Skills -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <!-- Left - ID Information -->
+                    <fieldset class="compact-spacing">
+                        <legend>ID INFORMATION</legend>
+                        <p class="compact-spacing">
+                            <strong>OSCA ID:</strong> 
+                            <span id="displayOscaId"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>GSIS/SSS:</strong> 
+                            <span id="displayGsisSss"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Philhealth:</strong> 
+                            <span id="displayPhilhealth"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>TIN:</strong> 
+                            <span id="displayTin"></span>
+                        </p>
+                        <p class="no-bottom-margin">
+                            <strong>Other Govt ID:</strong> 
+                            <span id="displayOtherGovtId"></span>
+                        </p>
+                    </fieldset>
+                    
+                    <!-- Right - Education & Skills -->
+                    <fieldset class="compact-spacing">
+                        <legend>EDUCATION & SKILLS</legend>
+                        <p class="compact-spacing">
+                            <strong>Education:</strong> 
+                            <span id="displayEducation"></span>
+                        </p>
+                        <p class="no-bottom-margin">
+                            <strong>Skills:</strong> 
+                            <span id="displaySkills"></span>
+                        </p>
+                    </fieldset>
+                </div>
 
-                                                    <!-- ID Information -->
-                                                    <fieldset>
-                                                        <legend>ID INFORMATION</legend>
-                                                        <p><strong>OSCA ID:</strong> 
-                                                            <span id="displayOscaId"></span>
-                                                        </p>
-                                                        <p><strong>GSIS/SSS:</strong> 
-                                                            <span id="displayGsisSss"></span>
-                                                        </p>
-                                                        <p><strong>Philhealth:</strong> 
-                                                            <span id="displayPhilhealth"></span>
-                                                        </p>
-                                                        <p><strong>TIN:</strong> 
-                                                            <span id="displayTin"></span>
-                                                        </p>
-                                                        <p><strong>Other Govt ID:</strong> 
-                                                            <span id="displayOtherGovtId"></span>
-                                                        </p>
-                                                    </fieldset>
+                <!-- Bottom Row: Family Composition + Community Service -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <!-- Left - Family Composition -->
+                    <fieldset class="compact-spacing">
+                        <legend>FAMILY COMPOSITION</legend>
+                        <div id="displayChildren">
+                            <!-- Family composition will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
 
-                                                    <!-- Family Composition -->
-                                                    <fieldset>
-                                                        <legend>FAMILY COMPOSITION</legend>
-                                                        <div id="displayChildren"></div>
-                                                    </fieldset>
-
-                                                    <!-- Education & Skills -->
-                                                    <fieldset>
-                                                        <legend>EDUCATION & SKILLS</legend>
-                                                        <p><strong>Education:</strong> 
-                                                            <span id="displayEducation"></span>
-                                                        </p>
-                                                        <p><strong>Skills:</strong> 
-                                                            <span id="displaySkills"></span>
-                                                        </p>
-                                                    </fieldset>
-
-                                                    <!-- Community Service -->
-                                                    <fieldset>
-                                                        <legend>COMMUNITY SERVICE</legend>
-                                                        <div id="displayCommunityService"></div>
-                                                    </fieldset>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Print</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <!-- Right - Community Service -->
+                    <fieldset class="compact-spacing">
+                        <legend>COMMUNITY SERVICE</legend>
+                        <div id="displayCommunityService">
+                            <!-- Community service will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            
+            <div class="modal-footer flex-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
 
                                     <!-- Edit Modal -->
                                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
@@ -543,7 +575,7 @@
             });
 
             // Initialize DataTable
-            var table = $('#seniorTable').DataTable({
+            var table = $('#example').DataTable({
                 paging: true,
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50, 100],
