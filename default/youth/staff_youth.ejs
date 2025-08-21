@@ -618,15 +618,148 @@
 			gtag('js', new Date());
 			gtag('config', 'UA-23581568-13');
 			$(document).ready(function() {
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true,
-					rowCallback: function(row) {
-						if ($(row).hasClass('dt-empty')) {
-							$(row).hide();
+				// Initialize DataTable only once
+				if ($.fn.dataTable.isDataTable('#example')) {
+					window.youthTable = $('#example').DataTable();
+				} else {
+					window.youthTable = $('#example').DataTable({
+						paging: true,
+						pageLength: 10,
+						lengthMenu: [5, 10, 25, 50, 100],
+						responsive: true,
+						rowCallback: function(row) {
+							if ($(row).hasClass('dt-empty')) {
+								$(row).hide();
+							}
 						}
+					});
+				}
+
+				// Barangay/Purok dynamic filters
+				const barangaysData = <%- JSON.stringify(barangays) %>;
+				const barangaySelect = document.getElementById('barangay-filter');
+				const purokSelect = document.getElementById('purok-filter');
+				const table = window.youthTable;
+
+				// Populate Barangay options dynamically
+				if (barangaysData && typeof barangaysData === 'object') {
+					Object.keys(barangaysData).forEach(function(barangay) {
+						const option = document.createElement('option');
+						option.value = barangay;
+						option.textContent = barangay;
+						barangaySelect.appendChild(option);
+					});
+				}
+
+				// Initialize purok dropdown as disabled
+				purokSelect.disabled = true;
+
+				// Barangay change: populate Purok and filter table
+				barangaySelect.addEventListener('change', function() {
+					const selectedBarangay = this.value;
+					purokSelect.innerHTML = '';
+
+					const defaultOption = document.createElement('option');
+					defaultOption.value = '';
+					defaultOption.textContent = selectedBarangay ? 'Select Purok' : 'First select a Barangay';
+					purokSelect.appendChild(defaultOption);
+
+					purokSelect.disabled = !selectedBarangay;
+
+					if (selectedBarangay && barangaysData[selectedBarangay]) {
+						const allOption = document.createElement('option');
+						allOption.value = 'all';
+						allOption.textContent = 'All Puroks';
+						purokSelect.appendChild(allOption);
+
+						barangaysData[selectedBarangay].forEach(function(purok) {
+							const option = document.createElement('option');
+							option.value = purok;
+							option.textContent = purok;
+							purokSelect.appendChild(option);
+						});
+					}
+
+					// Filter the table based on selected barangay (column index 2)
+					table.columns(2).search(selectedBarangay || '').draw();
+					// Clear purok filter when barangay changes
+					table.columns(3).search('').draw();
+				});
+
+				// Purok change: filter table
+				purokSelect.addEventListener('change', function() {
+					const selectedPurok = this.value;
+					if (selectedPurok === 'all' || selectedPurok === '') {
+						table.columns(3).search('').draw();
+					} else {
+						table.columns(3).search(selectedPurok).draw();
+					}
+				});
+			});
+		</script>
+		<script>
+			// Convert EJS data to JavaScript object
+			const barangaysData = <%- JSON.stringify(barangays) %>;
+
+			document.addEventListener('DOMContentLoaded', function() {
+				const barangaySelect = document.getElementById('barangay-filter');
+				const purokSelect = document.getElementById('purok-filter');
+
+				// Populate Barangay options dynamically
+				if (barangaysData && typeof barangaysData === 'object') {
+					Object.keys(barangaysData).forEach(function(barangay) {
+						const option = document.createElement('option');
+						option.value = barangay;
+						option.textContent = barangay;
+						barangaySelect.appendChild(option);
+					});
+				}
+
+				// Get existing DataTable instance
+				var table = window.youthTable || $('#example').DataTable();
+
+				// Initialize purok dropdown as disabled
+				purokSelect.disabled = true;
+
+				// When Barangay changes, populate Purok and filter table
+				barangaySelect.addEventListener('change', function() {
+					const selectedBarangay = this.value;
+					purokSelect.innerHTML = '';
+
+					const defaultOption = document.createElement('option');
+					defaultOption.value = '';
+					defaultOption.textContent = selectedBarangay ? 'Select Purok' : 'First select a Barangay';
+					purokSelect.appendChild(defaultOption);
+
+					purokSelect.disabled = !selectedBarangay;
+
+					if (selectedBarangay && barangaysData[selectedBarangay]) {
+						const allOption = document.createElement('option');
+						allOption.value = 'all';
+						allOption.textContent = 'All Puroks';
+						purokSelect.appendChild(allOption);
+
+						barangaysData[selectedBarangay].forEach(function(purok) {
+							const option = document.createElement('option');
+							option.value = purok;
+							option.textContent = purok;
+							purokSelect.appendChild(option);
+						});
+					}
+
+					// Filter the table based on selected barangay (column index 2)
+					table.columns(2).search(selectedBarangay || '').draw();
+					// Clear purok filter when barangay changes
+					table.columns(3).search('').draw();
+				});
+
+				// When Purok changes, filter table
+				purokSelect.addEventListener('change', function() {
+					const selectedPurok = this.value;
+					if (selectedPurok === 'all' || selectedPurok === '') {
+						table.columns(3).search('').draw();
+					} else {
+						table.columns(3).search(selectedPurok).draw();
 					}
 				});
 			});

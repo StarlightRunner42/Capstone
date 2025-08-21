@@ -162,7 +162,7 @@
                                             <div class="filter-group">
                                                 <label for="barangay-filter">Barangay:</label>
                                                 <select id="barangay-filter" class="form-control">
-                                                    <option value="">Select Barangay</option>
+                                                    <option value="">All Barangays</option>
                                                     <% Object.keys(barangays).forEach(barangay => { %>
                                                         <option value="<%= barangay %>"><%= barangay %></option>
                                                     <% }) %>
@@ -175,6 +175,9 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        
+                            
+                                        
                                         <% if (seniorCitizens && seniorCitizens.length > 0) { %>
                                             <table id="seniorTable" class="display" style="width:100%">
                                                 <thead>
@@ -540,7 +543,7 @@
             });
 
             // Initialize DataTable
-            $('#seniorTable').DataTable({
+            var table = $('#seniorTable').DataTable({
                 paging: true,
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50, 100],
@@ -551,6 +554,44 @@
                     }
                 }
             });
+
+            // Search input functionality
+            $('#seniorSearchInput').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            // Clear search button
+            $('#clearSearchBtn').on('click', function() {
+                $('#seniorSearchInput').val('');
+                table.search('').draw();
+            });
+
+            // Combine with existing filters
+            $('#barangay-filter, #purok-filter').on('change', function() {
+                table.draw();
+            });
+
+            // Custom filtering function
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var barangay = $('#barangay-filter').val();
+                    var purok = $('#purok-filter').val();
+                    
+                    // If no barangay is selected, show all
+                    if (!barangay) return true;
+                    
+                    var rowBarangay = data[2]; // Barangay is in the 3rd column (index 2)
+                    var rowPurok = data[3]; // Purok is in the 4th column (index 3)
+                    
+                    // Filter by barangay
+                    if (barangay && rowBarangay !== barangay) return false;
+                    
+                    // Filter by purok if selected and not "all"
+                    if (purok && purok !== 'all' && rowPurok !== purok) return false;
+                    
+                    return true;
+                }
+            );
         });
     </script>
 

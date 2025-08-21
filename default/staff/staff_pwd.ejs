@@ -162,7 +162,7 @@
 												<div class="filter-group">
 													<label for="barangay-filter">Barangay:</label>
 													<select id="barangay-filter" class="form-control">
-														<option value="">Select Barangay</option><% Object.keys(barangays).forEach(barangay => { %> <option value="<%= barangay %>"><%= barangay %> </option><% }) %>
+														<option value="">All Barangays</option><% Object.keys(barangays).forEach(barangay => { %> <option value="<%= barangay %>"><%= barangay %> </option><% }) %>
 													</select>
 												</div>
 												<div class="filter-group">
@@ -208,7 +208,7 @@
 
 															
 															<!-- View Modal -->
-															<<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+															<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
 																<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 																	<div class="modal-content">
 																		<div class="modal-header">
@@ -520,6 +520,19 @@
 				const barangaySelect = document.getElementById('barangay-filter');
 				const purokSelect = document.getElementById('purok-filter');
 				
+				// Initialize DataTable with filtering capability
+				var table = $('#example').DataTable({
+					paging: true,
+					pageLength: 10,
+					lengthMenu: [5, 10, 25, 50, 100],
+					responsive: true,
+					rowCallback: function(row) {
+						if ($(row).hasClass('dt-empty')) {
+							$(row).hide();
+						}
+					}
+				});
+
 				// Initialize purok dropdown as disabled
 				purokSelect.disabled = true;
 
@@ -547,6 +560,30 @@
 							option.textContent = purok;
 							purokSelect.appendChild(option);
 						});
+					}
+					
+					// Filter the table based on selected barangay
+					if (selectedBarangay === '') {
+						table.columns(2).search('').draw();
+					} else {
+						table.columns(2).search(selectedBarangay).draw();
+					}
+				});
+
+				// Purok change event handler
+				purokSelect.addEventListener('change', function() {
+					const selectedPurok = this.value;
+					const selectedBarangay = barangaySelect.value;
+					
+					if (selectedPurok === 'all') {
+						// Show all puroks in selected barangay
+						table.columns(3).search('').draw();
+					} else if (selectedPurok === '') {
+						// Show all records in selected barangay (no purok filter)
+						table.columns(3).search('').draw();
+					} else {
+						// Filter by specific purok
+						table.columns(3).search(selectedPurok).draw();
 					}
 				});
 
@@ -669,19 +706,6 @@
 							console.error('Error parsing PWD data:', e);
 						}
 					});
-				});
-
-				// Initialize DataTable
-				$('#example').DataTable({
-					paging: true,
-					pageLength: 10,
-					lengthMenu: [5, 10, 25, 50, 100],
-					responsive: true,
-					rowCallback: function(row) {
-						if ($(row).hasClass('dt-empty')) {
-							$(row).hide();
-						}
-					}
 				});
 			});
 		</script>
