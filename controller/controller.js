@@ -723,9 +723,9 @@ exports.editUserStatus = async (req, res) => {
   }
 };
 
-exports.updateUser = (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
-    const { id, name, email, role, status } = req.body;
+    const { id, name, email, role, status, password, confirm_password } = req.body;
 
     if (!id) {
       return res.status(400).json({ message: 'User id is required' });
@@ -737,21 +737,31 @@ exports.updateUser = (req, res) => {
     if (role) update.role = role;
     if (status) update.status = status;
 
+    if (password || confirm_password) {
+      if (!password || !confirm_password) {
+        return res.status(400).json({ message: 'Both password and confirm_password are required' });
+      }
+      if (password !== confirm_password) {
+        return res.status(400).json({ message: 'Passwords do not match' });
+      }
+      const hashedPassword = await bcrypt.hash(password, saltrounds);
+      update.password = hashedPassword;
+    }
+
     if (Object.keys(update).length === 0) {
       return res.redirect('/superadmin-users');
     }
 
-    User.findByIdAndUpdate(id, update, { new: true })
-      .then(updatedUser => {
-        if (!updatedUser) {
-          return res.status(404).json({ message: 'User not found' });
-        }
-        return res.redirect('/superadmin-users');
-      })
-      .catch(err => {
-        console.error(err);
-        return res.status(500).json({ message: 'Internal Server Error' });
-      });
+    try {
+      const updatedUser = await User.findByIdAndUpdate(id, update, { new: true });
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      return res.redirect('/superadmin-users');
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Internal Server Error' });
