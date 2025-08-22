@@ -1,22 +1,5 @@
-// Data structure with PDAO count and gender breakdown
-const barangayData = {
-    1: { name: "Barangay 1", pdaoCount: 156, maleCount: 89, femaleCount: 67 },
-    2: { name: "Barangay 2", pdaoCount: 124, maleCount: 71, femaleCount: 53 },
-    3: { name: "Barangay 3", pdaoCount: 98, maleCount: 56, femaleCount: 42 },
-    4: { name: "Barangay 4", pdaoCount: 167, maleCount: 95, femaleCount: 72 },
-    5: { name: "Barangay 5", pdaoCount: 119, maleCount: 68, femaleCount: 51 },
-    6: { name: "Barangay Mambulac", pdaoCount: 187, maleCount: 107, femaleCount: 80 },
-    7: { name: "Barangay Guinhalaran", pdaoCount: 136, maleCount: 78, femaleCount: 58 },
-    8: { name: "Barangay E-Lopez", pdaoCount: 145, maleCount: 83, femaleCount: 62 },
-    9: { name: "Barangay Bagtic", pdaoCount: 112, maleCount: 64, femaleCount: 48 },
-    10: { name: "Barangay Balaring", pdaoCount: 158, maleCount: 90, femaleCount: 68 },
-    11: { name: "Barangay Hawaiian", pdaoCount: 94, maleCount: 54, femaleCount: 40 },
-    12: { name: "Barangay Patag", pdaoCount: 127, maleCount: 73, femaleCount: 54 },
-    13: { name: "Barangay Kapt. Ramon", pdaoCount: 165, maleCount: 94, femaleCount: 71 },
-    14: { name: "Barangay Guimbalaon", pdaoCount: 129, maleCount: 74, femaleCount: 55 },
-    15: { name: "Barangay Rizal", pdaoCount: 173, maleCount: 99, femaleCount: 74 },
-    16: { name: "Barangay Lantad", pdaoCount: 108, maleCount: 62, femaleCount: 46 }
-};
+// Dynamic PDAO data source
+let barangayData = {};
 
 let currentChart = null;
 let currentPage = 1;
@@ -25,31 +8,70 @@ let filteredData = [];
 let allData = [];
 let currentChartType = 'doughnut'; // Default chart type
 
-// Calculate statistics
-const totalPDAO = Object.values(barangayData).reduce((sum, barangay) => sum + barangay.pdaoCount, 0);
-const totalMale = Object.values(barangayData).reduce((sum, barangay) => sum + barangay.maleCount, 0);
-const totalFemale = Object.values(barangayData).reduce((sum, barangay) => sum + barangay.femaleCount, 0);
-const averagePDAO = Math.round(totalPDAO / Object.keys(barangayData).length);
-const averageMalePercentage = ((totalMale / totalPDAO) * 100).toFixed(1);
-const averageFemalePercentage = ((totalFemale / totalPDAO) * 100).toFixed(1);
+// Calculate statistics (after load)
+let totalPDAO = 0;
+let totalMale = 0;
+let totalFemale = 0;
+let averagePDAO = 0;
+let averageMalePercentage = '0.0';
+let averageFemalePercentage = '0.0';
 
-// Update stats display
-document.getElementById('totalPDAO').textContent = totalPDAO.toLocaleString();
-document.getElementById('averagePDAO').textContent = averagePDAO;
+// Update stats display (after load)
+function updateStatsDisplay() {
+    document.getElementById('totalPDAO').textContent = totalPDAO.toLocaleString();
+    document.getElementById('averagePDAO').textContent = averagePDAO;
+}
 
 // Initialize data
 function initializeData() {
-    allData = Object.entries(barangayData).map(([id, data]) => ({
+    const entries = Object.entries(barangayData);
+    totalPDAO = entries.reduce((sum, [_, d]) => sum + d.pdaoCount, 0);
+    totalMale = entries.reduce((sum, [_, d]) => sum + (d.maleCount || 0), 0);
+    totalFemale = entries.reduce((sum, [_, d]) => sum + (d.femaleCount || 0), 0);
+    averagePDAO = entries.length ? Math.round(totalPDAO / entries.length) : 0;
+    averageMalePercentage = totalPDAO ? ((totalMale / totalPDAO) * 100).toFixed(1) : '0.0';
+    averageFemalePercentage = totalPDAO ? ((totalFemale / totalPDAO) * 100).toFixed(1) : '0.0';
+    updateStatsDisplay();
+
+    allData = entries.map(([id, data]) => ({
         id: parseInt(id),
         name: data.name,
         pdaoCount: data.pdaoCount,
         maleCount: data.maleCount,
         femaleCount: data.femaleCount,
-        malePercentage: ((data.maleCount / data.pdaoCount) * 100).toFixed(1),
-        femalePercentage: ((data.femaleCount / data.pdaoCount) * 100).toFixed(1),
-        percentage: ((data.pdaoCount / totalPDAO) * 100).toFixed(1)
+        malePercentage: data.pdaoCount ? ((data.maleCount / data.pdaoCount) * 100).toFixed(1) : '0.0',
+        femalePercentage: data.pdaoCount ? ((data.femaleCount / data.pdaoCount) * 100).toFixed(1) : '0.0',
+        percentage: totalPDAO ? ((data.pdaoCount / totalPDAO) * 100).toFixed(1) : '0.0'
     }));
     filteredData = [...allData];
+}
+
+async function loadPdaoData() {
+    try {
+        const res = await fetch('/api/analytics/pdao', { credentials: 'same-origin' });
+        const json = await res.json();
+        if (!json.success) throw new Error('Failed to fetch PDAO data');
+
+        barangayData = {};
+        json.data.forEach(item => {
+            barangayData[item.id] = {
+                name: item.name,
+                pdaoCount: item.pdaoCount,
+                maleCount: item.maleCount,
+                femaleCount: item.femaleCount
+            };
+        });
+
+        initializeData();
+        renderTable();
+        renderPagination();
+    } catch (err) {
+        console.error(err);
+        barangayData = {};
+        initializeData();
+        renderTable();
+        renderPagination();
+    }
 }
 
 // Render table rows
@@ -350,6 +372,4 @@ document.addEventListener('keydown', function(event) {
 });
 
 // Initialize the application
-initializeData();
-renderTable();
-renderPagination();
+loadPdaoData();

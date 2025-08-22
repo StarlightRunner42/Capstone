@@ -371,6 +371,62 @@ exports.registerPwd = async (req, res) => {
   }
 };
   
+// Analytics: OSCA (Senior Citizens) counts by barangay
+exports.getOscaAnalytics = async (req, res) => {
+  try {
+    const results = await SeniorCitizen.aggregate([
+      {
+        $group: {
+          _id: "$identifying_information.address.barangay",
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    const data = results
+      .filter(r => r._id)
+      .map((r, idx) => ({ id: idx + 1, name: r._id, oscaCount: r.count }));
+
+    res.json({ success: true, data });
+  } catch (err) {
+    console.error('OSCA analytics error:', err);
+    res.status(500).json({ success: false, message: 'Failed to load OSCA analytics' });
+  }
+};
+
+// Analytics: PDAO (PWD) counts and gender breakdown by barangay
+exports.getPdaoAnalytics = async (req, res) => {
+  try {
+    const results = await PWD.aggregate([
+      {
+        $group: {
+          _id: "$barangay",
+          pdaoCount: { $sum: 1 },
+          maleCount: { $sum: { $cond: [{ $eq: ["$gender", "Male"] }, 1, 0] } },
+          femaleCount: { $sum: { $cond: [{ $eq: ["$gender", "Female"] }, 1, 0] } }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    const data = results
+      .filter(r => r._id)
+      .map((r, idx) => ({
+        id: idx + 1,
+        name: r._id,
+        pdaoCount: r.pdaoCount,
+        maleCount: r.maleCount,
+        femaleCount: r.femaleCount
+      }));
+
+    res.json({ success: true, data });
+  } catch (err) {
+    console.error('PDAO analytics error:', err);
+    res.status(500).json({ success: false, message: 'Failed to load PDAO analytics' });
+  }
+};
+
 // Fetch barangays and their puroks from the database
 async function fetchBarangays() {
   const barangayList = await Barangay.find({});

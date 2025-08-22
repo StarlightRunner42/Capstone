@@ -1,22 +1,5 @@
- // Data structure with OSCA count
- const barangayData = {
-    1: { name: "Barangay 1", oscaCount: 156 },
-    2: { name: "Barangay 2", oscaCount: 124 },
-    3: { name: "Barangay 3", oscaCount: 98 },
-    4: { name: "Barangay 4", oscaCount: 167 },
-    5: { name: "Barangay 5", oscaCount: 119 },
-    6: { name: "Barangay Mambulac", oscaCount: 187 },
-    7: { name: "Barangay Guinhalaran", oscaCount: 136 },
-    8: { name: "Barangay E-Lopez", oscaCount: 145 },
-    9: { name: "Barangay Bagtic", oscaCount: 112 },
-    10: { name: "Barangay Balaring", oscaCount: 158 },
-    11: { name: "Barangay Hawaiian", oscaCount: 94 },
-    12: { name: "Barangay Patag", oscaCount: 127 },
-    13: { name: "Barangay Kapt. Ramon", oscaCount: 165 },
-    14: { name: "Barangay Guimbalaon", oscaCount: 129 },
-    15: { name: "Barangay Rizal", oscaCount: 173 },
-    16: { name: "Barangay Lantad", oscaCount: 108 }
-};
+ // Dynamic OSCA data source
+ let barangayData = {};
 
 let currentChart = null;
 let currentPage = 1;
@@ -25,9 +8,9 @@ let filteredData = [];
 let allData = [];
 let currentChartType = 'doughnut'; // Default chart type
 
-// Calculate statistics
-const totalOSCA = Object.values(barangayData).reduce((sum, barangay) => sum + barangay.oscaCount, 0);
-const averageOSCA = Math.round(totalOSCA / Object.keys(barangayData).length);
+// Calculate statistics (computed after data load)
+let totalOSCA = 0;
+let averageOSCA = 0;
 
 // Update stats display
 document.getElementById('totalOSCA').textContent = totalOSCA.toLocaleString();
@@ -35,13 +18,44 @@ document.getElementById('averageOSCA').textContent = averageOSCA;
 
 // Initialize data
 function initializeData() {
-    allData = Object.entries(barangayData).map(([id, data]) => ({
+    const entries = Object.entries(barangayData);
+    totalOSCA = entries.reduce((sum, [_, data]) => sum + data.oscaCount, 0);
+    averageOSCA = entries.length ? Math.round(totalOSCA / entries.length) : 0;
+    document.getElementById('totalOSCA').textContent = totalOSCA.toLocaleString();
+    document.getElementById('averageOSCA').textContent = averageOSCA;
+
+    allData = entries.map(([id, data]) => ({
         id: parseInt(id),
         name: data.name,
         oscaCount: data.oscaCount,
-        percentage: ((data.oscaCount / totalOSCA) * 100).toFixed(1)
+        percentage: totalOSCA ? ((data.oscaCount / totalOSCA) * 100).toFixed(1) : '0.0'
     }));
     filteredData = [...allData];
+}
+
+async function loadOscaData() {
+    try {
+        const res = await fetch('/api/analytics/osca', { credentials: 'same-origin' });
+        const json = await res.json();
+        if (!json.success) throw new Error('Failed to fetch OSCA data');
+
+        // Map into barangayData with numeric ids as keys
+        barangayData = {};
+        json.data.forEach(item => {
+            barangayData[item.id] = { name: item.name, oscaCount: item.oscaCount };
+        });
+
+        initializeData();
+        renderTable();
+        renderPagination();
+    } catch (err) {
+        console.error(err);
+        // Fallback: keep empty state
+        barangayData = {};
+        initializeData();
+        renderTable();
+        renderPagination();
+    }
 }
 
 // Render table rows
@@ -344,6 +358,4 @@ document.addEventListener('keydown', function(event) {
 });
 
 // Initialize the application
-initializeData();
-renderTable();
-renderPagination();
+loadOscaData();

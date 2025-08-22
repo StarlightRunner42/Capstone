@@ -97,6 +97,10 @@ router.post('/add-youth', requireAuth,controller.createYouth);
 // Data operations
 router.post('/add-data', controller.createResident);
 
+// Analytics APIs
+router.get('/api/analytics/osca', requireAuth, controller.getOscaAnalytics);
+router.get('/api/analytics/pdao', requireAuth, controller.getPdaoAnalytics);
+
 
 //ArcGIS routes
 router.get("/silay-boundary", controller.getSilayBoundary);
