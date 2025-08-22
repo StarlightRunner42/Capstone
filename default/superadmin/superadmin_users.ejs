@@ -189,8 +189,18 @@
           <td><%= user.status %></td>
           <td>
             <!-- Add your action buttons/links here -->
-            <a href="/edit/<%= user._id %>">Edit</a> |
-            <a href="/delete/<%= user._id %>" onclick="return confirm('Are you sure?')">Delete</a>
+            <button type="button" class="btn btn-link p-0 open-edit"
+              data-id="<%= user._id %>" 
+              data-name="<%= user.name %>" 
+              data-email="<%= user.email %>" 
+              data-role="<%= user.role %>" 
+              data-status="<%= user.status %>">Edit</button>
+            <form action="/edit-user" method="POST" style="display:inline-block; margin-left:8px;">
+                <input type="hidden" name="id" value="<%= user._id %>" required>
+                <button type="submit" class="btn btn-link p-0 <%= user.status === 'Inactive' ? '' : 'text-danger' %>">
+                  <%= user.status === 'Inactive' ? 'Activate' : 'Deactivate' %>
+                </button>
+            </form>
           </td>
         </tr>
       <% }); %>
@@ -210,29 +220,31 @@
 											<div class="modal-content">
 												<span class="close-btn">&times;</span>
 												<h2>Edit User</h2>
-												<form id="edit-user-form">
-													<input type="hidden" id="edit-user-id">
+												<form id="edit-user-form" method="POST" action="/update-user">
+													<input type="hidden" id="edit-user-id" name="id">
 													<div class="form-group">
-														<label for="edit-username">Username:</label>
-														<input type="text" id="edit-username" required>
+														<label for="edit-username">Name:</label>
+														<input type="text" id="edit-username" name="name" required>
 													</div>
 													<div class="form-group">
 														<label for="edit-email">Email:</label>
-														<input type="email" id="edit-email" required>
+														<input type="email" id="edit-email" name="email" required>
 													</div>
 													<div class="form-group">
 														<label for="edit-role">Role:</label>
-														<select id="edit-role" required>
-															<option value="editor">staff</option>
-															<option value="admin">Admin</option>
+														<select id="edit-role" name="role" required>
+															<option value="Admin">Admin</option>
+															<option value="Staff">Staff</option>
+															<option value="Super Admin">Super Admin</option>
+															<option value="Youth">Youth</option>
 														</select>
 													</div>
 													<div class="form-group">
 														<label for="edit-status">Status:</label>
-														<select id="edit-status" required>
-															<option value="active">Active</option>
-															<option value="suspended">Suspended</option>
-
+														<select id="edit-status" name="status" required>
+															<option value="Active">Active</option>
+															<option value="Suspended">Suspended</option>
+															<option value="Inactive">Inactive</option>
 														</select>
 													</div>
 													<div class="form-actions">
@@ -251,6 +263,9 @@
 					<div id="styleSelector"></div>
 				</div>
 			</div>
+		</div>
+		</div>
+		</div>
 		</div>
 		</div>
 		</div>
@@ -287,7 +302,34 @@
 		<script src="/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 		<script type="text/javascript" src="/assets/pages/dashboard/crm-dashboard.min.js"></script>
 		<script type="text/javascript" src="/assets/js/script.js"></script>
-		<script type="text/javascript" src="/assets/js/update.js"></script>
+		<!-- Removed update.js here to avoid preventing form submit on this page -->
+		<script>
+		  $(document).on('click', '.open-edit', function() {
+			const id = $(this).data('id');
+			const name = $(this).data('name');
+			const email = $(this).data('email');
+			const role = $(this).data('role');
+			const status = $(this).data('status');
+
+			$('#edit-user-id').val(id);
+			$('#edit-username').val(name);
+			$('#edit-email').val(email);
+			$('#edit-role').val(role);
+			$('#edit-status').val(status);
+
+			$('#edit-modal').show();
+		  });
+
+		  $('.close-btn, .cancel-btn').on('click', function(){
+			$('#edit-modal').hide();
+		  });
+
+		  $(window).on('click', function(e){
+			if (e.target.id === 'edit-modal') {
+			  $('#edit-modal').hide();
+			}
+		  });
+		</script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 		<script>

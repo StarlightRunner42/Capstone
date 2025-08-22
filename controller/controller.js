@@ -701,4 +701,62 @@ exports.getVillages = (req, res) => {
 };
 
 
+exports.editUserStatus = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ message: 'User id is required' });
+    }
+
+    const existing = await User.findById(id);
+    if (!existing) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const nextStatus = existing.status === 'Inactive' ? 'Active' : 'Inactive';
+    await User.findByIdAndUpdate(id, { status: nextStatus }, { new: true });
+    return res.redirect('/superadmin-users');
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.updateUser = (req, res) => {
+  try {
+    const { id, name, email, role, status } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ message: 'User id is required' });
+    }
+
+    const update = {};
+    if (name) update.name = name;
+    if (email) update.email = email;
+    if (role) update.role = role;
+    if (status) update.status = status;
+
+    if (Object.keys(update).length === 0) {
+      return res.redirect('/superadmin-users');
+    }
+
+    User.findByIdAndUpdate(id, update, { new: true })
+      .then(updatedUser => {
+        if (!updatedUser) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        return res.redirect('/superadmin-users');
+      })
+      .catch(err => {
+        console.error(err);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+
 

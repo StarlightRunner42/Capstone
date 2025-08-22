@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['Admin', 'Staff','Super Admin','Youth'], required: true },
-    status: { type: String, enum: ['Active', 'Suspended'], default: 'active' }
+    status: { type: String, enum: ['Active', 'Suspended', 'Inactive'], default: 'Active' }
 });
 
 const BarangaySchema = new mongoose.Schema({

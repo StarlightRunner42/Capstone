@@ -72,10 +72,12 @@ router.get('/add_pwd', controller.renderAddPWD);
 
 
 //Super admin 
-router.get('/index-superadmin',requireAuth ,controller.renderSuperAdminIndex);
+router.get('/index-superadmin',controller.renderSuperAdminIndex);
 
-router.get('/superadmin-users',requireAuth ,controller.renderSuperAdminUser);
+router.get('/superadmin-users',controller.renderSuperAdminUser);
 
+router.post('/update-user', requireAuth, controller.updateUser);
+router.post('/edit-user', requireAuth, controller.editUserStatus);
 
 // Form routes (used by both staff and admin)
 router.get('/Senior-form', requireAuth, controller.renderSeniorForm);
