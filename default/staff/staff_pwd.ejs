@@ -359,10 +359,12 @@
 																				<span aria-hidden="true">&times;</span>
 																			</button>
 																		</div>
+
 																		<div class="modal-body">
 																			<form id="editResidentForm">
 																				<!-- Top Row: Personal Info + Contact Info -->
 																				<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+																					
 																					<!-- Left - Personal Information -->
 																					<fieldset style="flex: 1; margin-right: 10px;">
 																						<legend>PERSONAL INFORMATION</legend>
@@ -408,6 +410,7 @@
 																							<input type="text" class="form-control" id="editSpouseName" value="Maria Dela Cruz">
 																						</div>
 																					</fieldset>
+
 																					<!-- Right - Contact Information -->
 																					<fieldset style="flex: 1; margin-left: 10px;">
 																						<legend>CONTACT INFORMATION</legend>
@@ -430,23 +433,9 @@
 																								<input type="email" class="form-control" id="editPrimaryContactEmail" value="maria@example.com">
 																							</div>
 																						</div>
-																						<div class="form-group">
-																							<label>Emergency Contact:</label>
-																							<div class="form-group">
-																								<label for="editEmergencyContactName">Name:</label>
-																								<input type="text" class="form-control" id="editEmergencyContactName" value="Pedro Dela Cruz">
-																							</div>
-																							<div class="form-group">
-																								<label for="editEmergencyContactRelation">Relation:</label>
-																								<input type="text" class="form-control" id="editEmergencyContactRelation" value="Brother">
-																							</div>
-																							<div class="form-group">
-																								<label for="editEmergencyContactPhone">Phone:</label>
-																								<input type="tel" class="form-control" id="editEmergencyContactPhone" value="09123456781">
-																							</div>
-																						</div>
 																					</fieldset>
 																				</div>
+
 																				<!-- Bottom Row: ID Information + Education -->
 																				<div style="display: flex; justify-content: space-between;">
 																					<!-- Left - ID Information -->
@@ -477,6 +466,7 @@
 																							<input type="text" class="form-control" id="editOtherID" value="UMID-789456123">
 																						</div>
 																					</fieldset>
+																					
 																					<!-- Right - Education Information -->
 																					<fieldset style="flex: 1; margin-left: 10px;">
 																						<legend>EDUCATIONAL ATTAINMENT</legend>
@@ -491,13 +481,23 @@
 																								<option value="Vocational">Vocational</option>
 																							</select>
 																						</div>
+
+																						<div class="form-group">
+																							<label for="editEducationLevel">Status of Employment:</label>
+																							<select class="form-control" id="editEducationLevel">
+																							<option value="">-- Select One --</option>
+							<option value="Employee">Employee</option>
+							<option value="Unemployed">Unemployed</option>
+							<option value="Self-employed">Self-employed</option>
+																							</select>
+																						</div>
+
 																					</fieldset>
 																				</div>
 																			</form>
 																		</div>
 																		<div class="modal-footer">
 																			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-																			<button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
 																		</div>
 																	</div>
 																</div>

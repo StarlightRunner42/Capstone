@@ -194,6 +194,7 @@
 																		</svg>
 																	</button>
 																</div>
+																
 																<!-- View Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -314,7 +315,8 @@
         </div>
     </div>
 </div>
-																<!-- Edit Modal -->
+
+<!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -327,15 +329,19 @@
 
             <div class="modal-body">
                 <form id="editResidentForm">
-                    <!-- Personal Information Section -->
-					 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;"></div>
-                    <fieldset style="flex: 1; margin-right: 10px;">
+                    <!-- Top Row: Personal Info + Contact Info -->
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+						<!-- Left - Personal Information -->
+
+                    <fieldset>
                         <legend>PERSONAL INFORMATION</legend>
+
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="editFirstName">First Name</label>
                                 <input type="text" class="form-control" id="editFirstName" required>
                             </div>
+						    
                             <div class="form-group col-md-4">
                                 <label for="editMiddleName">Middle Name</label>
                                 <input type="text" class="form-control" id="editMiddleName">
