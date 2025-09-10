@@ -456,6 +456,7 @@ label {
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+  text-align: left;
 }
 
 .modal-footer {
