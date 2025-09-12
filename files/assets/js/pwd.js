@@ -332,17 +332,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
   
-    // Contact information management
+    document.addEventListener('DOMContentLoaded', function() {
     const contactsContainer = document.getElementById('contactsContainer');
     let contactCounter = document.querySelectorAll('.contact-entry').length;
-  
-    // Add contact entry
+
+    // ✅ Add new contact entry
     document.getElementById('addContact').addEventListener('click', function() {
         contactCounter++;
         const newContact = document.createElement('div');
         newContact.className = 'contact-entry';
         newContact.dataset.contactId = contactCounter;
-        
+
         newContact.innerHTML = `
             <div class="form-row">
                 <div class="form-group">
@@ -380,19 +380,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `;
-        
+
         contactsContainer.appendChild(newContact);
     });
-  
-    // Remove contact entry (event delegation)
+
+    // ✅ Remove contact entry using event delegation
     contactsContainer.addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-contact')) {
-            const contactEntries = contactsContainer.querySelectorAll('.contact-entry');
-            if (contactEntries.length > 1) {
+            const allContacts = contactsContainer.querySelectorAll('.contact-entry');
+
+            // Prevent removing the first default contact
+            if (allContacts.length > 1) {
                 e.target.closest('.contact-entry').remove();
+            } else {
+                alert('You must keep at least one contact.');
             }
         }
     });
+});
+
   
     // Initialize purok options if a barangay is already selected
     if (document.getElementById('barangay').value) {
@@ -447,7 +453,7 @@ function convertToUppercase(inputElement) {
   // Apply uppercase conversion to all relevant input fields
   document.addEventListener('DOMContentLoaded', function() {
     // Get all text input fields (including text, email, tel, etc.)
-    const inputFields = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea');
+    const inputFields = document.querySelectorAll('input[type="text"], input[type="tel"], textarea');
     
     // Apply to each field
     inputFields.forEach(input => {

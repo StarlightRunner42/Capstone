@@ -330,249 +330,99 @@
             <div class="modal-body">
                 <form id="editResidentForm">
                     <!-- Top Row: Personal Info + Contact Info -->
-                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-						<!-- Left - Personal Information -->
-
-                    <fieldset>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <!-- Left - Personal Information -->
+                    <fieldset style="flex: 1; margin-right: 10px;">
                         <legend>PERSONAL INFORMATION</legend>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="editFirstName">First Name</label>
-                                <input type="text" class="form-control" id="editFirstName" required>
-                            </div>
-						    
-                            <div class="form-group col-md-4">
-                                <label for="editMiddleName">Middle Name</label>
-                                <input type="text" class="form-control" id="editMiddleName">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editLastName">Last Name</label>
-                                <input type="text" class="form-control" id="editLastName" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="editBarangay">Barangay</label>
-                                <select class="form-control" id="editBarangay" required>
-                                    <option value="">Select Barangay</option>
-                                    <% Object.keys(barangays).forEach(barangay => { %>
-                                    <option value="<%= barangay %>"><%= barangay %></option>
-                                    <% }) %>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editPurok">Purok</label>
-                                <select class="form-control" id="editPurok" required>
-                                    <option value="">Select Purok</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editContact">Contact</label>
-                                <input type="tel" class="form-control" id="editContact" required pattern="[0-9]{11}" maxlength="11">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="editBirthday">Birthday</label>
-                                <input type="date" class="form-control" id="editBirthday" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editAge">Age</label>
-                                <input type="number" class="form-control" id="editAge" readonly>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editGender">Gender</label>
-                                <select class="form-control" id="editGender" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                    <option value="Prefer not to say">Prefer not to say</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="editPlaceOfBirth">Place of Birth</label>
-                                <input type="text" class="form-control" id="editPlaceOfBirth" required>
-                            </div>
-                        </div>
+                        <p>
+                            <strong>Contact:</strong>
+                            <span id="displayContact"></span>
+                        </p>
+                        <p>
+                            <strong>Birthday:</strong>
+                            <span id="displayBirthday"></span> ( <span id="displayAge"></span> years old)
+                        </p>
+                        <p>
+                            <strong>Gender:</strong>
+                            <span id="displayGender"></span>
+                        </p>
+                        <p>
+                            <strong>Place of Birth:</strong>
+                            <span id="displayPlaceOfBirth"></span>
+                        </p>
                     </fieldset>
-
-                    <!-- Educational Information Section -->
-                    <fieldset>
-                        <legend>EDUCATIONAL ATTAINMENT</legend>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="editEducationLevel">Education Level</label>
-                                <select class="form-control" id="editEducationLevel" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Elementary Level">Elementary Level</option>
-                                    <option value="Elementary Graduate">Elementary Graduate</option>
-                                    <option value="High School Graduate">High School Graduate</option>
-                                    <option value="College Level">College Level</option>
-                                    <option value="College Graduate">College Graduate</option>
-                                    <option value="Post Graduate">Post Graduate</option>
-                                    <option value="Vocational">Vocational</option>
-                                    <option value="Not Attended School">Not Attended School</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="editRegisteredSK">Registered SK Voters</label>
-                                <select class="form-control" id="editRegisteredSK" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="editVotedSK">Voted last SK election?</label>
-                                <select class="form-control" id="editVotedSK" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="editRegisteredNational">Registered National Voters</label>
-                                <select class="form-control" id="editRegisteredNational" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-                        </div>
+                    <!-- Right - Education Information -->
+                    <fieldset style="flex: 1; margin-left: 10px;">
+                        <legend>EDUCATIONAL INFORMATION</legend>
+                        <p>
+                            <strong>Education Level:</strong>
+                            <span id="displayEducationLevel"></span>
+                        </p>
+                        <p>
+                            <strong>SK Voter:</strong>
+                            <span id="displaySkVoter"></span>
+                        </p>
+                        <p id="displaySkVoted" style="display: none;">
+                            <strong>Voted Last SK:</strong>
+                            <span id="displaySkVotedStatus"></span>
+                        </p>
+                        <p>
+                            <strong>National Voter:</strong>
+                            <span id="displayNationalVoter"></span>
+                        </p>
+                        <p>
+                            <strong>Employment Status:</strong>
+                            <span id="displayEmploymentStatus"></span>
+                        </p>
+                        <p id="displayEmploymentCategory" style="display: none;">
+                            <strong>Employment Category:</strong>
+                            <span id="displayEmploymentCategoryValue"></span>
+                        </p>
+                        <p id="displayEmploymentType" style="display: none;">
+                            <strong>Employment Type:</strong>
+                            <span id="displayEmploymentTypeValue"></span>
+                        </p>
                     </fieldset>
-
-                    <!-- Employment Information Section -->
-                    <fieldset>
-                        <legend>EMPLOYMENT INFORMATION</legend>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="editEmploymentStatus">Employment Status</label>
-                                <select class="form-control" id="editEmploymentStatus" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Employee">Employee</option>
-                                    <option value="Unemployed">Unemployed</option>
-                                    <option value="Self-employed">Self-employed</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4" id="editCategoryGroup" style="display: none;">
-                                <label for="editEmploymentCategory">Employment Category</label>
-                                <select class="form-control" id="editEmploymentCategory">
-                                    <option value="">-- Select One --</option>
-                                    <option value="Government">Government</option>
-                                    <option value="Private">Private</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4" id="editTypeGroup" style="display: none;">
-                                <label for="editEmploymentType">Employment Type</label>
-                                <select class="form-control" id="editEmploymentType">
-                                    <option value="">-- Select One --</option>
-                                    <option value="Permanent/Regular">Permanent/Regular</option>
-                                    <option value="Seasonal">Seasonal</option>
-                                    <option value="Casual">Casual</option>
-                                    <option value="Emergency">Emergency</option>
-                                </select>
-                            </div>
-                        </div>
+                </div>
+                <!-- Bottom Row: Youth Classification + Age Group -->
+                <div style="display: flex; justify-content: space-between;">
+                    <!-- Left - Youth Classification -->
+                    <fieldset style="flex: 1; margin-right: 10px;">
+                        <legend>YOUTH CLASSIFICATION</legend>
+                        <div id="displayYouthClassification"></div>
                     </fieldset>
-
-                    <!-- KK Assembly Information -->
+                    <!-- Right - Youth Age Group -->
+                    <fieldset style="flex: 1; margin-left: 10px;">
+                        <legend>YOUTH AGE GROUP</legend>
+                        <div id="displayYouthAgeGroup"></div>
+                    </fieldset>
+                </div>
+                <!-- KK Assembly Information -->
+                <div style="margin-top: 20px;">
                     <fieldset>
                         <legend>KK ASSEMBLY INFORMATION</legend>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="editAssembly">Attended KK Assembly before?</label>
-                                <select class="form-control" id="editAssembly" required>
-                                    <option value="">-- Select One --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6" id="editSkYesFields" style="display: none;">
-                                <label for="editSkTimes">How many times?</label>
-                                <select class="form-control" id="editSkTimes">
-                                    <option value="">-- Select --</option>
-                                    <option value="1-2">1-2 Times</option>
-                                    <option value="3-4">3-4 Times</option>
-                                    <option value="5+">5 and above</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6" id="editSkNoFields" style="display: none;">
-                                <label for="editReason">Reason for not attending</label>
-                                <select class="form-control" id="editReason">
-                                    <option value="">-- Select --</option>
-                                    <option value="No KK Assembly Meeting">No KK Assembly Meeting</option>
-                                    <option value="Not interested to attend">Not interested to Attend</option>
-                                </select>
-                            </div>
+                        <p>
+                            <strong>Attended KK Assembly:</strong>
+                            <span id="displayAssemblyAttended"></span>
+                        </p>
+                        <div id="displayAssemblyTimes" style="display: none;">
+                            <p>
+                                <strong>Times Attended:</strong>
+                                <span id="displayAssemblyTimesValue"></span>
+                            </p>
                         </div>
-                    </fieldset>
-
-                    <!-- Youth Classification Section -->
-                    <fieldset>
-                        <legend>YOUTH CLASSIFICATION</legend>
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editYouthInSchool" name="editYouthClassification[]" value="In School Youth">
-                                    <label class="form-check-label" for="editYouthInSchool">In School Youth</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editYouthOutSchool" name="editYouthClassification[]" value="Out of School Youth">
-                                    <label class="form-check-label" for="editYouthOutSchool">Out of School Youth</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editYouthSpecificNeeds" name="editYouthClassification[]" value="Youth w/Specific Needs">
-                                    <label class="form-check-label" for="editYouthSpecificNeeds">Youth w/Specific Needs</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editYouthOther" name="editYouthClassification[]" value="Other">
-                                    <label class="form-check-label" for="editYouthOther">Others, specify:</label>
-                                    <input type="text" class="form-control" id="editYouthOtherText" style="display: none;">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <!-- Youth Age Group Section -->
-                    <fieldset>
-                        <legend>YOUTH AGE GROUP</legend>
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editAgeChild" name="editYouthAgeGroup[]" value="Child Youth (15−17 yrs old)">
-                                    <label class="form-check-label" for="editAgeChild">Child Youth (15−17 yrs old)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editAgeCore" name="editYouthAgeGroup[]" value="Core Youth (18−24 yrs old)">
-                                    <label class="form-check-label" for="editAgeCore">Core Youth (18−24 yrs old)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editAgeYoungAdult" name="editYouthAgeGroup[]" value="Young Adult (15−30 yrs old)">
-                                    <label class="form-check-label" for="editAgeYoungAdult">Young Adult (15−30 yrs old)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="editAgeOther" name="editYouthAgeGroup[]" value="Other">
-                                    <label class="form-check-label" for="editAgeOther">Others, specify:</label>
-                                    <input type="text" class="form-control" id="editAgeOtherText" style="display: none;">
-                                </div>
-                            </div>
+                        <div id="displayAssemblyReason" style="display: none;">
+                            <p>
+                                <strong>Reason for Not Attending:</strong>
+                                <span id="displayAssemblyReasonValue"></span>
+                            </p>
                         </div>
                     </fieldset>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
+                <button type="button" class="btn btn-primary" id="saveChangesBtn">Update</button>
             </div>
         </div>
     </div>

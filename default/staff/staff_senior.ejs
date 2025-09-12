@@ -379,190 +379,121 @@
 
             <div class="modal-body">
                 <form id="editResidentForm">
-                    <!-- Top Row: Personal Info + Contact Info -->
-                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        
-                        <!-- Left - Personal Information -->
-                        <fieldset>
-                            <legend>PERSONAL INFORMATION</legend>
-                            
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="editLastName">Last Name:</label>
-                                    <input type="text" class="form-control" id="editLastName">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="editFirstName">First Name:</label>
-                                    <input type="text" class="form-control" id="editFirstName">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="editMiddleName">Middle Name:</label>
-                                    <input type="text" class="form-control" id="editMiddleName">
-                                </div>
-                            </div>
+                   <!-- Top Row: Personal Information + Contact Information -->
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <!-- Left - Personal Information -->
+                    <fieldset class="compact-spacing">
+                        <legend>PERSONAL INFORMATION</legend>
+                        <p class="compact-spacing">
+                            <strong>Address:</strong> 
+                            <span id="displayBarangay"></span>, 
+                            <span id="displayPurok"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Birthday:</strong> 
+                            <span id="displayBirthday"></span> 
+                            (<span id="displayAge"></span> years old)
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Gender:</strong> 
+                            <span id="displayGender"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Marital Status:</strong> 
+                            <span id="displayCivilStatus"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Place of Birth:</strong> 
+                            <span id="displayPlaceOfBirth"></span>
+                        </p>
+                        <p id="displaySpouse" class="compact-spacing" style="display:none;">
+                            <strong>Spouse:</strong> 
+                            <span id="displaySpouseName"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Father:</strong> 
+                            <span id="displayFatherName"></span>
+                        </p>
+                        <p class="no-bottom-margin">
+                            <strong>Mother:</strong> 
+                            <span id="displayMotherName"></span>
+                        </p>
+                    </fieldset>
+                    
+                    <!-- Right - Contact Information -->
+                    <fieldset class="compact-spacing">
+                        <legend>CONTACT INFORMATION</legend>
+                        <div id="displayContacts">
+                            <!-- Contact information will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
+                </div>
 
-                            <div class="form-group">
-                                <label for="editBarangay">Barangay:</label>
-                                <input type="text" class="form-control" id="editBarangay">
-                            </div>
+                <!-- Middle Row: ID Information + Education & Skills -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <!-- Left - ID Information -->
+                    <fieldset class="compact-spacing">
+                        <legend>ID INFORMATION</legend>
+                        <p class="compact-spacing">
+                            <strong>OSCA ID:</strong> 
+                            <span id="displayOscaId"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>GSIS/SSS:</strong> 
+                            <span id="displayGsisSss"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>Philhealth:</strong> 
+                            <span id="displayPhilhealth"></span>
+                        </p>
+                        <p class="compact-spacing">
+                            <strong>TIN:</strong> 
+                            <span id="displayTin"></span>
+                        </p>
+                        <p class="no-bottom-margin">
+                            <strong>Other Govt ID:</strong> 
+                            <span id="displayOtherGovtId"></span>
+                        </p>
+                    </fieldset>
+                    
+                    <!-- Right - Education & Skills -->
+                    <fieldset class="compact-spacing">
+                        <legend>EDUCATION & SKILLS</legend>
+                        <p class="compact-spacing">
+                            <strong>Education:</strong> 
+                            <span id="displayEducation"></span>
+                        </p>
+                        <p class="no-bottom-margin">
+                            <strong>Skills:</strong> 
+                            <span id="displaySkills"></span>
+                        </p>
+                    </fieldset>
+                </div>
 
-                            <div class="form-group">
-                                <label for="editPurok">Purok:</label>
-                                <input type="text" class="form-control" id="editPurok">
-                            </div>
+                <!-- Bottom Row: Family Composition + Community Service -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <!-- Left - Family Composition -->
+                    <fieldset class="compact-spacing">
+                        <legend>FAMILY COMPOSITION</legend>
+                        <div id="displayChildren">
+                            <!-- Family composition will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="editBirthday">Birthday:</label>
-                                    <input type="date" class="form-control" id="editBirthday">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="editAge">Age:</label>
-                                    <input type="number" class="form-control" id="editAge" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="editGender">Gender:</label>
-                                <select class="form-control" id="editGender">
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="editCivilStatus">Civil Status:</label>
-                                <select class="form-control" id="editCivilStatus">
-                                    <option value="">Select Civil Status</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widowed">Widowed</option>
-                                    <option value="Separated">Separated</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group" id="editSpouseGroup" style="display:none;">
-                                <label for="editSpouseName">Spouse Name:</label>
-                                <input type="text" class="form-control" id="editSpouseName">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="editPlaceOfBirth">Place of Birth:</label>
-                                <input type="text" class="form-control" id="editPlaceOfBirth">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="editFatherName">Father's Name:</label>
-                                <input type="text" class="form-control" id="editFatherName">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="editMotherName">Mother's Name:</label>
-                                <input type="text" class="form-control" id="editMotherName">
-                            </div>
-                        </fieldset>
-
-                       <!-- Right - Contact Information -->
-																					<fieldset style="flex: 1; margin-left: 10px;">
-																						<legend>CONTACT INFORMATION</legend>
-																						<div class="form-group">
-																							<label>Primary Contact:</label>
-																							<div class="form-group">
-																								<label for="editPrimaryContactName">Name:</label>
-																								<input type="text" class="form-control" id="editPrimaryContactName" value="Maria Dela Cruz">
-																							</div>
-																							<div class="form-group">
-																								<label for="editPrimaryContactRelation">Relation:</label>
-																								<input type="text" class="form-control" id="editPrimaryContactRelation" value="Spouse">
-																							</div>
-																							<div class="form-group">
-																								<label for="editPrimaryContactPhone">Phone:</label>
-																								<input type="tel" class="form-control" id="editPrimaryContactPhone" value="09123456780">
-																							</div>
-																							<div class="form-group">
-																								<label for="editPrimaryContactEmail">Email:</label>
-																								<input type="email" class="form-control" id="editPrimaryContactEmail" value="maria@example.com">
-																							</div>
-																						</div>
-																					</fieldset>
+                    <!-- Right - Community Service -->
+                    <fieldset class="compact-spacing">
+                        <legend>COMMUNITY SERVICE</legend>
+                        <div id="displayCommunityService">
+                            <!-- Community service will be dynamically inserted here -->
+                        </div>
+                    </fieldset>
                     </div>
-
-                    <!-- Middle Row: ID Information + Education & Skills -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        
-                        <!-- Left - ID Information -->
-                        <fieldset>
-                            <legend>ID INFORMATION</legend>
-                            <div class="form-group">
-                                <label for="editOscaId">OSCA ID:</label>
-                                <input type="text" class="form-control" id="editOscaId">
-                            </div>
-                            <div class="form-group">
-                                <label for="editGsisSss">GSIS / SSS:</label>
-                                <input type="text" class="form-control" id="editGsisSss">
-                            </div>
-                            <div class="form-group">
-                                <label for="editPhilhealth">Philhealth:</label>
-                                <input type="text" class="form-control" id="editPhilhealth">
-                            </div>
-                            <div class="form-group">
-                                <label for="editTin">TIN:</label>
-                                <input type="text" class="form-control" id="editTin">
-                            </div>
-                            <div class="form-group">
-                                <label for="editOtherGovtId">Other Gov't ID:</label>
-                                <input type="text" class="form-control" id="editOtherGovtId">
-                            </div>
-                        </fieldset>
-
-                        <!-- Right - Education & Skills -->
-                        <fieldset>
-                            <legend>EDUCATION & SKILLS</legend>
-                            <div class="form-group">
-                                <label for="editEducation">Education:</label>
-                                <select class="form-control" id="editEducation">
-                                    <option value="">Select Education Level</option>
-                                    <option value="Elementary">Elementary</option>
-                                    <option value="High School">High School</option>
-                                    <option value="College Undergraduate">College Undergraduate</option>
-                                    <option value="College Graduate">College Graduate</option>
-                                    <option value="Vocational">Vocational</option>
-                                    <option value="Post Graduate">Post Graduate</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="editSkills">Skills:</label>
-                                <textarea class="form-control" id="editSkills" rows="3"></textarea>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <!-- Bottom Row: Family Composition + Community Service -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        
-                        <!-- Left - Family Composition -->
-                        <fieldset>
-                            <legend>FAMILY COMPOSITION</legend>
-                            <div id="editChildrenContainer">
-                                <!-- Existing family member fields will be dynamically inserted here -->
-                            </div>
-                        </fieldset>
-
-                        <!-- Right - Community Service -->
-                        <fieldset>
-                            <legend>COMMUNITY SERVICE</legend>
-                            <div id="editCommunityServiceContainer">
-                                <!-- Existing community service fields will be dynamically inserted here -->
-                            </div>
-                        </fieldset>
-                    </div>
-                </form>
-            </div>
-
+                    
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="updateBtn">Update</button>
+            </div>
+                </form>
             </div>
         </div>
     </div>

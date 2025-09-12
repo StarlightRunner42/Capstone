@@ -109,54 +109,60 @@
 							</div>
 						</div>
 				</fieldset>
+				
 				<fieldset id="contactInformation">
-					<legend>CONTACT INFORMATION</legend>
-					<!-- Contacts Container -->
-					<div id="contactsContainer">
-						<!-- Default Contact (can't be removed) -->
-						<div class="contact-entry" data-contact-id="1">
-							<div class="form-row">
-								<div class="form-group">
-									<label>Contact Type</label>
-									<select class="contact-type" name="contacts[1][type]" required>
-										<option value="primary">Primary</option>
-										<option value="secondary">Secondary</option>
-										<option value="emergency">Emergency</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label>Full Name</label>
-									<input type="text" name="contacts[1][name]" required>
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-group">
-									<label>Relationship</label>
-									<input type="text" name="contacts[1][relationship]" required>
-								</div>
-								<div class="form-group">
-									<label>Phone Number</label>
-									<input type="tel" name="contacts[1][phone]" required>
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-group">
-									<label>Email Address</label>
-									<input type="email" name="contacts[1][email]">
-								</div>
-								<div class="form-group">
-									<button type="button" class="delete-child" disabled>Remove</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Add Contact Button -->
-					<div class="form-row">
-						<div class="form-group">
-							<button type="button" id="addContact" class="add-child-btn">+ Add Another Contact</button>
-						</div>
-					</div>
-				</fieldset>
+                    <legend>CONTACT INFORMATION</legend>
+                    
+                    <!-- Contacts Container -->
+                    <div id="contactsContainer">
+                        <!-- Default Contact (can't be removed) -->
+                        <div class="contact-entry" data-contact-id="1">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Contact Type</label>
+                                    <select class="contact-type" name="contacts[1][type]" required>
+                                        <option value="primary">Primary</option>
+                                        <option value="secondary">Secondary</option>
+                                        <option value="emergency">Emergency</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" name="contacts[1][name]" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Relationship</label>
+                                    <input type="text" name="contacts[1][relationship]" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" name="contacts[1][phone]" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" name="contacts[1][email]">
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="delete-child" disabled>Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add Contact Button -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <button type="button" id="addContact" class="add-child-btn">+ Add Another Contact</button>
+                        </div>
+                    </div>
+                </fieldset>
+
 				<fieldset id="familyComposition">
 					<legend>Family Composition</legend>
 					<!-- Father's Name -->

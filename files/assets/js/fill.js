@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     input.addEventListener('blur', function() {
       if (!this.value.trim()) this.style.borderColor = 'red';
-    });
+    });   
   });
   
   // Show first tab
@@ -411,7 +411,7 @@ function convertToUppercase(inputElement) {
 // Apply uppercase conversion to all relevant input fields
 document.addEventListener('DOMContentLoaded', function() {
   // Get all text input fields (including text, email, tel, etc.)
-  const inputFields = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea');
+  const inputFields = document.querySelectorAll('input[type="text"], input[type="tel"], textarea');
   
   // Apply to each field
   inputFields.forEach(input => {
