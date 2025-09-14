@@ -307,12 +307,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Child information management
   document.addEventListener('DOMContentLoaded', function() {
     const childrenContainer = document.getElementById('childrenContainer');
-    
-    // Add child entry
+    let contactCounter = document.querySelectorAll('.contact-entry').length;
+
+    // Add child entry handler
     document.getElementById('addChild').addEventListener('click', function() {
         const childEntry = childrenContainer.querySelector('.child-entry');
         const newChild = childEntry.cloneNode(true);
-  
+        
         // Clear values
         newChild.querySelectorAll('input').forEach(input => input.value = '');
         newChild.querySelector('select').value = 'not_working';
@@ -321,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         childrenContainer.appendChild(newChild);
         attachWorkingStatusListeners();
     });
-  
+
     // Delete child entry (event delegation)
     childrenContainer.addEventListener('click', function(e) {
         if (e.target.classList.contains('delete-child')) {
@@ -331,12 +332,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-  
-    document.addEventListener('DOMContentLoaded', function() {
-    const contactsContainer = document.getElementById('contactsContainer');
-    let contactCounter = document.querySelectorAll('.contact-entry').length;
 
-    // ✅ Add new contact entry
+    // Add contact entry handler
     document.getElementById('addContact').addEventListener('click', function() {
         contactCounter++;
         const newContact = document.createElement('div');
@@ -382,25 +379,33 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         contactsContainer.appendChild(newContact);
+        
+        // Convert new inputs to uppercase
+        const newInputs = newContact.querySelectorAll('input[type="text"], input[type="tel"]');
+        newInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                convertToUppercase(this);
+            });
+        });
     });
 
-    // ✅ Remove contact entry using event delegation
+    // Remove contact entry handler using event delegation
     contactsContainer.addEventListener('click', function(e) {
-        if (e.target.classList.contains('remove-contact')) {
+        if (e.target.classList.contains('remove-contact') && !e.target.disabled) {
             const allContacts = contactsContainer.querySelectorAll('.contact-entry');
-
-            // Prevent removing the first default contact
             if (allContacts.length > 1) {
                 e.target.closest('.contact-entry').remove();
             } else {
-                alert('You must keep at least one contact.');
+                Swal.fire({
+                    title: "Cannot Remove",
+                    text: "You must keep at least one contact.",
+                    icon: "warning"
+                });
             }
         }
     });
-});
-
-  
-    // Initialize purok options if a barangay is already selected
+    
+    // Initialize purok options if barangay is selected
     if (document.getElementById('barangay').value) {
         updatePurokOptions();
     }
@@ -410,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize first tab
     showTab(0);
-  });
+});
   
   function attachWorkingStatusListeners() {
     document.querySelectorAll('select[name="childWorkingStatus[]"]').forEach(select => {
