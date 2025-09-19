@@ -31,16 +31,18 @@ router.get('/Admin', requireAuth, (req, res) => {
 });
 
 router.get('/Map', (req, res) => {
-    res.render('admin/arcgis_map');
+    res.render('admin/pwd_map');
 });
+
+router.get('/Maps', (req, res) => {
+    res.render('admin/senior_map');
+});
+
 
 router.get('/Analytics', requireAuth, (req, res) => {
     res.render('admin/admin_analytics');
 });
 
-router.get('/Dashboard', requireAuth,(req, res) => {
-    res.render('admin/dashboard');
-});
 
 router.get('/User', requireAuth, (req, res) => {
     res.render('admin/admin_update');
@@ -51,6 +53,14 @@ router.get('/index-youth', requireAuth,controller.renderYouth);
 
 router.get('/add_youth', requireAuth,(req, res) => {
     res.render('youth/staff_youth_add');
+});
+
+router.get('/Youth', requireAuth,(req, res) => {
+    res.render('youth/admin_youth');
+});
+
+router.get('/Mapss', (req, res) => {
+    res.render('youth/youth_map');
 });
 
 router.post('/create-youth', controller.createYouth);

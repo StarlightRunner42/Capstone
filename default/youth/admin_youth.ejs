@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>ADMIN-OSCA</title>
+		<title>ADMIN-LYDO</title>
 		<!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 10]>
@@ -107,14 +107,15 @@
 									</a>
 								</li>
 								<li>
-									<a href="/Maps" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
-										<i class="feather icon-user-plus"></i> View Map Senior </a>
+									<a href="/Mapss" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
+										<i class="feather icon-user-plus"></i> View Map LYDO </a>
 								</li>
 							</ul>
 							<ul class="nav-right">
 								<li class="user-profile header-notification">
 									<div class="dropdown-primary dropdown">
 										<div class="dropdown-toggle" data-toggle="dropdown">
+											
 											<i class="feather icon-chevron-down"></i>
 										</div>
 										<ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -145,13 +146,13 @@
 										</a>
 										<ul class="pcoded-submenu">
 											<li class="">
-												<a href="/Index">
-													<span class="">PDAO TABLE</span>
+												<a href="/index-youth">
+													<span class="">LYDO</span>
 												</a>
 											</li>
 											<li class="active">
-												<a href="/Analytics">
-													<span class="">OSCA TABLE</span>
+												<a href="/Youth">
+													<span class="">LYDO TABLE</span>
 												</a>
 											</li>
 										</ul>
@@ -163,7 +164,7 @@
 							<div class="pcoded-inner-content">
 								<div class="main-body">
 									<div class="page-wrapper">
-													
+
 										<div class="container">
 											<div class="stats-overview">
 												<div class="stat-card">
@@ -171,28 +172,28 @@
 													<div class="stat-label">Total Barangays</div>
 												</div>
 												<div class="stat-card">
-													<div class="stat-number" id="totalOSCA">2,198</div>
-													<div class="stat-label">Total OSCA Count</div>
+													<div class="stat-number" id="totalLYDO">2,198</div>
+													<div class="stat-label">Total LYDO Count</div>
 												</div>
 												<div class="stat-card">
-													<div class="stat-number" id="averageOSCA">137</div>
+													<div class="stat-number" id="averageLYDO">137</div>
 													<div class="stat-label">Average per Barangay</div>
 												</div>
 											</div>
-									
+
 											<div class="table-container">
 												<div class="table-header">
-													<h2 class="table-title">Barangay OSCA Table</h2>
+													<h2 class="table-title">Barangay LYDO Table</h2>
 													<div class="search-container">
 														<input type="text" class="search-input" id="searchInput" placeholder="🔍 Search barangays...">
 													</div>
 												</div>
-									
+
 												<table class="data-table" id="dataTable">
 													<thead>
 														<tr>
 															<th>Barangay Name</th>
-															<th>OSCA Count</th>
+															<th>LYDO Count</th>
 															<th>Action</th>
 														</tr>
 													</thead>
@@ -200,7 +201,7 @@
 														<!-- Table rows will be generated here -->
 													</tbody>
 												</table>
-									
+
 												<div id="noResults" class="no-results" style="display: none;">
 													<h3>🔍 No results found</h3>
 													<p>Try adjusting your search terms</p>
@@ -216,7 +217,7 @@
 												</div>
 											</div>
 										</div>
-									
+
 										<!-- Enhanced Modal -->
 										<div id="chartModal" class="modal">
 											<div class="modal-content">
@@ -253,7 +254,9 @@
 												</div>
 											</div>
 										</div>
-										 
+									
+
+										
 									<!-- latest activity end -->
 								</div>
 							</div>
@@ -342,7 +345,7 @@
 		<script src="/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 		<script type="text/javascript" src="/assets/pages/dashboard/crm-dashboard.min.js"></script>
 		<script type="text/javascript" src="/assets/js/script.js"></script>
-		<script type="text/javascript" src="/assets/js/analytics.js"></script>
+		<script type="text/javascript" src="/assets/js/youth.js"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 		<script>
