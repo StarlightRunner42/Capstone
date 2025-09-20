@@ -187,7 +187,29 @@
 															<td><%= youth.purok %> </td>
 															<td>
 																<div class="action-container">
-																	<button class="action action-primary" aria-label="View" data-toggle="modal" data-target="#viewModal">
+																	<button class="action action-primary view-youth-btn" aria-label="View" data-toggle="modal" data-target="#viewModal"
+																		data-first-name="<%= youth.first_name %>"
+																		data-middle-name="<%= youth.middle_name %>"
+																		data-last-name="<%= youth.last_name %>"
+																		data-contact="<%= youth.contact %>"
+																		data-birthday="<%= youth.birthday.toISOString().split('T')[0] %>"
+																		data-age="<%= youth.age %>"
+																		data-gender="<%= youth.gender %>"
+																		data-place-of-birth="<%= youth.place_of_birth %>"
+																		data-education-level="<%= youth.education_level %>"
+																		data-registered-sk="<%= youth.registered_sk %>"
+																		data-voted-sk="<%= youth.voted_sk %>"
+																		data-registered-national="<%= youth.registered_national %>"
+																		data-employment-status="<%= youth.employment_status %>"
+																		data-employment-category="<%= youth.employment_category %>"
+																		data-employment-type="<%= youth.employment_type %>"
+																		data-assembly="<%= youth.Assembly %>"
+																		data-sk-times="<%= youth.sk_times %>"
+																		data-reason="<%= youth.reason %>"
+																		data-youth-classification="<%= JSON.stringify(youth.youth_classification || []) %>"
+																		data-youth-classification-other="<%= youth.youth_classification_other || '' %>"
+																		data-youth-age-group="<%= JSON.stringify(youth.youth_age_group || []) %>"
+																		data-youth-age-group-other="<%= youth.youth_age_group_other || '' %>">
 																		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 																			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 																			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -623,6 +645,158 @@
 						table.columns(3).search(selectedPurok).draw();
 					}
 				});
+			});
+		</script>
+		
+		<!-- Modal Population Script -->
+		<script>
+			$(document).ready(function() {
+				// Event listener for view youth buttons
+				$(document).on('click', '.view-youth-btn', function() {
+					const $button = $(this);
+					
+					// Debug: Log all data attributes
+					console.log('Button data attributes:', {
+						'data-youth-classification': $button.data('youth-classification'),
+						'data-youth-age-group': $button.data('youth-age-group')
+					});
+					
+					// Get data from button attributes
+					const youthData = {
+						firstName: $button.data('first-name') || '',
+						middleName: $button.data('middle-name') || '',
+						lastName: $button.data('last-name') || '',
+						contact: $button.data('contact') || '',
+						birthday: $button.data('birthday') || '',
+						age: $button.data('age') || '',
+						gender: $button.data('gender') || '',
+						placeOfBirth: $button.data('place-of-birth') || '',
+						educationLevel: $button.data('education-level') || '',
+						registeredSk: $button.data('registered-sk') || '',
+						votedSk: $button.data('voted-sk') || '',
+						registeredNational: $button.data('registered-national') || '',
+						employmentStatus: $button.data('employment-status') || '',
+						employmentCategory: $button.data('employment-category') || '',
+						employmentType: $button.data('employment-type') || '',
+						assembly: $button.data('assembly') || '',
+						skTimes: $button.data('sk-times') || '',
+						reason: $button.data('reason') || '',
+						youthClassification: $button.data('youth-classification') || '[]',
+						youthClassificationOther: $button.data('youth-classification-other') || '',
+						youthAgeGroup: $button.data('youth-age-group') || '[]',
+						youthAgeGroupOther: $button.data('youth-age-group-other') || ''
+					};
+					
+					// Populate modal fields
+					populateYouthModal(youthData);
+				});
+				
+				// Function to populate the modal with youth data
+				function populateYouthModal(data) {
+					// Personal Information
+					$('#displayFirstName').text(data.firstName);
+					$('#displayMiddleName').text(data.middleName);
+					$('#displayLastName').text(data.lastName);
+					$('#displayContact').text(data.contact);
+					$('#displayBirthday').text(data.birthday);
+					$('#displayAge').text(data.age);
+					$('#displayGender').text(data.gender);
+					$('#displayPlaceOfBirth').text(data.placeOfBirth);
+					
+					// Educational Information
+					$('#displayEducationLevel').text(data.educationLevel);
+					$('#displaySkVoter').text(data.registeredSk);
+					$('#displayNationalVoter').text(data.registeredNational);
+					$('#displayEmploymentStatus').text(data.employmentStatus);
+					
+					// Handle SK Voted conditional display
+					if (data.registeredSk === 'Yes') {
+						$('#displaySkVoted').show();
+						$('#displaySkVotedStatus').text(data.votedSk);
+					} else {
+						$('#displaySkVoted').hide();
+					}
+					
+					// Handle Employment Category conditional display
+					if (data.employmentStatus === 'Employee') {
+						$('#displayEmploymentCategory').show();
+						$('#displayEmploymentCategoryValue').text(data.employmentCategory || 'N/A');
+					} else {
+						$('#displayEmploymentCategory').hide();
+					}
+					
+					// Handle Employment Type conditional display
+					if (data.employmentStatus === 'Employee') {
+						$('#displayEmploymentType').show();
+						$('#displayEmploymentTypeValue').text(data.employmentType || 'N/A');
+					} else {
+						$('#displayEmploymentType').hide();
+					}
+					
+					// Youth Classification
+					let youthClassificationHtml = '';
+					console.log('Youth Classification Data:', data.youthClassification);
+					
+					// Data is already parsed by jQuery, no need for JSON.parse
+					const classifications = data.youthClassification;
+					console.log('Classifications (already parsed):', classifications);
+					
+					if (Array.isArray(classifications) && classifications.length > 0) {
+						classifications.forEach(function(classification) {
+							if (classification && classification.trim() !== '') {
+								youthClassificationHtml += '<p><strong>' + classification + '</strong></p>';
+							}
+						});
+						if (data.youthClassificationOther && data.youthClassificationOther.trim() !== '') {
+							youthClassificationHtml += '<p><strong>Other: </strong>' + data.youthClassificationOther + '</p>';
+						}
+					}
+					
+					if (youthClassificationHtml === '') {
+						youthClassificationHtml = '<p>No classification data available</p>';
+					}
+					
+					$('#displayYouthClassification').html(youthClassificationHtml);
+					
+					// Youth Age Group
+					let youthAgeGroupHtml = '';
+					console.log('Youth Age Group Data:', data.youthAgeGroup);
+					
+					// Data is already parsed by jQuery, no need for JSON.parse
+					const ageGroups = data.youthAgeGroup;
+					console.log('Age Groups (already parsed):', ageGroups);
+					
+					if (Array.isArray(ageGroups) && ageGroups.length > 0) {
+						ageGroups.forEach(function(ageGroup) {
+							if (ageGroup && ageGroup.trim() !== '') {
+								youthAgeGroupHtml += '<p><strong>' + ageGroup + '</strong></p>';
+							}
+						});
+						if (data.youthAgeGroupOther && data.youthAgeGroupOther.trim() !== '') {
+							youthAgeGroupHtml += '<p><strong>Other: </strong>' + data.youthAgeGroupOther + '</p>';
+						}
+					}
+					
+					if (youthAgeGroupHtml === '') {
+						youthAgeGroupHtml = '<p>No age group data available</p>';
+					}
+					
+					$('#displayYouthAgeGroup').html(youthAgeGroupHtml);
+					
+					// KK Assembly Information
+					$('#displayAssemblyAttended').text(data.assembly);
+					
+					// Handle Assembly Times conditional display
+					if (data.assembly === 'Yes') {
+						$('#displayAssemblyTimes').show();
+						$('#displayAssemblyTimesValue').text(data.skTimes || 'N/A');
+						$('#displayAssemblyReason').hide();
+					} else {
+						$('#displayAssemblyTimes').hide();
+						$('#displayAssemblyReason').show();
+						$('#displayAssemblyReasonValue').text(data.reason || 'N/A');
+					}
+				}
 			});
 		</script>
 	</body>
