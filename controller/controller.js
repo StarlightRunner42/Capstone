@@ -703,6 +703,71 @@ exports.createYouth = async (req, res) => {
   }
 };
 
+exports.updateYouth = async (req, res) => {
+  try {
+    console.log('Update Youth - Request body:', req.body);
+    const { youthId, ...updateData } = req.body;
+    
+    console.log('Youth ID:', youthId);
+    console.log('Update data:', updateData);
+    
+    if (!youthId) {
+      return res.status(400).json({
+        message: 'Youth ID is required',
+        success: false
+      });
+    }
+
+    // Convert birthday to Date object
+    if (updateData.birthday) {
+      updateData.birthday = new Date(updateData.birthday);
+    }
+
+    // Clean up empty strings and convert to null for optional fields
+    const fieldsToClean = ['sk_times', 'reason', 'employment_category', 'employment_type', 'voted_sk', 'youth_classification_other', 'youth_age_group_other'];
+    fieldsToClean.forEach(field => {
+      if (updateData[field] === '' || updateData[field] === undefined) {
+        updateData[field] = null;
+      }
+    });
+
+    // Update the youth record
+    const updatedYouth = await Youth.findByIdAndUpdate(
+      youthId,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedYouth) {
+      return res.status(404).json({
+        message: 'Youth record not found',
+        success: false
+      });
+    }
+
+    res.status(200).json({
+      message: 'Youth record updated successfully',
+      data: updatedYouth,
+      success: true
+    });
+  } catch (err) {
+    console.error('Error updating youth:', err);
+
+    // Handle validation errors
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({
+        message: 'Validation Error',
+        errors: err.errors,
+        success: false
+      });
+    }
+
+    res.status(500).json({
+      message: 'Internal Server Error',
+      success: false
+    });
+  }
+};
 
 exports.getSilayBoundary = (req, res) => {
   try {

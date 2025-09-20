@@ -64,6 +64,7 @@ router.get('/Mapss', (req, res) => {
 });
 
 router.post('/create-youth', controller.createYouth);
+router.put('/update-youth', controller.updateYouth);
 
 
 // Staff routes
