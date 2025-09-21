@@ -1,21 +1,21 @@
-// ======= STATIC DATA =======
+// ======= STATIC DATA (FALLBACK) =======
 const staticBarangayData = [
-  { id: 1, name: "Barangay 1 ", lydoCount: 120 },
-  { id: 2, name: "Barangay 2 ", lydoCount: 85 },
-  { id: 3, name: "Barangay 3 ", lydoCount: 60 },
-  { id: 4, name: "Barangay 4 ", lydoCount: 45 },
-  { id: 5, name: "Barangay 5 ", lydoCount: 30 },
-  { id: 6, name: "Barangay Rizal ", lydoCount: 25 },
-  { id: 7, name: "Barangay Hawaian ", lydoCount: 15 },
-  { id: 8, name: "Barangay Patag ", lydoCount: 10 },
-  { id: 9, name: "Barangay Bagtic ", lydoCount: 5 },
-  { id: 10, name: "Barangay Guimbalaon ", lydoCount: 2 },
-  { id: 11, name: "Barangay Kapt Ramon   ", lydoCount: 2 },
-  { id: 12, name: "Barangay Lantad ", lydoCount: 2 },
-  { id: 13, name: "Barangay Balaring ", lydoCount: 2 },
-  { id: 14, name: "Barangay E Lopez ", lydoCount: 2 },
-  { id: 15, name: "Barangay Mambulac ", lydoCount: 2 },
-  { id: 16, name: "Barangay Guinhalaran", lydoCount: 2 },
+  { id: 1, name: "Barangay 1", lydoCount: 0 },
+  { id: 2, name: "Barangay 2", lydoCount: 0 },
+  { id: 3, name: "Barangay 3", lydoCount: 0 },
+  { id: 4, name: "Barangay 4", lydoCount: 0 },
+  { id: 5, name: "Barangay 5", lydoCount: 0 },
+  { id: 6, name: "Barangay Mambulac", lydoCount: 0 },
+  { id: 7, name: "Barangay Guinhalaran", lydoCount: 0 },
+  { id: 8, name: "Barangay E-Lopez", lydoCount: 0 },
+  { id: 9, name: "Barangay Bagtic", lydoCount: 0 },
+  { id: 10, name: "Barangay Balaring", lydoCount: 0 },
+  { id: 11, name: "Barangay Hawaiian", lydoCount: 0 },
+  { id: 12, name: "Barangay Patag", lydoCount: 0 },
+  { id: 13, name: "Barangay Kapt. Ramon", lydoCount: 0 },
+  { id: 14, name: "Barangay Guimbalaon", lydoCount: 0 },
+  { id: 15, name: "Barangay Rizal", lydoCount: 0 },
+  { id: 16, name: "Barangay Lantad", lydoCount: 0 },
 ];
 
 // ======= VARIABLES =======
@@ -53,8 +53,62 @@ function initializeData() {
   filteredData = [...allData];
 }
 
-// ======= LOAD STATIC DATA =======
-function loadLydoData() {
+// ======= LOAD DATA FROM API =======
+async function loadLydoData() {
+  try {
+    console.log('🔄 Loading youth data from API...');
+    
+    // Show loading state
+    showLoadingState();
+    
+    const response = await fetch('/api/analytics/youth');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    if (result.success && result.data) {
+      console.log('✅ Youth data loaded successfully:', result.data);
+      
+      // Update statistics
+      document.getElementById('totalBarangays').textContent = result.data.totalBarangays;
+      document.getElementById('totalLYDO').textContent = result.data.totalLYDO.toLocaleString();
+      document.getElementById('averageLYDO').textContent = result.data.averageLYDO;
+      
+      // Process barangay data
+      barangayData = {};
+      result.data.barangays.forEach(item => {
+        barangayData[item.id] = {
+          name: item.name,
+          lydoCount: item.lydoCount
+        };
+      });
+      
+      initializeData();
+      renderTable();
+      renderPagination();
+      
+      hideLoadingState();
+    } else {
+      throw new Error('Invalid response format');
+    }
+  } catch (error) {
+    console.error('❌ Error loading youth data:', error);
+    
+    // Fallback to static data
+    console.log('🔄 Falling back to static data...');
+    loadStaticData();
+    hideLoadingState();
+    
+    // Show error message
+    showErrorMessage('Failed to load youth data. Using fallback data.');
+  }
+}
+
+// ======= LOAD STATIC DATA (FALLBACK) =======
+function loadStaticData() {
   barangayData = {};
 
   staticBarangayData.forEach(item => {
@@ -67,6 +121,66 @@ function loadLydoData() {
   initializeData();
   renderTable();
   renderPagination();
+}
+
+// ======= LOADING STATE FUNCTIONS =======
+function showLoadingState() {
+  const tableBody = document.getElementById('tableBody');
+  tableBody.innerHTML = `
+    <tr>
+      <td colspan="3" style="text-align: center; padding: 40px;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+          <div class="spinner" style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          <p style="margin: 0; color: #666;">Loading youth data...</p>
+        </div>
+      </td>
+    </tr>
+  `;
+  
+  // Add spinner animation
+  if (!document.querySelector('#spinner-style')) {
+    const style = document.createElement('style');
+    style.id = 'spinner-style';
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+function hideLoadingState() {
+  // Loading state will be replaced by renderTable()
+}
+
+function showErrorMessage(message) {
+  // Create a temporary notification
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff6b6b;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 10000;
+    font-family: Arial, sans-serif;
+    max-width: 300px;
+  `;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.parentNode.removeChild(notification);
+    }
+  }, 5000);
 }
 
 // ======= RENDER TABLE =======

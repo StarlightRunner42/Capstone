@@ -1293,6 +1293,77 @@ exports.getYouthMapData = async (req, res) => {
   }
 };
 
+// Get Youth count per barangay for admin analytics
+exports.getYouthAnalytics = async (req, res) => {
+  try {
+    console.log('🔍 Fetching Youth analytics data from database...');
+    
+    // Get Youth count by barangay
+    const youthCounts = await Youth.aggregate([
+      {
+        $group: {
+          _id: "$barangay",
+          lydoCount: { $sum: 1 },
+          maleCount: { $sum: { $cond: [{ $eq: ["$gender", "Male"] }, 1, 0] } },
+          femaleCount: { $sum: { $cond: [{ $eq: ["$gender", "Female"] }, 1, 0] } },
+          skRegistered: { $sum: { $cond: [{ $eq: ["$registered_sk", "Yes"] }, 1, 0] } },
+          skVoted: { $sum: { $cond: [{ $eq: ["$voted_sk", "Yes"] }, 1, 0] } },
+          nationalRegistered: { $sum: { $cond: [{ $eq: ["$registered_national", "Yes"] }, 1, 0] } }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    console.log('📊 Youth counts from database:', youthCounts);
+
+    // Define all barangays in Silay City (matching the map data)
+    const allBarangays = [
+      "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5",
+      "Barangay Mambulac", "Barangay Guinhalaran", "Barangay E-Lopez", "Barangay Bagtic",
+      "Barangay Balaring", "Barangay Hawaiian", "Barangay Patag",
+      "Barangay Kapt. Ramon", "Barangay Guimbalaon", "Barangay Rizal", "Barangay Lantad"
+    ];
+
+    // Create result array with all barangays, including those with 0 count
+    const result = allBarangays.map((barangayName, index) => {
+      const countData = youthCounts.find(item => 
+        item._id && item._id.toLowerCase() === barangayName.toLowerCase()
+      );
+      
+      return {
+        id: index + 1,
+        name: barangayName,
+        lydoCount: countData ? countData.lydoCount : 0,
+        maleCount: countData ? countData.maleCount : 0,
+        femaleCount: countData ? countData.femaleCount : 0,
+        skRegistered: countData ? countData.skRegistered : 0,
+        skVoted: countData ? countData.skVoted : 0,
+        nationalRegistered: countData ? countData.nationalRegistered : 0
+      };
+    });
+
+    // Calculate totals
+    const totalLYDO = result.reduce((sum, item) => sum + item.lydoCount, 0);
+    const totalBarangays = result.length;
+    const averageLYDO = totalBarangays > 0 ? Math.round(totalLYDO / totalBarangays) : 0;
+
+    console.log('✅ Youth analytics data prepared:', { totalLYDO, totalBarangays, averageLYDO });
+
+    res.json({ 
+      success: true, 
+      data: {
+        barangays: result,
+        totalLYDO,
+        totalBarangays,
+        averageLYDO
+      }
+    });
+  } catch (err) {
+    console.error('❌ Error fetching Youth analytics data:', err);
+    res.status(500).json({ success: false, message: 'Failed to load Youth analytics data' });
+  }
+};
+
 // Get senior count data by barangay for the map
 exports.getSeniorMapData = async (req, res) => {
   try {

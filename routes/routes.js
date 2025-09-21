@@ -55,7 +55,7 @@ router.get('/add_youth', requireAuth,(req, res) => {
     res.render('youth/staff_youth_add');
 });
 
-router.get('/Youth', requireAuth,(req, res) => {
+router.get('/Youth',(req, res) => {
     res.render('youth/admin_youth');
 });
 
@@ -113,6 +113,7 @@ router.post('/add-data', controller.createResident);
 // Analytics APIs
 router.get('/api/analytics/osca', requireAuth, controller.getOscaAnalytics);
 router.get('/api/analytics/pdao', requireAuth, controller.getPdaoAnalytics);
+router.get('/api/analytics/youth', controller.getYouthAnalytics);
 
 
 //ArcGIS routes
