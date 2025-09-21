@@ -549,6 +549,134 @@ exports.renderSeniorForm = async (req, res) => {
   }
   };
 
+exports.updateSenior = async (req, res) => {
+  try {
+    const { residentId, ...updateData } = req.body;
+    
+    if (!residentId) {
+      return res.status(400).json({
+        success: false,
+        error: "Resident ID is required"
+      });
+    }
+
+    // Build the update object based on the nested structure
+    const updateObject = {};
+
+    // Handle identifying_information fields
+    if (updateData.first_name || updateData.middle_name || updateData.last_name) {
+      updateObject['identifying_information.name.first_name'] = updateData.first_name;
+      updateObject['identifying_information.name.middle_name'] = updateData.middle_name;
+      updateObject['identifying_information.name.last_name'] = updateData.last_name;
+    }
+
+    if (updateData.barangay || updateData.purok) {
+      updateObject['identifying_information.address.barangay'] = updateData.barangay;
+      updateObject['identifying_information.address.purok'] = updateData.purok;
+    }
+
+    if (updateData.gender) {
+      updateObject['identifying_information.gender'] = updateData.gender;
+    }
+
+    if (updateData.birthday) {
+      updateObject['identifying_information.date_of_birth'] = new Date(updateData.birthday);
+    }
+
+    if (updateData.age) {
+      updateObject['identifying_information.age'] = parseInt(updateData.age);
+    }
+
+    if (updateData.marital_status) {
+      updateObject['identifying_information.marital_status'] = updateData.marital_status;
+    }
+
+    if (updateData.place_of_birth) {
+      updateObject['identifying_information.place_of_birth'] = updateData.place_of_birth;
+    }
+
+    // Handle ID information
+    if (updateData.osca_id) {
+      updateObject['identifying_information.osca_id_number'] = updateData.osca_id;
+    }
+
+    if (updateData.gsis_sss) {
+      updateObject['identifying_information.gsis_sss'] = updateData.gsis_sss;
+    }
+
+    if (updateData.philhealth) {
+      updateObject['identifying_information.philhealth'] = updateData.philhealth;
+    }
+
+    if (updateData.tin) {
+      updateObject['identifying_information.tin'] = updateData.tin;
+    }
+
+    // Handle family composition
+    if (updateData.father_name) {
+      const fatherParts = updateData.father_name.trim().split(' ');
+      if (fatherParts.length >= 2) {
+        updateObject['family_composition.father.first_name'] = fatherParts[0];
+        updateObject['family_composition.father.last_name'] = fatherParts[fatherParts.length - 1];
+        if (fatherParts.length > 2) {
+          updateObject['family_composition.father.middle_name'] = fatherParts.slice(1, -1).join(' ');
+        }
+      }
+    }
+
+    if (updateData.mother_name) {
+      const motherParts = updateData.mother_name.trim().split(' ');
+      if (motherParts.length >= 2) {
+        updateObject['family_composition.mother.first_name'] = motherParts[0];
+        updateObject['family_composition.mother.last_name'] = motherParts[motherParts.length - 1];
+        if (motherParts.length > 2) {
+          updateObject['family_composition.mother.middle_name'] = motherParts.slice(1, -1).join(' ');
+        }
+      }
+    }
+
+    if (updateData.spouse_name && updateData.marital_status === 'Married') {
+      updateObject['family_composition.spouse.name'] = updateData.spouse_name;
+    }
+
+    // Handle contacts
+    if (updateData.contacts && Array.isArray(updateData.contacts)) {
+      updateObject['identifying_information.contacts'] = updateData.contacts.filter(contact => 
+        contact.name && contact.name.trim() !== ''
+      );
+    }
+
+    console.log('Update object:', updateObject);
+
+    // Update the senior citizen record
+    const updatedSenior = await SeniorCitizen.findByIdAndUpdate(
+      residentId,
+      { $set: updateObject },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedSenior) {
+      return res.status(404).json({
+        success: false,
+        error: "Senior citizen not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Senior citizen updated successfully",
+      data: updatedSenior
+    });
+
+  } catch (error) {
+    console.error('Error updating senior citizen:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || "Internal server error"
+    });
+  }
+};
+
   exports.renderPWDForm = async (req, res) => {
  try {
     const barangays = await fetchBarangays();
