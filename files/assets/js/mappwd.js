@@ -76,7 +76,7 @@ define([
     }
     
     .data-table th {
-      background: linear-gradient(145deg, #3498db, #2980b9);
+      background: linear-gradient(145deg, #e74c3c, #c0392b);
       color: white;
       padding: 8px 6px;
       text-align: left;
@@ -97,10 +97,10 @@ define([
     }
     
     .data-table tr:hover {
-      background-color: #e8f4fd;
+      background-color: #fdeaea;
     }
     
-    .senior-count {
+    .pwd-count {
       font-weight: 700;
       color: #e74c3c;
     }
@@ -136,7 +136,7 @@ define([
     .stat-item {
       text-align: center;
       padding: 12px;
-      background: rgba(52, 152, 219, 0.1);
+      background: rgba(231, 76, 60, 0.1);
       border-radius: 10px;
     }
     
@@ -197,10 +197,9 @@ define([
       opacity: 1;
     }
     
-    
     /* Custom popup styling */
     .esri-popup .esri-popup-header {
-      background: linear-gradient(145deg, #3498db, #2980b9);
+      background: linear-gradient(145deg, #e74c3c, #c0392b);
     }
     
     .esri-popup .esri-popup-header .esri-title {
@@ -245,11 +244,10 @@ define([
   const compass = new Compass({
     view: view
   });
-  view.ui.add(compass, "top-left");10.80240
+  view.ui.add(compass, "top-left");
 
   // 4️⃣ Enhanced barangay data - will be loaded from API
   let barangays = [];
-
 
   // 5️⃣ Load Silay City Boundary with enhanced styling
   fetch("/silay-boundary")
@@ -264,9 +262,9 @@ define([
           type: "simple",
           symbol: {
             type: "simple-fill",
-            color: [52, 152, 219, 0.1],
+            color: [231, 76, 60, 0.1],
             outline: { 
-              color: [52, 152, 219, 0.8], 
+              color: [231, 76, 60, 0.8], 
               width: 3,
               style: "dash"
             }
@@ -292,11 +290,11 @@ define([
 
       // Enhanced color coding with gradients
       let markerColor, markerSize, category;
-      if (b.seniorCount >= 70) {
+      if (b.pwdCount >= 20) {
         markerColor = [231, 76, 60]; // Modern red
         markerSize = "16px";
         category = "High";
-      } else if (b.seniorCount >= 40) {
+      } else if (b.pwdCount >= 10) {
         markerColor = [241, 196, 15]; // Modern orange
         markerSize = "14px";
         category = "Medium";
@@ -317,16 +315,18 @@ define([
         style: "circle"
       };
 
-      const seniorPercentage = ((b.seniorCount / b.population) * 100).toFixed(1);
+      const pwdPercentage = ((b.pwdCount / b.population) * 100).toFixed(1);
 
       const pointGraphic = new Graphic({
         geometry: point,
         symbol: markerSymbol,
         attributes: { 
           name: b.name, 
-          seniorCount: b.seniorCount,
+          pwdCount: b.pwdCount,
+          maleCount: b.maleCount,
+          femaleCount: b.femaleCount,
           population: b.population,
-          percentage: seniorPercentage,
+          percentage: pwdPercentage,
           category: category
         },
         popupTemplate: {
@@ -335,19 +335,29 @@ define([
             <div style="padding: 10px; font-family: 'Segoe UI', sans-serif;">
               <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px;">
                 <div style="text-align: center; padding: 10px; background: #ecf0f1; border-radius: 8px;">
-                  <strong style="font-size: 18px; color: #2c3e50;">{seniorCount}</strong>
-                  <div style="font-size: 12px; color: #7f8c8d;">Seniors</div>
+                  <strong style="font-size: 18px; color: #2c3e50;">{pwdCount}</strong>
+                  <div style="font-size: 12px; color: #7f8c8d;">PWDs</div>
                 </div>
                 <div style="text-align: center; padding: 10px; background: #ecf0f1; border-radius: 8px;">
                   <strong style="font-size: 18px; color: #2c3e50;">{percentage}%</strong>
                   <div style="font-size: 12px; color: #7f8c8d;">of Population</div>
                 </div>
               </div>
-              <div style="padding: 8px; background: linear-gradient(90deg, #3498db, #2980b9); color: white; border-radius: 6px; text-align: center;">
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px;">
+                <div style="text-align: center; padding: 8px; background: #3498db; color: white; border-radius: 6px;">
+                  <strong>{maleCount}</strong>
+                  <div style="font-size: 10px;">Male</div>
+                </div>
+                <div style="text-align: center; padding: 8px; background: #e91e63; color: white; border-radius: 6px;">
+                  <strong>{femaleCount}</strong>
+                  <div style="font-size: 10px;">Female</div>
+                </div>
+              </div>
+              <div style="padding: 8px; background: linear-gradient(90deg, #e74c3c, #c0392b); color: white; border-radius: 6px; text-align: center;">
                 <strong>Population: {population}</strong>
               </div>
               <div style="margin-top: 10px; font-size: 12px; color: #7f8c8d; text-align: center;">
-                Category: <strong>{category}</strong> Senior Concentration
+                Category: <strong>{category}</strong> PWD Concentration
               </div>
             </div>
           `
@@ -362,7 +372,7 @@ define([
   const headerContainer = document.createElement("div");
   headerContainer.className = "header-container modern-panel";
   headerContainer.innerHTML = `
-    <h1 class="header-title">Senior Distribution Map</h1>
+    <h1 class="header-title">PWD Distribution Map</h1>
     <p class="header-subtitle">Silay City, Negros Occidental</p>
   `;
   view.container.appendChild(headerContainer);
@@ -372,19 +382,19 @@ define([
   legendContainer.className = "legend-container modern-panel";
   legendContainer.innerHTML = `
     <div class="legend-title">
-      <span>📍</span> Senior Concentration Levels
+      <span>📍</span> PWD Concentration Levels
     </div>
     <div class="legend-item">
       <div class="legend-dot" style="background: #e74c3c;"></div>
-      <span><strong>High</strong> (70+ Seniors)</span>
+      <span><strong>High</strong> (20+ PWDs)</span>
     </div>
     <div class="legend-item">
       <div class="legend-dot" style="background: #f1c40f;"></div>
-      <span><strong>Medium</strong> (40-69 Seniors)</span>
+      <span><strong>Medium</strong> (10-19 PWDs)</span>
     </div>
     <div class="legend-item">
       <div class="legend-dot" style="background: #2ecc71;"></div>
-      <span><strong>Low</strong> (0-39 Seniors)</span>
+      <span><strong>Low</strong> (0-9 PWDs)</span>
     </div>
   `;
   view.container.appendChild(legendContainer);
@@ -396,28 +406,30 @@ define([
 
   // Function to create and update data table
   function updateDataTable(barangayData) {
-    // Sort by senior count descending
-    const sortedData = [...barangayData].sort((a, b) => b.seniorCount - a.seniorCount);
+    // Sort by PWD count descending
+    const sortedData = [...barangayData].sort((a, b) => b.pwdCount - a.pwdCount);
     
     const tableHTML = `
       <div class="legend-title">
-        <span>📊</span> Senior Count by Barangay
+        <span>📊</span> PWD Count by Barangay
       </div>
       <table class="data-table">
         <thead>
           <tr>
             <th>Barangay</th>
-            <th>Seniors</th>
+            <th>PWDs</th>
+            <th>M/F</th>
             <th>%</th>
           </tr>
         </thead>
         <tbody>
           ${sortedData.map(barangay => {
-            const percentage = ((barangay.seniorCount / barangay.population) * 100).toFixed(1);
+            const percentage = ((barangay.pwdCount / barangay.population) * 100).toFixed(1);
             return `
               <tr>
                 <td>${barangay.name}</td>
-                <td class="senior-count">${barangay.seniorCount}</td>
+                <td class="pwd-count">${barangay.pwdCount}</td>
+                <td style="font-size: 10px;">${barangay.maleCount}M/${barangay.femaleCount}F</td>
                 <td class="percentage">${percentage}%</td>
               </tr>
             `;
@@ -436,37 +448,47 @@ define([
 
   // Function to update statistics panel
   function updateStatistics(barangayData) {
-    const totalSeniors = barangayData.reduce((sum, b) => sum + b.seniorCount, 0);
+    const totalPwds = barangayData.reduce((sum, b) => sum + b.pwdCount, 0);
+    const totalMales = barangayData.reduce((sum, b) => sum + b.maleCount, 0);
+    const totalFemales = barangayData.reduce((sum, b) => sum + b.femaleCount, 0);
     const totalPopulation = barangayData.reduce((sum, b) => sum + b.population, 0);
-    const averageSeniorPercentage = ((totalSeniors / totalPopulation) * 100).toFixed(1);
-    const highestSenior = Math.max(...barangayData.map(b => b.seniorCount));
-    const highestBarangay = barangayData.find(b => b.seniorCount === highestSenior).name;
+    const averagePwdPercentage = ((totalPwds / totalPopulation) * 100).toFixed(1);
+    const highestPwd = Math.max(...barangayData.map(b => b.pwdCount));
+    const highestBarangay = barangayData.find(b => b.pwdCount === highestPwd).name;
 
     statsContainer.innerHTML = `
       <div class="legend-title">
-         Senior Statistics Overview
+         PWD Statistics Overview
       </div>
       <div class="stats-grid">
         <div class="stat-item">
-          <span class="stat-number">${totalSeniors}</span>
-          <div class="stat-label">Total Seniors</div>
+          <span class="stat-number">${totalPwds}</span>
+          <div class="stat-label">Total PWDs</div>
         </div>
         <div class="stat-item">
           <span class="stat-number">${barangayData.length}</span>
           <div class="stat-label">Barangays</div>
         </div>
         <div class="stat-item">
-          <span class="stat-number">${averageSeniorPercentage}%</span>
+          <span class="stat-number">${totalMales}</span>
+          <div class="stat-label">Male PWDs</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">${totalFemales}</span>
+          <div class="stat-label">Female PWDs</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">${averagePwdPercentage}%</span>
           <div class="stat-label">Average Rate</div>
         </div>
         <div class="stat-item">
-          <span class="stat-number">${highestSenior}</span>
+          <span class="stat-number">${highestPwd}</span>
           <div class="stat-label">Highest Count</div>
         </div>
       </div>
-      <div style="margin-top: 15px; padding: 10px; background: rgba(46, 204, 113, 0.1); border-radius: 8px;">
-        <div style="font-size: 12px; color: #27ae60; font-weight: 600;">
-          Highest Senior Population: ${highestBarangay}
+      <div style="margin-top: 15px; padding: 10px; background: rgba(231, 76, 60, 0.1); border-radius: 8px;">
+        <div style="font-size: 12px; color: #e74c3c; font-weight: 600;">
+          Highest PWD Population: ${highestBarangay}
         </div>
       </div>
     `;
@@ -484,10 +506,10 @@ define([
       <span>🎯</span> Quick Guide
     </div>
     <div style="font-size: 13px; line-height: 1.6; color: #34495e;">
-      <p><strong>Click</strong> markers to view detailed Senior information</p>
+      <p><strong>Click</strong> markers to view detailed PWD information</p>
       <p><strong>Zoom</strong> and pan to explore different areas</p>
       <p><strong>Toggle</strong> basemap for satellite view</p>
-      <p><strong>Senior data</strong> represents registered seniors per barangay</p>
+      <p><strong>PWD data</strong> represents registered PWDs per barangay</p>
     </div>
   `;
 
@@ -507,7 +529,7 @@ define([
 
   // 12️⃣ Add loading animation (optional)
   view.when(() => {
-    console.log("🗺️ Silay City Senior Map loaded successfully!");
+    console.log("🗺️ Silay City PWD Map loaded successfully!");
 
     // Add subtle entrance animation
     const panels = document.querySelectorAll('.modern-panel');
@@ -524,19 +546,19 @@ define([
     });
   });
 
-  // 13️⃣ Dynamic Senior data loader (enhanced)
-  fetch("/senior-map-data")
+  // 13️⃣ Dynamic PWD data loader (enhanced)
+  fetch("/pwd-map-data")
     .then(res => res.json())
     .then(response => {
       if (response.success) {
-        console.log("📊 Loading real-time Senior data from database...");
+        console.log("📊 Loading real-time PWD data from database...");
         console.log("🗄️ Raw response from server:", response);
         
         barangays = response.data;
         
         // Log each barangay's data
         barangays.forEach(barangay => {
-          console.log(`📍 ${barangay.name}: ${barangay.seniorCount} seniors (${((barangay.seniorCount / barangay.population) * 100).toFixed(1)}% of population)`);
+          console.log(`📍 ${barangay.name}: ${barangay.pwdCount} PWDs (${barangay.maleCount}M, ${barangay.femaleCount}F) (${((barangay.pwdCount / barangay.population) * 100).toFixed(1)}% of population)`);
         });
         
         // Add markers with real data
@@ -548,12 +570,11 @@ define([
         // Update data table
         updateDataTable(barangays);
         
-        console.log("✅ Senior data loaded successfully from database:", barangays);
+        console.log("✅ PWD data loaded successfully from database:", barangays);
       } else {
-        console.error("❌ Error loading Senior data:", response.message);
+        console.error("❌ Error loading PWD data:", response.message);
       }
     })
-    .catch(err => console.error("❌ Error loading Senior data:", err));
-
+    .catch(err => console.error("❌ Error loading PWD data:", err));
 
 });

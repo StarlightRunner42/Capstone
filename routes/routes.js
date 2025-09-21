@@ -118,5 +118,8 @@ router.get('/api/analytics/pdao', requireAuth, controller.getPdaoAnalytics);
 //ArcGIS routes
 router.get("/silay-boundary", controller.getSilayBoundary);
 router.get("/villages", controller.getVillages);
+router.get("/senior-map-data", controller.getSeniorMapData);
+router.get("/pwd-map-data", controller.getPwdMapData);
+router.get("/debug-senior-data", controller.debugSeniorData);
 
 module.exports = router;
