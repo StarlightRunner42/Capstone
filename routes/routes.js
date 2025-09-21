@@ -75,6 +75,7 @@ router.get('/index-staff', requireAuth, (req, res) => {
 
 
 router.post('/register-pwd', controller.registerPwd);
+router.post('/update-pwd', requireAuth, controller.updatePwd);
 
 router.get('/add_senior', controller.renderAddSenior);
 

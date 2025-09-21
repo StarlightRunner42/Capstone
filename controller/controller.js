@@ -370,6 +370,88 @@ exports.registerPwd = async (req, res) => {
     });
   }
 };
+
+exports.updatePwd = async (req, res) => {
+  try {
+    console.log('Update PWD - Request body:', req.body);
+    const { pwd_id, ...updateData } = req.body;
+    
+    console.log('PWD ID:', pwd_id);
+    console.log('Update data:', updateData);
+    console.log('Education level received:', updateData.education_level);
+    console.log('Employment status received:', updateData.employment_status);
+    
+    if (!pwd_id) {
+      return res.status(400).json({
+        message: 'PWD ID is required',
+        success: false
+      });
+    }
+
+    // Convert birthday to Date object if provided
+    if (updateData.birthday) {
+      updateData.birthday = new Date(updateData.birthday);
+    }
+
+    // Convert age to number if provided
+    if (updateData.age) {
+      updateData.age = parseInt(updateData.age);
+    }
+
+    // Disability arrays are now sent directly as arrays from the frontend
+    // No need to parse JSON strings since we're sending JSON data
+
+    // Clean up empty strings and convert to null for optional fields only
+    // Don't clean required fields to avoid validation errors
+    const fieldsToClean = ['middle_name', 'place_of_birth', 'spouse_name', 
+                          'fatherFirstName', 'fatherMiddleName', 'fatherLastName', 'fatherExtension',
+                          'motherFirstName', 'motherMiddleName', 'motherLastName',
+                          'employment_category', 'employment_type',
+                          'disability_other_text', 'cause_other_text'];
+    
+    fieldsToClean.forEach(field => {
+      if (updateData[field] === '' || updateData[field] === undefined) {
+        updateData[field] = null;
+      }
+    });
+
+    // Update the PWD record
+    const updatedPwd = await PWD.findByIdAndUpdate(
+      pwd_id,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedPwd) {
+      return res.status(404).json({
+        message: 'PWD record not found',
+        success: false
+      });
+    }
+
+    res.status(200).json({
+      message: 'PWD record updated successfully',
+      data: updatedPwd,
+      success: true
+    });
+  } catch (err) {
+    console.error('Error updating PWD:', err);
+
+    // Handle validation errors
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({
+        message: 'Validation Error',
+        errors: err.errors,
+        success: false
+      });
+    }
+
+    res.status(500).json({
+      message: 'Internal Server Error',
+      success: false
+    });
+  }
+};
   
 // Analytics: OSCA (Senior Citizens) counts by barangay
 exports.getOscaAnalytics = async (req, res) => {

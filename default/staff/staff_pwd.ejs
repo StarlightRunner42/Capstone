@@ -194,6 +194,12 @@
 																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
 																	</svg>
 																</button>
+																<button class="action action-edit edit-btn" aria-label="Edit" data-toggle="modal" data-target="#editModal"
+																	data-pwd='<%= JSON.stringify(pwd).replace(/'/g, "&apos;") %>'>
+																	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+																	</svg>
+																</button>
 															
 															<!-- View Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
@@ -332,11 +338,6 @@
             <div class="modal-footer flex-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Add ASS</button>
-				<button class="action action-success" aria-label="Edit" data-toggle="modal" data-target="#editModal">
-																	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-																	</svg>
-																</button>
 															</div>
 
             </div>
@@ -345,140 +346,275 @@
 </div>
 															<!-- Edit Modal -->
 															<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
-																<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 																	<div class="modal-content">
 																		<div class="modal-header">
-																			<h5 class="modal-title" id="editModalTitle">Edit Resident Information</h5>
+																			<h5 class="modal-title" id="editModalTitle">Edit PWD Information</h5>
 																			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																				<span aria-hidden="true">&times;</span>
 																			</button>
 																		</div>
 
 																		<div class="modal-body">
-																			<form id="editResidentForm">
-																			<!-- Top Row: Personal Information + Contact Information -->
-																			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-																				<!-- Left - Personal Information -->
-																				<fieldset class="compact-spacing">
-																					<legend>PERSONAL INFORMATION</legend>
-																					<p class="compact-spacing">
-																						<strong>Address:</strong>
-																						<span id="displayBarangay"></span> 
-																						<span id="displayPurok"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>Birthday:</strong>
-																						<span id="displayBirthday"></span> 
-																						(<span id="displayAge"></span> years old)
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>Gender:</strong>
-																						<span id="displayGender"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>Civil Status:</strong>
-																						<span id="displayCivilStatus"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>Place of Birth:</strong>
-																						<span id="displayPlaceOfBirth"></span>
-																					</p>
-																					<p id="displaySpouse" class="compact-spacing" style="display: none;">
-																						<strong>Spouse Name:</strong>
-																						<span id="displaySpouseName"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>Father's Name:</strong>
-																						<span id="displayFatherName"></span>
-																					</p>
-																					<p class="no-bottom-margin">
-																						<strong>Mother's Name:</strong>
-																						<span id="displayMotherName"></span>
-																					</p>
-																				</fieldset>
+																			<form id="editPwdForm">
+																				<input type="hidden" id="editPwdId" name="pwd_id">
 																				
-																				<!-- Right - Contact Information -->
-																				<fieldset class="compact-spacing">
-																					<legend>CONTACT INFORMATION</legend>
-																					<div id="displayContacts">
-																						<!-- Contacts will be dynamically inserted here -->
+																				<!-- Personal Information Section -->
+																				<fieldset class="mb-4">
+																					<legend>Personal Information</legend>
+																					<div class="row">
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editFirstName">First Name *</label>
+																								<input type="text" class="form-control" id="editFirstName" name="first_name" required>
 																					</div>
-																				</fieldset>
 																			</div>
-															
-																			<!-- Middle Row: ID Information + Education -->
-																			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-																				<!-- Left - ID Information -->
-																				<fieldset class="compact-spacing">
-																					<legend>ID INFORMATION</legend>
-																					<p class="compact-spacing">
-																						<strong>SSS No:</strong>
-																						<span id="displaySSS"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>GSIS No:</strong>
-																						<span id="displayGSIS"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>PSN No:</strong>
-																						<span id="displayPSN"></span>
-																					</p>
-																					<p class="no-bottom-margin">
-																						<strong>Philhealth No:</strong>
-																						<span id="displayPhilhealth"></span>
-																					</p>
-																				</fieldset>
-																				
-																				<!-- Right - Education Information -->
-																				<fieldset class="compact-spacing">
-																					<legend>EDUCATION & EMPLOYMENT</legend>
-																					<p class="compact-spacing">
-																						<strong>Education Level:</strong>
-																						<span id="displayEducationLevel"></span>
-																					</p>
-																					<p class="compact-spacing">
-																						<strong>Employment Status:</strong>
-																						<span id="displayEmploymentStatus"></span>
-																					</p>
-																					<p id="displayEmploymentCategory" class="compact-spacing" style="display: none;">
-																						<strong>Employment Category:</strong>
-																						<span id="displayEmpCategory"></span>
-																					</p>
-																					<p id="displayEmploymentType" class="no-bottom-margin" style="display: none;">
-																						<strong>Employment Type:</strong>
-																						<span id="displayEmpType"></span>
-																					</p>
-																				</fieldset>
-																			</div>
-															
-																			<!-- Bottom Row: Disability Information -->
-																			<fieldset class="no-bottom-margin">
-																				<legend>DISABILITY INFORMATION</legend>
-																				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-																					<!-- Left - Types of Disability -->
-																					<div>
-																						<h6 style="margin-bottom: 0.5rem; font-weight: 600; color: #495057;">Types of Disability</h6>
-																						<div id="displayDisabilityTypes">
-																							<!-- Disability types will be dynamically inserted here -->
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editMiddleName">Middle Name</label>
+																								<input type="text" class="form-control" id="editMiddleName" name="middle_name">
+																							</div>
+																						</div>
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editLastName">Last Name *</label>
+																								<input type="text" class="form-control" id="editLastName" name="last_name" required>
+																							</div>
 																						</div>
 																					</div>
-																						
-																					<!-- Right - Causes of Disability -->
-																					<div>
-																						<h6 style="margin-bottom: 0.5rem; font-weight: 600; color: #495057;">Causes of Disability</h6>
-																						<div id="displayDisabilityCauses">
-																							<!-- Disability causes will be dynamically inserted here -->
+																					<div class="row">
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editBirthday">Birthday *</label>
+																								<input type="date" class="form-control" id="editBirthday" name="birthday" required>
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editAge">Age</label>
+																								<input type="number" class="form-control" id="editAge" name="age" readonly>
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editGender">Gender *</label>
+																								<select class="form-control" id="editGender" name="gender" required>
+																									<option value="">Select Gender</option>
+																									<option value="Male">Male</option>
+																									<option value="Female">Female</option>
+																								</select>
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editCivilStatus">Civil Status *</label>
+																								<select class="form-control" id="editCivilStatus" name="civil_status" required>
+																									<option value="">Select Status</option>
+																									<option value="Single">Single</option>
+																									<option value="Married">Married</option>
+																									<option value="Widowed">Widowed</option>
+																									<option value="Separated">Separated</option>
+																									<option value="Divorced">Divorced</option>
+																								</select>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="row">
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editBarangay">Barangay *</label>
+																								<input type="text" class="form-control" id="editBarangay" name="barangay" required>
+																							</div>
+																						</div>
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editPurok">Purok</label>
+																								<input type="text" class="form-control" id="editPurok" name="purok">
+																							</div>
+																						</div>
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editPlaceOfBirth">Place of Birth</label>
+																								<input type="text" class="form-control" id="editPlaceOfBirth" name="place_of_birth">
+																							</div>
+																						</div>
+																					</div>
+																					<div class="row" id="editSpouseRow" style="display: none;">
+																						<div class="col-md-12">
+																							<div class="form-group">
+																								<label for="editSpouseName">Spouse Name</label>
+																								<input type="text" class="form-control" id="editSpouseName" name="spouse_name">
+																							</div>
+																						</div>
+																					</div>
+																				</fieldset>
+																				
+																				<!-- Parent Information Section -->
+																				<fieldset class="mb-4">
+																					<legend>Parent Information</legend>
+																					<div class="row">
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editFatherFirstName">Father's First Name</label>
+																								<input type="text" class="form-control" id="editFatherFirstName" name="fatherFirstName">
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editFatherMiddleName">Father's Middle Name</label>
+																								<input type="text" class="form-control" id="editFatherMiddleName" name="fatherMiddleName">
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editFatherLastName">Father's Last Name</label>
+																								<input type="text" class="form-control" id="editFatherLastName" name="fatherLastName">
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editFatherExtension">Father's Extension</label>
+																								<input type="text" class="form-control" id="editFatherExtension" name="fatherExtension">
+																							</div>
+																						</div>
+																					</div>
+																					<div class="row">
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editMotherFirstName">Mother's First Name</label>
+																								<input type="text" class="form-control" id="editMotherFirstName" name="motherFirstName">
+																							</div>
+																						</div>
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editMotherMiddleName">Mother's Middle Name</label>
+																								<input type="text" class="form-control" id="editMotherMiddleName" name="motherMiddleName">
+																							</div>
+																						</div>
+																						<div class="col-md-4">
+																							<div class="form-group">
+																								<label for="editMotherLastName">Mother's Last Name</label>
+																								<input type="text" class="form-control" id="editMotherLastName" name="motherLastName">
+																							</div>
+																						</div>
+																			</div>
+																				</fieldset>
+																				
+																				<!-- ID Information Section -->
+																				<fieldset class="mb-4">
+																					<legend>ID Information</legend>
+																					<div class="row">
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editSSS">SSS No.</label>
+																								<input type="text" class="form-control" id="editSSS" name="sss_id">
+																			</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editGSIS">GSIS No.</label>
+																								<input type="text" class="form-control" id="editGSIS" name="gsis_sss_no">
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editPSN">PSN No.</label>
+																								<input type="text" class="form-control" id="editPSN" name="psn_no">
+																							</div>
+																						</div>
+																						<div class="col-md-3">
+																							<div class="form-group">
+																								<label for="editPhilhealth">Philhealth No.</label>
+																								<input type="text" class="form-control" id="editPhilhealth" name="philhealth_no">
+																							</div>
+																						</div>
+																					</div>
+																				</fieldset>
+
+																				<!-- Education & Employment Section -->
+																				<fieldset class="mb-4">
+																					<legend>Education & Employment</legend>
+																					<div class="row">
+																						<div class="col-md-6">
+																							<div class="form-group">
+																								<label for="editEducationLevel">Education Level</label>
+																								<select class="form-control" id="editEducationLevel" name="education_level">
+																									<option value="">Select Education Level</option>
+																									<option value="Not Attended School">Not Attended School</option>
+																									<option value="Elementary Level">Elementary Level</option>
+																									<option value="Elementary Graduate">Elementary Graduate</option>
+																									<option value="High School Graduate">High School Graduate</option>
+																									<option value="College Level">College Level</option>
+																									<option value="College Graduate">College Graduate</option>
+																									<option value="Post Graduate">Post Graduate</option>
+																									<option value="Vocational">Vocational</option>
+																								</select>
+																						</div>
+																					</div>
+																						<div class="col-md-6">
+																							<div class="form-group">
+																								<label for="editEmploymentStatus">Employment Status</label>
+																								<select class="form-control" id="editEmploymentStatus" name="employment_status">
+																									<option value="">Select Employment Status</option>
+																									<option value="Employee">Employee</option>
+																									<option value="Unemployed">Unemployed</option>
+																									<option value="Self-Employed">Self-Employed</option>
+																									<option value="Retired">Retired</option>
+																									<option value="Student">Student</option>
+																								</select>
+																			</div>
+																						</div>
+																					</div>
+																					<div class="row" id="editEmploymentDetails" style="display: none;">
+																						<div class="col-md-6">
+																							<div class="form-group">
+																								<label for="editEmploymentCategory">Employment Category</label>
+																								<select class="form-control" id="editEmploymentCategory" name="employment_category">
+																									<option value="">Select Category</option>
+																									<option value="Government">Government</option>
+																									<option value="Private">Private</option>
+																									<option value="NGO">NGO</option>
+																								</select>
+																							</div>
+																						</div>
+																						<div class="col-md-6">
+																							<div class="form-group">
+																								<label for="editEmploymentType">Employment Type</label>
+																								<select class="form-control" id="editEmploymentType" name="employment_type">
+																									<option value="">Select Type</option>
+																									<option value="Permanent">Permanent</option>
+																									<option value="Contractual">Contractual</option>
+																									<option value="Casual">Casual</option>
+																								</select>
+																							</div>
+																						</div>
+																					</div>
+																				</fieldset>
+
+																				<!-- Disability Information Section -->
+																				<fieldset class="mb-4">
+																					<legend>Disability Information</legend>
+																					<div class="row">
+																						<div class="col-md-6">
+																							<h6>Types of Disability</h6>
+																							<div id="editDisabilityTypes">
+																								<!-- Disability checkboxes will be populated here -->
+																							</div>
+																						</div>
+																						<div class="col-md-6">
+																							<h6>Causes of Disability</h6>
+																							<div id="editDisabilityCauses">
+																								<!-- Disability causes checkboxes will be populated here -->
 																						</div>
 																					</div>
 																				</div>
 																			</fieldset>
 																					
+																			</form>
 																				</div>
 																				<div class="modal-footer">
 																					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-																					<button type="button" class="btn btn-primary" id="updateBtn">Update</button>
-																				</div>
-																			</form>
+																			<button type="button" class="btn btn-primary" id="updatePwdBtn">Update</button>
 																		</div>
 																	</div>
 																</div>
@@ -696,6 +832,206 @@
 						} catch (e) {
 							console.error('Error parsing PWD data:', e);
 						}
+					});
+				});
+
+				// Edit modal code
+				const editButtons = document.querySelectorAll('.edit-btn');
+				
+				editButtons.forEach(button => {
+					button.addEventListener('click', function() {
+						try {
+							const pwdData = JSON.parse(this.getAttribute('data-pwd'));
+							console.log('Edit PWD Data:', pwdData);
+							
+							// Populate form fields
+							document.getElementById('editPwdId').value = pwdData._id || '';
+							document.getElementById('editFirstName').value = pwdData.first_name || '';
+							document.getElementById('editMiddleName').value = pwdData.middle_name || '';
+							document.getElementById('editLastName').value = pwdData.last_name || '';
+							document.getElementById('editBirthday').value = pwdData.birthday ? pwdData.birthday.split('T')[0] : '';
+							document.getElementById('editAge').value = pwdData.age || '';
+							document.getElementById('editGender').value = pwdData.gender || '';
+							document.getElementById('editCivilStatus').value = pwdData.civil_status || '';
+							document.getElementById('editBarangay').value = pwdData.barangay || '';
+							document.getElementById('editPurok').value = pwdData.purok || '';
+							document.getElementById('editPlaceOfBirth').value = pwdData.place_of_birth || '';
+							document.getElementById('editSpouseName').value = pwdData.spouse_name || '';
+							
+							// Show/hide spouse field based on civil status
+							const spouseRow = document.getElementById('editSpouseRow');
+							if (pwdData.civil_status === 'Married') {
+								spouseRow.style.display = 'block';
+							} else {
+								spouseRow.style.display = 'none';
+							}
+							
+							// Parent information
+							document.getElementById('editFatherFirstName').value = pwdData.fatherFirstName || '';
+							document.getElementById('editFatherMiddleName').value = pwdData.fatherMiddleName || '';
+							document.getElementById('editFatherLastName').value = pwdData.fatherLastName || '';
+							document.getElementById('editFatherExtension').value = pwdData.fatherExtension || '';
+							document.getElementById('editMotherFirstName').value = pwdData.motherFirstName || '';
+							document.getElementById('editMotherMiddleName').value = pwdData.motherMiddleName || '';
+							document.getElementById('editMotherLastName').value = pwdData.motherLastName || '';
+							
+							// ID Information
+							document.getElementById('editSSS').value = pwdData.sss_id || '';
+							document.getElementById('editGSIS').value = pwdData.gsis_sss_no || '';
+							document.getElementById('editPSN').value = pwdData.psn_no || '';
+							document.getElementById('editPhilhealth').value = pwdData.philhealth_no || '';
+							
+							// Education and Employment
+							document.getElementById('editEducationLevel').value = pwdData.education_level || '';
+							document.getElementById('editEmploymentStatus').value = pwdData.employment_status || '';
+							document.getElementById('editEmploymentCategory').value = pwdData.employment_category || '';
+							document.getElementById('editEmploymentType').value = pwdData.employment_type || '';
+							
+							// Show/hide employment details based on status
+							const employmentDetails = document.getElementById('editEmploymentDetails');
+							if (pwdData.employment_status === 'Employee') {
+								employmentDetails.style.display = 'block';
+							} else {
+								employmentDetails.style.display = 'none';
+							}
+							
+							// Populate disability types
+							const disabilityTypesContainer = document.getElementById('editDisabilityTypes');
+							disabilityTypesContainer.innerHTML = '';
+							const disabilityTypes = [
+								'Visual/Blind', 'Hard of Hearing/Deaf', 'Speech/Language Impairment',
+								'Learning Disability', 'Mental/Intellectual', 'Multiple Disability',
+								'Physical Disability', 'Psychosocial Disability', 'Other'
+							];
+							
+							disabilityTypes.forEach(type => {
+								const checkboxDiv = document.createElement('div');
+								checkboxDiv.className = 'form-check';
+								checkboxDiv.innerHTML = `
+									<input class="form-check-input" type="checkbox" name="disability[]" value="${type}" id="edit_${type.replace(/\s+/g, '_').replace(/\//g, '_')}">
+									<label class="form-check-label" for="edit_${type.replace(/\s+/g, '_').replace(/\//g, '_')}">${type}</label>
+								`;
+								disabilityTypesContainer.appendChild(checkboxDiv);
+								
+								// Check if this disability type is selected
+								if (pwdData.disability && pwdData.disability.includes(type)) {
+									checkboxDiv.querySelector('input').checked = true;
+								}
+							});
+							
+							// Populate disability causes
+							const disabilityCausesContainer = document.getElementById('editDisabilityCauses');
+							disabilityCausesContainer.innerHTML = '';
+							const disabilityCauses = [
+								'Congenital/Inborn', 'Illness', 'Injury', 'Other'
+							];
+							
+							disabilityCauses.forEach(cause => {
+								const checkboxDiv = document.createElement('div');
+								checkboxDiv.className = 'form-check';
+								checkboxDiv.innerHTML = `
+									<input class="form-check-input" type="checkbox" name="cause_disability[]" value="${cause}" id="edit_cause_${cause.replace(/\s+/g, '_').replace(/\//g, '_')}">
+									<label class="form-check-label" for="edit_cause_${cause.replace(/\s+/g, '_').replace(/\//g, '_')}">${cause}</label>
+								`;
+								disabilityCausesContainer.appendChild(checkboxDiv);
+								
+								// Check if this cause is selected
+								if (pwdData.cause_disability && pwdData.cause_disability.includes(cause)) {
+									checkboxDiv.querySelector('input').checked = true;
+								}
+							});
+							
+						} catch (e) {
+							console.error('Error parsing edit PWD data:', e);
+						}
+					});
+				});
+
+				// Handle civil status change for spouse field
+				document.getElementById('editCivilStatus').addEventListener('change', function() {
+					const spouseRow = document.getElementById('editSpouseRow');
+					if (this.value === 'Married') {
+						spouseRow.style.display = 'block';
+					} else {
+						spouseRow.style.display = 'none';
+						document.getElementById('editSpouseName').value = '';
+					}
+				});
+
+				// Handle employment status change
+				document.getElementById('editEmploymentStatus').addEventListener('change', function() {
+					const employmentDetails = document.getElementById('editEmploymentDetails');
+					if (this.value === 'Employee') {
+						employmentDetails.style.display = 'block';
+					} else {
+						employmentDetails.style.display = 'none';
+						document.getElementById('editEmploymentCategory').value = '';
+						document.getElementById('editEmploymentType').value = '';
+					}
+				});
+
+				// Handle birthday change to calculate age
+				document.getElementById('editBirthday').addEventListener('change', function() {
+					if (this.value) {
+						const birthday = new Date(this.value);
+						const today = new Date();
+						let age = today.getFullYear() - birthday.getFullYear();
+						const monthDiff = today.getMonth() - birthday.getMonth();
+						if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+							age--;
+						}
+						document.getElementById('editAge').value = age;
+					}
+				});
+
+				// Handle form submission
+				document.getElementById('updatePwdBtn').addEventListener('click', function() {
+					const form = document.getElementById('editPwdForm');
+					const formData = new FormData(form);
+					
+					// Convert FormData to regular object
+					const data = {};
+					for (let [key, value] of formData.entries()) {
+						data[key] = value;
+					}
+					
+					// Collect disability types
+					const disabilityTypes = [];
+					document.querySelectorAll('input[name="disability[]"]:checked').forEach(checkbox => {
+						disabilityTypes.push(checkbox.value);
+					});
+					data.disability = disabilityTypes;
+					
+					// Collect disability causes
+					const disabilityCauses = [];
+					document.querySelectorAll('input[name="cause_disability[]"]:checked').forEach(checkbox => {
+						disabilityCauses.push(checkbox.value);
+					});
+					data.cause_disability = disabilityCauses;
+					
+					console.log('Sending data:', data);
+					
+					// Send update request
+					fetch('/update-pwd', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(data)
+					})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							alert('PWD information updated successfully!');
+							$('#editModal').modal('hide');
+							location.reload(); // Refresh the page to show updated data
+						} else {
+							alert('Error updating PWD information: ' + (data.message || 'Unknown error'));
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Error updating PWD information. Please try again.');
 					});
 				});
 			});
