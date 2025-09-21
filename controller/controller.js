@@ -1171,6 +1171,128 @@ exports.getPwdMapData = async (req, res) => {
   }
 };
 
+// Get Youth count data by barangay for the map
+exports.getYouthMapData = async (req, res) => {
+  try {
+    console.log('🔍 Fetching Youth data from database...');
+    
+    // First, let's see what barangay names are actually in the database
+    const allYouths = await Youth.find({}, 'barangay first_name last_name');
+    console.log('🔍 All barangay names in Youth database:', allYouths.map(y => y.barangay));
+    
+    // Get Youth count by barangay with additional breakdowns
+    const youthCounts = await Youth.aggregate([
+      {
+        $group: {
+          _id: "$barangay",
+          youthCount: { $sum: 1 },
+          maleCount: { $sum: { $cond: [{ $eq: ["$gender", "Male"] }, 1, 0] } },
+          femaleCount: { $sum: { $cond: [{ $eq: ["$gender", "Female"] }, 1, 0] } },
+          skRegistered: { $sum: { $cond: [{ $eq: ["$registered_sk", "Yes"] }, 1, 0] } },
+          skVoted: { $sum: { $cond: [{ $eq: ["$voted_sk", "Yes"] }, 1, 0] } },
+          nationalRegistered: { $sum: { $cond: [{ $eq: ["$registered_national", "Yes"] }, 1, 0] } }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    console.log('📊 Youth counts from database:', youthCounts);
+
+    // Define barangay coordinates and other data - Updated to match database names
+    const barangayData = [
+      { name: "Barangay 1", lat: 10.80240, lon: 122.97624, population: 4200 },
+      { name: "Barangay 2", lat: 10.79938, lon: 122.97828, population: 3750 },
+      { name: "Barangay 3", lat: 10.79770, lon: 122.97281, population: 4800 },
+      { name: "Barangay 4", lat: 10.78407, lon: 123.00921, population: 3200 },
+      { name: "Barangay 5", lat: 10.78147, lon: 122.99145, population: 2650 },
+      { name: "Barangay Mambulac", lat: 10.79754, lon: 122.9679, population: 2100 },
+      { name: "Barangay Guinhalaran", lat: 10.7811, lon: 122.9666, population: 3100 },
+      { name: "Barangay E-Lopez", lat: 10.82060, lon: 123.03538, population: 1800 },
+      { name: "Barangay Bagtic", lat: 10.76204, lon: 123.05122, population: 2850 },
+      { name: "Barangay Balaring", lat: 10.83171, lon: 122.96136, population: 1920 },
+      { name: "Barangay Hawaiian", lat: 10.82606, lon: 123.00549, population: 3900 },
+      { name: "Barangay Patag", lat: 10.72466, lon: 123.15720, population: 1200 },
+      { name: "Barangay Kapt. Ramon", lat: 10.77394, lon: 123.11920, population: 1500 },
+      { name: "Barangay Guimbalaon", lat: 10.75730, lon: 123.07857, population: 2300 },
+      { name: "Barangay Rizal", lat: 10.79816, lon: 122.99473, population: 2800 },
+      { name: "Barangay Lantad", lat: 10.80845, lon: 122.97199, population: 2400 }
+    ];
+
+    // Merge database counts with barangay data
+    const result = barangayData.map(barangay => {
+      // Try exact match first
+      let countData = youthCounts.find(item => item._id === barangay.name);
+      let youthCount = 0;
+      let maleCount = 0;
+      let femaleCount = 0;
+      let skRegistered = 0;
+      let skVoted = 0;
+      let nationalRegistered = 0;
+      
+      if (countData) {
+        youthCount = countData.youthCount;
+        maleCount = countData.maleCount;
+        femaleCount = countData.femaleCount;
+        skRegistered = countData.skRegistered;
+        skVoted = countData.skVoted;
+        nationalRegistered = countData.nationalRegistered;
+      } else {
+        // Try case-insensitive match
+        countData = youthCounts.find(item => 
+          item._id && item._id.toLowerCase() === barangay.name.toLowerCase()
+        );
+        if (countData) {
+          youthCount = countData.youthCount;
+          maleCount = countData.maleCount;
+          femaleCount = countData.femaleCount;
+          skRegistered = countData.skRegistered;
+          skVoted = countData.skVoted;
+          nationalRegistered = countData.nationalRegistered;
+        } else {
+          // Try partial match for common variations
+          countData = youthCounts.find(item => {
+            if (!item._id) return false;
+            const dbName = item._id.toLowerCase();
+            const mapName = barangay.name.toLowerCase();
+            
+            // Check for common variations
+            return dbName.includes(mapName) || 
+                   mapName.includes(dbName) ||
+                   dbName.includes('hawaiian') && mapName.includes('hawaiian') ||
+                   dbName.includes('poblacion') && mapName.includes('poblacion');
+          });
+          if (countData) {
+            youthCount = countData.youthCount;
+            maleCount = countData.maleCount;
+            femaleCount = countData.femaleCount;
+            skRegistered = countData.skRegistered;
+            skVoted = countData.skVoted;
+            nationalRegistered = countData.nationalRegistered;
+          }
+        }
+      }
+      
+      console.log(`📍 ${barangay.name}: ${youthCount} Youths (${maleCount}M, ${femaleCount}F) (SK: ${skRegistered} registered, ${skVoted} voted) (matched with: ${countData ? countData._id : 'none'})`);
+      
+      return {
+        ...barangay,
+        youthCount: youthCount,
+        maleCount: maleCount,
+        femaleCount: femaleCount,
+        skRegistered: skRegistered,
+        skVoted: skVoted,
+        nationalRegistered: nationalRegistered
+      };
+    });
+
+    console.log('✅ Final Youth result with database data:', result);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    console.error('❌ Error fetching Youth map data:', err);
+    res.status(500).json({ success: false, message: 'Failed to load Youth map data' });
+  }
+};
+
 // Get senior count data by barangay for the map
 exports.getSeniorMapData = async (req, res) => {
   try {

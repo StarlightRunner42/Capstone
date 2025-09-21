@@ -120,6 +120,7 @@ router.get("/silay-boundary", controller.getSilayBoundary);
 router.get("/villages", controller.getVillages);
 router.get("/senior-map-data", controller.getSeniorMapData);
 router.get("/pwd-map-data", controller.getPwdMapData);
+router.get("/youth-map-data", controller.getYouthMapData);
 router.get("/debug-senior-data", controller.debugSeniorData);
 
 module.exports = router;
