@@ -292,7 +292,7 @@ label {
   left: 100%;
 }
 
-.action:hover {
+ .action:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -305,7 +305,7 @@ label {
 /* Updated View Button with Specific Color */
 .action-view {
   background: rgb(1, 2, 46);
-  color: white;
+  color: rgb(252, 243, 243);
   border-color: rgb(1, 2, 46);
 }
 
@@ -315,23 +315,13 @@ label {
 }
 
 .action-edit {
-  background: linear-gradient(135deg, var(--success-color), #48bb78);
+  background: linear-gradient(135deg, var(--success-color), #5fc78b);
   color: white;
 }
 
 .action-edit:hover {
   background: linear-gradient(135deg, #2f855a, var(--success-color));
   box-shadow: 0 8px 25px rgba(56, 161, 105, 0.3);
-}
-
-.action-delete {
-  background: linear-gradient(135deg, var(--danger-color), #fc8181);
-  color: white;
-}
-
-.action-delete:hover {
-  background: linear-gradient(135deg, #c53030, var(--danger-color));
-  box-shadow: 0 8px 25px rgba(229, 62, 62, 0.3);
 }
 
 .action svg {
@@ -613,7 +603,7 @@ fieldset:hover legend {
   color: var(--text-secondary);
 }
 
-/* Enhanced Buttons */
+/* Enhanced Buttons
 .btn {
   display: inline-block;
   font-weight: var(--font-weight-semibold);
@@ -675,9 +665,9 @@ fieldset:hover legend {
   background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
   border-color: var(--text-muted);
   box-shadow: 0 8px 25px rgba(113, 128, 150, 0.15);
-}
+} */
 
-.btn-primary {
+/* .btn-primary {
   color: white;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
   border-color: var(--accent-color);
@@ -688,7 +678,7 @@ fieldset:hover legend {
   background: linear-gradient(135deg, #2c5aa0, var(--accent-color));
   border-color: #2c5aa0;
   box-shadow: 0 8px 25px rgba(49, 130, 206, 0.3);
-}
+} */
 
 /* Special styling for h6 in disability section */
 .modal-body h6 {

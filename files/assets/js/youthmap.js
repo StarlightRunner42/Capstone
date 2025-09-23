@@ -184,7 +184,7 @@ define([
     .info-panel {
       position: absolute;
       top: 28%;
-      left: 20px;
+      right: 20px;
       transform: translateY(-50%);
       padding: 20px;
       max-width: 250px;
@@ -416,51 +416,51 @@ define([
   `;
   view.container.appendChild(legendContainer);
 
-  // 8.5️⃣ Data table container
-  let dataTableContainer = document.createElement("div");
-  dataTableContainer.className = "data-table-container modern-panel";
-  view.container.appendChild(dataTableContainer);
+  // // 8.5️⃣ Data table container
+  // let dataTableContainer = document.createElement("div");
+  // dataTableContainer.className = "data-table-container modern-panel";
+  // view.container.appendChild(dataTableContainer);
 
-  // Function to create and update data table
-  function updateDataTable(barangayData) {
-    // Sort by Youth count descending
-    const sortedData = [...barangayData].sort((a, b) => b.youthCount - a.youthCount);
+  // // Function to create and update data table
+  // function updateDataTable(barangayData) {
+  //   // Sort by Youth count descending
+  //   const sortedData = [...barangayData].sort((a, b) => b.youthCount - a.youthCount);
     
-    const tableHTML = `
-      <div class="legend-title">
-        <span>📊</span> Youth Count by Barangay
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Barangay</th>
-            <th>Youths</th>
-            <th>M/F</th>
-            <th>SK Reg</th>
-            <th>SK Vote</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${sortedData.map(barangay => {
-            const percentage = ((barangay.youthCount / barangay.population) * 100).toFixed(1);
-            return `
-              <tr>
-                <td>${barangay.name}</td>
-                <td class="youth-count">${barangay.youthCount}</td>
-                <td style="font-size: 9px;">${barangay.maleCount}M/${barangay.femaleCount}F</td>
-                <td style="font-size: 9px; color: #f39c12;">${barangay.skRegistered}</td>
-                <td style="font-size: 9px; color: #27ae60;">${barangay.skVoted}</td>
-                <td class="percentage">${percentage}%</td>
-              </tr>
-            `;
-          }).join('')}
-        </tbody>
-      </table>
-    `;
+  //   const tableHTML = `
+  //     <div class="legend-title">
+  //       <span>📊</span> Youth Count by Barangay
+  //     </div>
+  //     <table class="data-table">
+  //       <thead>
+  //         <tr>
+  //           <th>Barangay</th>
+  //           <th>Youths</th>
+  //           <th>M/F</th>
+  //           <th>SK Reg</th>
+  //           <th>SK Vote</th>
+  //           <th>%</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         ${sortedData.map(barangay => {
+  //           const percentage = ((barangay.youthCount / barangay.population) * 100).toFixed(1);
+  //           return `
+  //             <tr>
+  //               <td>${barangay.name}</td>
+  //               <td class="youth-count">${barangay.youthCount}</td>
+  //               <td style="font-size: 9px;">${barangay.maleCount}M/${barangay.femaleCount}F</td>
+  //               <td style="font-size: 9px; color: #f39c12;">${barangay.skRegistered}</td>
+  //               <td style="font-size: 9px; color: #27ae60;">${barangay.skVoted}</td>
+  //               <td class="percentage">${percentage}%</td>
+  //             </tr>
+  //           `;
+  //         }).join('')}
+  //       </tbody>
+  //     </table>
+  //   `;
     
-    dataTableContainer.innerHTML = tableHTML;
-  }
+  //   dataTableContainer.innerHTML = tableHTML;
+  // }
 
   // 9️⃣ Enhanced statistics panel - will be updated with real data
   let statsContainer = document.createElement("div");
