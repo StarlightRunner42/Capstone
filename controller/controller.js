@@ -979,6 +979,76 @@ exports.updateYouth = async (req, res) => {
   }
 };
 
+// Send SMS via external API
+exports.sendSms = async (req, res) => {
+
+  try {
+    const { recipients, message } = req.body;
+
+    if (!process.env.API_TOKEN) {
+      return res.status(500).json({ success: false, message: 'API_TOKEN not configured on server' });
+    }
+
+    if (!message || !recipients || !Array.isArray(recipients) || recipients.length === 0) {
+      return res.status(400).json({ success: false, message: 'Recipients and message are required' });
+    }
+
+    const apiUrl = 'https://sms.iprogtech.com/api/v1/sms_messages';
+
+    const results = [];
+
+    // Send messages sequentially to avoid rate issues; can be parallelized if needed
+    for (const r of recipients) {
+      const phone = r.phone || '';
+      const name = r.name || '';
+
+      if (!phone) {
+        results.push({ phone, name, status: 'skipped', reason: 'no phone' });
+        continue;
+      }
+
+      const body = {
+        api_token: process.env.API_TOKEN,
+        phone_number: phone,
+        message: message
+      };
+
+      try {
+        const resp = await axios.post(apiUrl, body, {
+          headers: { 'Content-Type': 'application/json' },
+          timeout: 15000
+        });
+
+        // Log full response for debugging
+        console.log(`SMS API response for ${phone}: status=${resp.status}`);
+        console.log('headers:', resp.headers);
+        console.log('data:', resp.data);
+
+        results.push({ phone, name, status: 'sent', response: resp.data });
+      } catch (err) {
+        // Log detailed error
+        if (err.response) {
+          console.error(`SMS send error for ${phone}: status=${err.response.status}`, err.response.data);
+        } else {
+          console.error(`SMS send error for ${phone}:`, err.message);
+        }
+        results.push({ phone, name, status: 'error', error: err && err.response ? err.response.data : err.message });
+      }
+    }
+
+    // If any send failed, return 503 so frontend can show service-down message
+    const allSent = results.every(r => r.status === 'sent');
+    if (allSent) {
+      return res.status(200).json({ success: true, results });
+    } else {
+      return res.status(503).json({ success: false, message: 'SMS service is down at the moment', results });
+    }
+  } catch (err) {
+    console.error('sendSms error:', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
 exports.getSilayBoundary = (req, res) => {
   try {
     const filePath = path.join(__dirname, "..", "files", "assets", "data", "Silay City.geojson");

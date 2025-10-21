@@ -17,6 +17,9 @@ router.post('/create-user', controller.createUser);
 router.post('/login', controller.login);
 router.get('/logout', controller.logout);
 
+// SMS sending endpoint (receives requests from frontend and relays to external SMS API)
+router.post('/send-sms', requireAuth, controller.sendSms);
+
 // Admin routes
 router.get('/Index', requireAuth, (req, res) => {
     res.render('admin/admin_index-1');

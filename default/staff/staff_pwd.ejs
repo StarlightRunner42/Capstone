@@ -94,14 +94,14 @@
 									</a>
 								</li>
 								<li>
-									<a href="/add_pwd" class="btn btn-primary rounded" id="addSeniorBtn" target="_blank">
+									<a href="/add_pwd" class="btn btn-primary rounded" target="_blank">
 										<i class="feather icon-user-plus"></i>ADD PDAO </a>
 								</li>
 
 								<li style="list-style: none;">
-        <a href="#" class="btn btn-primary rounded" id="addSeniorBtn" data-bs-toggle="modal" data-bs-target="#assistanceModal">
+        <!-- <a href="#" class="btn btn-primary rounded" id="addSeniorBtn" data-bs-toggle="modal" data-bs-target="#assistanceModal">
             <i data-feather="user-plus"></i> ADD ASSISTANCE
-        </a>
+        </a> -->
     </li>
 							</ul>
 							<ul class="nav-right"></ul>
@@ -177,7 +177,9 @@
 											 <table id="example" class="display" style="width:100%">
 	<thead>
 		<tr>
-			<th><input type="checkbox" id="select-all" aria-label="Select all rows"></th>
+			<th>
+				<!-- <input type="checkbox" id="select-all" aria-label="Select all rows"> -->
+			</th>
 			<th>Full Name</th>
 			<th>Age</th>
 			<th>Barangay</th>
@@ -187,9 +189,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% pwds.forEach(pwd => { %>
+			<% pwds.forEach(pwd => { %>
 		<tr>
-			<td><input type="checkbox" class="row-checkbox" value="<%= pwd.id %>" aria-label="Select row"></td>
+			<td>
+				<input type="checkbox" class="row-checkbox" value="<%= pwd._id || pwd.id %>" aria-label="Select row"
+					data-phone="<%= (pwd.contacts && pwd.contacts.length && pwd.contacts[0].phone) ? pwd.contacts[0].phone : '' %>"
+					data-name="<%= (pwd.first_name || '') + ' ' + (pwd.last_name || '') %>">
+			</td>
 			<td><%= pwd.first_name %> <%= pwd.middle_name %> <%= pwd.last_name %></td>
 			<td><%= pwd.age %></td>
 			<td><%= pwd.barangay %></td>
@@ -223,25 +229,33 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="smsForm">
-                      
-                        <div class="sms-template">
-                            <label class="form-label">
-                                <i data-feather="message-square" style="width: 16px; height: 16px;"></i> Message Template
-                            </label>
-                            <textarea class="form-control" id="smsMessage" rows="6" required>Hello! 
+								<form id="smsForm">
 
-You are eligible for PWD benefits including:
-- 20% discount on medicines, medical services & transportation
-- Priority lane access
-- Educational assistance
-- Skills training programs
+									<div class="mb-2">
+										<label class="form-label">Recipients</label>
+										<div id="recipientsList" style="max-height:150px; overflow:auto; border:1px solid #e9ecef; padding:8px; border-radius:4px;">
+											<!-- Filled dynamically with selected recipients -->
+											<em>No recipients selected</em>
+										</div>
+									</div>
 
-Visit your local office to claim your benefits.
+									<div class="sms-template">
+										<label class="form-label">
+											<i data-feather="message-square" style="width: 16px; height: 16px;"></i> Message Template
+										</label>
+										<textarea class="form-control" id="smsMessage" rows="6" required>Hello! 
 
-Thank you!</textarea>
-                            <small class="text-muted">You can edit this message before sending</small>
-                        </div>
+			You are eligible for PWD benefits including:
+			- 20% discount on medicines, medical services & transportation
+			- Priority lane access
+			- Educational assistance
+			- Skills training programs
+
+			Visit your local office to claim your benefits.
+
+			Thank you!</textarea>
+										<small class="text-muted">You can edit this message before sending</small>
+									</div>
 
                         <!-- Character Counter -->
                         <div class="mb-3">
@@ -255,7 +269,7 @@ Thank you!</textarea>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i data-feather="x" style="width: 16px; height: 16px;"></i> Cancel
                     </button>
-                    <button type="button" class="btn btn-primary btn-send" id="sendSmsBtn">
+					<button type="button" class="btn btn-primary btn-send" id="sendSmsBtn">
                         <i data-feather="send" style="width: 16px; height: 16px;"></i> Send SMS
                     </button>
                 </div>
@@ -399,7 +413,7 @@ Thank you!</textarea>
             
             <div class="modal-footer flex-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Add ASS</button>
+                
 															</div>
 
             </div>
@@ -683,7 +697,14 @@ Thank you!</textarea>
 															</div>
 														</td>
 													</tr><% }); %> </tbody>
-											</table><% } else { %> <div class="alert alert-info text-center"> No data found. </div><% } %>
+											</table>
+											<!-- Button to open SMS modal for selected rows -->
+											<div class="mt-3">
+												<button id="openSmsForSelected" class="btn btn-success" disabled>
+													<i data-feather="message-circle"></i> Send SMS to selected
+												</button>
+											</div>
+											<% } else { %> <div class="alert alert-info text-center"> No data found. </div><% } %>
 										</div>
 										<!-- Container div -->
 									</div>
@@ -1097,8 +1118,16 @@ Thank you!</textarea>
 					});
 				});
 			});
-			 // Initialize Feather Icons
-        feather.replace();
+			// Initialize Feather Icons (guarded to avoid breaking page if feather isn't loaded)
+			if (typeof feather !== 'undefined' && feather.replace) {
+				try {
+					feather.replace();
+				} catch (e) {
+					console.warn('feather.replace() failed:', e);
+				}
+			} else {
+				console.warn('feather not available');
+			}
 
         // Character Counter
         const smsMessage = document.getElementById('smsMessage');
@@ -1111,33 +1140,107 @@ Thank you!</textarea>
         smsMessage.addEventListener('input', updateCharCount);
         updateCharCount(); // Initial count
 
-        // Send SMS Handler
-        document.getElementById('sendSmsBtn').addEventListener('click', function() {
-            const recipientNumber = document.getElementById('recipientNumber').value;
-            const recipientName = document.getElementById('recipientName').value;
-            const message = document.getElementById('smsMessage').value;
+		// Ensure SMS handler and modal logic run after DOM and bootstrap are ready
+		document.addEventListener('DOMContentLoaded', function () {
+			// Send SMS Handler - will POST to server which relays to external SMS API
+			document.getElementById('sendSmsBtn').addEventListener('click', async function() {
+				const btn = this;
+				const originalText = btn.innerHTML;
+				const message = document.getElementById('smsMessage').value.trim();
+				const recipients = Array.from(document.querySelectorAll('#recipientsList .recipient-item')).map(el => ({
+					phone: el.dataset.phone,
+					name: el.dataset.name
+				}));
 
-            if (recipientNumber && recipientName && message) {
-                // Here you would integrate with your SMS API
-                console.log('Sending SMS to:', recipientNumber);
-                console.log('Recipient:', recipientName);
-                console.log('Message:', message);
+				if (!message) {
+					alert('Please enter a message');
+					return;
+				}
 
-                // Close modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('assistanceModal'));
-                modal.hide();
+				if (!recipients.length) {
+					alert('No recipients selected');
+					return;
+				}
 
-                // Show success toast
-                const toast = new bootstrap.Toast(document.getElementById('successToast'));
-                toast.show();
+				// Set loading state
+				btn.setAttribute('disabled', 'disabled');
+				btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
 
-                // Reset form
-                document.getElementById('smsForm').reset();
-                updateCharCount();
-            } else {
-                alert('Please fill in all fields');
-            }
-        });
+				try {
+					const resp = await fetch('/send-sms', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ recipients, message })
+					});
+
+					const data = await resp.json().catch(() => ({}));
+
+					if (resp.status === 200 && data.success) {
+						alert('SMS has been sent successfully');
+						console.log('SMS results:', data.results);
+						let modal = null;
+						try { modal = bootstrap.Modal.getInstance(document.getElementById('assistanceModal')); } catch(e) { modal = null; }
+						if (!modal) modal = new bootstrap.Modal(document.getElementById('assistanceModal'));
+						modal.hide();
+						document.getElementById('smsForm').reset();
+						updateCharCount();
+					} else {
+						console.error('SMS failed or service down:', resp.status, data);
+						alert('The SMS service is down at the moment, sorry');
+					}
+				} catch (err) {
+					console.error('Error sending SMS:', err);
+					alert('The SMS service is down at the moment, sorry');
+				} finally {
+					// Restore button
+					btn.removeAttribute('disabled');
+					btn.innerHTML = originalText;
+				}
+			});
+
+			// Open SMS modal for selected rows
+			const openSmsBtn = document.getElementById('openSmsForSelected');
+			const recipientsListEl = document.getElementById('recipientsList');
+
+			function refreshOpenSmsState() {
+				const anyChecked = Array.from(document.querySelectorAll('.row-checkbox')).some(cb => cb.checked);
+				openSmsBtn.disabled = !anyChecked;
+			}
+
+			// When openSmsBtn clicked, populate modal with selected recipients
+			openSmsBtn.addEventListener('click', function() {
+				const selected = Array.from(document.querySelectorAll('.row-checkbox:checked'));
+				recipientsListEl.innerHTML = '';
+
+				if (!selected.length) {
+					recipientsListEl.innerHTML = '<em>No recipients selected</em>';
+					return;
+				}
+
+				selected.forEach(cb => {
+					const phone = cb.dataset.phone || cb.getAttribute('data-phone') || '';
+					const name = cb.dataset.name || cb.getAttribute('data-name') || '';
+
+					const item = document.createElement('div');
+					item.className = 'recipient-item';
+					item.dataset.phone = phone;
+					item.dataset.name = name;
+					item.style.padding = '4px 6px';
+					item.style.borderBottom = '1px solid #f1f1f1';
+					item.innerHTML = `<strong>${name}</strong> <span class="text-muted">${phone}</span>`;
+					recipientsListEl.appendChild(item);
+				});
+
+				// Show modal
+				const modalEl = document.getElementById('assistanceModal');
+				const modal = new bootstrap.Modal(modalEl);
+				modal.show();
+			});
+
+			// Watch row checkboxes to enable/disable openSmsBtn
+			document.querySelectorAll('.row-checkbox').forEach(cb => cb.addEventListener('change', refreshOpenSmsState));
+			refreshOpenSmsState();
+		});
 
         // Reset form when modal is closed
         document.getElementById('assistanceModal').addEventListener('hidden.bs.modal', function () {
@@ -1221,14 +1324,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
     <script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
+		window.dataLayer = window.dataLayer || [];
 
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag('js', new Date());
-			gtag('config', 'UA-23581568-13');
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'UA-23581568-13');
 		</script>
 	</body>
 </html>
