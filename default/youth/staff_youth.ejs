@@ -173,6 +173,9 @@
 												<table id="example" class="display" style="width:100%;">
 													<thead>
 														<tr>
+															<th>
+																<!-- <input type="checkbox" id="select-all" aria-label="Select all rows"> -->
+															</th>
 															<th>Name</th>
 															<th>Age</th>
 															<th>Barangay</th>
@@ -181,6 +184,11 @@
 														</tr>
 													</thead>
 													<tbody id="pwd-table-body"><% if (youths && youths.length > 0) { %><% youths.forEach((youth, index) => { %> <tr>
+															<td>
+																<input type="checkbox" class="row-checkbox" value="<%= youth._id || youth.id %>" aria-label="Select row"
+																	data-phone="<%= youth.contact || '' %>"
+																	data-name="<%= youth.first_name + ' ' + youth.last_name %>">
+															</td>
 															<td><%= youth.first_name %> <%= youth.middle_name %> <%= youth.last_name %> </td>
 															<td><%= youth.age %> </td>
 															<td><%= youth.barangay %> </td>
@@ -601,6 +609,67 @@
 															<td colspan="5">No youth data found.</td>
 														</tr><% } %> </tbody>
 												</table>
+												<!-- Button to open SMS modal for selected rows -->
+												<div class="mt-3">
+													<button id="openSmsForSelected" class="btn btn-success" disabled>
+														<i data-feather="message-circle"></i> Send SMS to selected
+													</button>
+												</div>
+
+												<!-- SMS Modal -->
+												<div class="modal fade" id="assistanceModal" tabindex="-1" aria-labelledby="assistanceModalLabel" aria-hidden="true">
+													<div class="modal-dialog modal-dialog-centered">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="assistanceModalLabel">
+																	<i data-feather="send" style="width: 20px; height: 20px;"></i> Send SMS
+																</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																<form id="smsForm">
+																	<div class="mb-2">
+																		<label class="form-label">Recipients:</label>
+																		<div id="recipientsList" class="border rounded p-2" style="max-height: 150px; overflow-y: auto;">
+																			<em>No recipients selected</em>
+																		</div>
+																	</div>
+
+																	<div class="sms-template">
+																		<label for="smsMessage" class="form-label">Message:</label>
+																		<textarea id="smsMessage" class="form-control" rows="4">Dear Youth,
+
+You are invited to participate in upcoming youth programs and activities:
+- Skills training & development
+- Youth leadership programs
+- Community service opportunities
+- Sports & cultural events
+
+Visit your local LYDO office for more information.
+
+Thank you!</textarea>
+																		<small class="text-muted">You can edit this message before sending</small>
+																	</div>
+
+																	<!-- Character Counter -->
+																	<div class="mb-3">
+																		<small class="text-muted">
+																			Characters: <span id="charCount">0</span>/160
+																		</small>
+																	</div>
+																</form>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+																	<i data-feather="x" style="width: 16px; height: 16px;"></i> Cancel
+																</button>
+																<button type="button" class="btn btn-primary btn-send" id="sendSmsBtn">
+																	<i data-feather="send" style="width: 16px; height: 16px;"></i> Send SMS
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
 												<div id="no-data-alert" class="alert alert-info text-center" style="display: none;"> No data found. </div>
 											</div>
 										</div>
@@ -657,6 +726,14 @@
 						pageLength: 10,
 						lengthMenu: [5, 10, 25, 50, 100],
 						responsive: true,
+						columnDefs: [
+							{
+								targets: 0, // First column (checkbox column)
+								searchable: false,
+								orderable: false
+							}
+						],
+						order: [[1, 'asc']], // Sort by second column (Name) by default
 						rowCallback: function(row) {
 							if ($(row).hasClass('dt-empty')) {
 								$(row).hide();
@@ -710,21 +787,21 @@
 						});
 					}
 
-					// Filter the table based on selected barangay (column index 2)
-					table.columns(2).search(selectedBarangay || '').draw();
-					// Clear purok filter when barangay changes
-					table.columns(3).search('').draw();
+					// Filter the table based on selected barangay (column index 3 after checkbox column)
+										table.columns(3).search(selectedBarangay || '').draw();
+										// Clear purok filter when barangay changes
+										table.columns(4).search('').draw();
 				});
 
 				// Purok change: filter table
-				purokSelect.addEventListener('change', function() {
-					const selectedPurok = this.value;
-					if (selectedPurok === 'all' || selectedPurok === '') {
-						table.columns(3).search('').draw();
-					} else {
-						table.columns(3).search(selectedPurok).draw();
-					}
-				});
+								purokSelect.addEventListener('change', function() {
+									const selectedPurok = this.value;
+									if (selectedPurok === 'all' || selectedPurok === '') {
+										table.columns(4).search('').draw();
+									} else {
+										table.columns(4).search(selectedPurok).draw();
+									}
+								});
 			});
 		</script>
 		<script>
@@ -777,21 +854,21 @@
 						});
 					}
 
-					// Filter the table based on selected barangay (column index 2)
-					table.columns(2).search(selectedBarangay || '').draw();
-					// Clear purok filter when barangay changes
-					table.columns(3).search('').draw();
+					// Filter the table based on selected barangay (column index 3 after checkbox column)
+										table.columns(3).search(selectedBarangay || '').draw();
+										// Clear purok filter when barangay changes
+										table.columns(4).search('').draw();
 				});
 
 				// When Purok changes, filter table
-				purokSelect.addEventListener('change', function() {
-					const selectedPurok = this.value;
-					if (selectedPurok === 'all' || selectedPurok === '') {
-						table.columns(3).search('').draw();
-					} else {
-						table.columns(3).search(selectedPurok).draw();
-					}
-				});
+								purokSelect.addEventListener('change', function() {
+									const selectedPurok = this.value;
+									if (selectedPurok === 'all' || selectedPurok === '') {
+										table.columns(4).search('').draw();
+									} else {
+										table.columns(4).search(selectedPurok).draw();
+									}
+								});
 			});
 		</script>
 		
