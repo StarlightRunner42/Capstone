@@ -47,24 +47,9 @@ app.listen(PORT, () => {
 
 // To do:
 
-// Frontend:
-// Fix modal data on all 3 Youth, senior and PWD
+// fix login where cant login if inactive
 
-// Fix Osca table, View Modal does not work
-
-// Change in Super admin Edit button in Users to show details of Users and the option to  Edit details
-
-// Backend:
-// Display data on modal dynamically on all 3 tables
-
-// Make Edit and Delete users
-
-// make edit data on all 3 tables
-
-// Add Unique ID on Different data all 3 tables
-
-// Display the Analytics Dynamically on admin
-
+//fix PDAO filtering doesnt work on baranggay check specific (might be the error from adding check marks to table)
 
 
 
