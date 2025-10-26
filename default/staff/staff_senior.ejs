@@ -217,7 +217,9 @@
                                             <table id="example" class="display" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        
+                                                        <th>
+                                                            <!-- <input type="checkbox" id="select-all" aria-label="Select all rows"> -->
+                                                        </th>
                                                         <th>Full Name</th>
                                                         <th>Age</th>
                                                         <th>Barangay</th>
@@ -229,6 +231,11 @@
                                                 <tbody>
                                                     <% seniorCitizens.forEach(senior => { %>
                                                         <tr>
+                                                            <td>
+                                                                <input type="checkbox" class="row-checkbox" value="<%= senior._id || senior.id %>" aria-label="Select row"
+                                                                    data-phone="<%= (senior.identifying_information.contact_information && senior.identifying_information.contact_information.length && senior.identifying_information.contact_information[0].contact_number) ? senior.identifying_information.contact_information[0].contact_number : '' %>"
+                                                                    data-name="<%= senior.identifying_information.name.first_name + ' ' + senior.identifying_information.name.last_name %>">
+                                                            </td>
                                                             <td>
                                                                 <%= senior.identifying_information.name.last_name %>
                                                                 <%= senior.identifying_information.name.first_name %> 
@@ -263,6 +270,67 @@
                                                     <% }); %>
                                                 </tbody>
                                             </table>
+                                            <!-- Button to open SMS modal for selected rows -->
+                                            <div class="mt-3">
+                                                <button id="openSmsForSelected" class="btn btn-success" disabled>
+                                                    <i data-feather="message-circle"></i> Send SMS to selected
+                                                </button>
+                                            </div>
+
+                                            <!-- SMS Modal -->
+                                            <div class="modal fade" id="assistanceModal" tabindex="-1" aria-labelledby="assistanceModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="assistanceModalLabel">
+                                                                <i data-feather="send" style="width: 20px; height: 20px;"></i> Send SMS
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="smsForm">
+                                                                <div class="mb-2">
+                                                                    <label class="form-label">Recipients:</label>
+                                                                    <div id="recipientsList" class="border rounded p-2" style="max-height: 150px; overflow-y: auto;">
+                                                                        <em>No recipients selected</em>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="sms-template">
+                                                                    <label for="smsMessage" class="form-label">Message:</label>
+                                                                    <textarea id="smsMessage" class="form-control" rows="4">Dear Senior Citizen,
+
+You are eligible for senior citizen benefits including:
+- 20% discount on medicines, medical services & transportation
+- Priority lane access
+- Social pension program
+- Other privileges under RA 9994
+
+Visit your local office to claim your benefits.
+
+Thank you!</textarea>
+                                                                    <small class="text-muted">You can edit this message before sending</small>
+                                                                </div>
+
+                                                                <!-- Character Counter -->
+                                                                <div class="mb-3">
+                                                                    <small class="text-muted">
+                                                                        Characters: <span id="charCount">0</span>/160
+                                                                    </small>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                <i data-feather="x" style="width: 16px; height: 16px;"></i> Cancel
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary btn-send" id="sendSmsBtn">
+                                                                <i data-feather="send" style="width: 16px; height: 16px;"></i> Send SMS
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <% } else { %>
                                             <div class="alert alert-info text-center">No senior citizens found.</div>
                                         <% } %>
@@ -1090,6 +1158,14 @@
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50, 100],
                 responsive: true,
+                columnDefs: [
+                    {
+                        targets: 0, // First column (checkbox column)
+                        searchable: false,
+                        orderable: false
+                    }
+                ],
+                order: [[1, 'asc']], // Sort by second column (Full Name) by default
                 rowCallback: function(row) {
                     if ($(row).hasClass('dt-empty')) {
                         $(row).hide();
@@ -1122,8 +1198,8 @@
                     // If no barangay is selected, show all
                     if (!barangay) return true;
                     
-                    var rowBarangay = data[2]; // Barangay is in the 3rd column (index 2)
-                    var rowPurok = data[3]; // Purok is in the 4th column (index 3)
+                    var rowBarangay = data[3]; // Barangay is in the 4th column (index 3) after checkbox
+                    var rowPurok = data[4]; // Purok is in the 5th column (index 4) after checkbox
                     
                     // Filter by barangay
                     if (barangay && rowBarangay !== barangay) return false;
